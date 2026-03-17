@@ -1,0 +1,26 @@
+name = 'Hugo Theme Somnia'
+license = 'MIT'
+licenselink = ''
+description = 'A Hugo theme Somnia'
+
+# The home page of the theme, where the source can be found
+homepage = ''
+
+# If you have a running demo of the theme
+# demosite = 'https://example.com'
+
+# Taxonomy terms
+tags = ['blog', 'docs', 'minimal', 'modern', 'fast']
+features = ['dark mode', 'responsive', 'search', 'toc', 'smooth scroll']
+
+# If the theme has a single author
+[author]
+  name = '恐咖兵糖'
+  homepage = 'https://github.com/kkbt0'
+
+# If porting an existing theme
+[original]
+  author = 'cworld1'
+  homepage = 'https://github.com/cworld1'
+  repo = 'https://github.com/cworld1/astro-theme-pure'
+

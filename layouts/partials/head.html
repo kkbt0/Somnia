@@ -1,0 +1,38 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+<meta content='IE=edge' http-equiv='X-UA-Compatible' />
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+<!-- Canonical URL-->
+<link rel='canonical' href="{{ .Permalink }}" />
+
+<meta name='color-scheme' content='light dark' />
+<!-- Primary Meta Tags-->
+<meta content="{{.Title}}" name='title' />
+<meta content="{{.Description}}" name='description' />
+<meta content="{{.Params.author|default .Site.Params.author}}" name='author' />
+
+<!-- [TODO] icons-->
+<!-- <link rel='icon' type={config.favicon.type} href={config.favicon.href} />
+<link rel='shortcut icon' type={config.favicon.type} href={config.favicon.href} />
+<link rel='icon' type='image/png' sizes='32x32' href='/favicon/favicon-32x32.png' />
+<link rel='icon' type='image/png' sizes='16x16' href='/favicon/favicon-16x16.png' />
+<link rel='apple-touch-icon' sizes='180x180' href='/favicon/apple-touch-icon.png' />
+<link rel='manifest' href='/favicon/site.webmanifest' /> -->
+
+<!-- [TODO] Font preloads-->
+<!-- [TODO] Article INFO -->
+<meta content="{{.Params.author|default .Site.Params.author.name}}" property='article:author' />
+<meta content="{{.Params.date}}" property='article:published_time' />
+
+<!-- [TODO] Open Graph -->
+<!-- [TODO] Sitemap -->
+<link href='/sitemap-index.xml' rel='sitemap' />
+<!-- [TODO] RSS auto-discovery -->
+{{ with .OutputFormats.Get "rss" }}
+  {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
+{{ end }}
+{{ partialCached "head/css.html" . }}
+{{ partialCached "head/js.html" . }}
+
+<!-- KaTeX 由页面参数控制 -->
+{{ if eq .Params.math true }}{{ partialCached "head/math.html" . }}{{ end}}

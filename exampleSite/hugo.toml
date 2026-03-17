@@ -1,0 +1,74 @@
+baseURL = 'https://example.org/'
+languageCode = 'zh-cn'
+title = 'Hugo Theme Somnia'
+theme = '../..'
+
+copyright = '© 2026 恐咖兵糖.'
+# 是否使用 robots.txt
+enableRobotsTXT = true
+# 网站地图配置
+[sitemap]
+changefreq = "weekly"
+filename = "sitemap.xml"
+priority = 0.5
+# Permalinks 配置
+[Permalinks]
+  # posts = ":year/:month/:filename"
+  posts = "/posts/:slug"
+
+
+[params]
+description = ''
+favicon = '/favicon/favicon.ico'
+socialCard = '/images/social-card.png'
+
+# 作者配置
+[params.author]
+  name = "恐咖兵糖"
+  email = "0@ftls.xyz"
+  link = "/kkbt/"
+  avatar = "https://ftls.xyz/img/avatar.webp"
+  gravatarEmail = ""
+
+[params.locale]
+lang = 'zh-CN'
+dateFormat = '2006年01月02日'
+
+[params.header]
+[[params.header.menu]]
+title = '博客'
+link = '/posts'
+[[params.header.menu]]
+title = '文档'
+link = '/docs'
+[[params.header.menu]]
+title = '项目'
+link = '/projects'
+[[params.header.menu]]
+title = '链接'
+link = '/links'
+[[params.header.menu]]
+title = '关于'
+link = '/about'
+
+[params.footer]
+year = '2024'
+credits = true
+[[params.footer.links]]
+title = 'Moe ICP 114514'
+link = 'https://icp.gov.moe/?keyword=114514'
+style = 'text-sm'
+[[params.footer.links]]
+title = '站点政策'
+link = '/terms'
+pos = 2
+
+[params.content]
+blogPageSize = 8
+
+[params.social]
+github = 'https://github.com/'
+
+[params.features]
+search = true
+mediumZoom = true

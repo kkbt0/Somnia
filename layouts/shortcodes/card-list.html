@@ -1,0 +1,24 @@
+{{$title := .Get "title" | default "" }}
+{{$content := .Inner | markdownify }}
+<div class="not-prose my-3 flex flex-col gap-y-2 rounded-xl border px-4 py-3 sm:py-4 card-list">
+    <p class='text-lg font-medium text-foreground'>{{$title}}</p>
+    {{$content}}
+</div>
+<style>
+    /* 主列表项样式 - 对应原 <p> 的样式 */
+    .card-list ul>li {
+        display: block;
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .card-list ul>li>ul>li {
+        display: flex;
+        flex-direction: column;
+        row-gap: 0.25rem;
+        list-style-type: disc;
+        margin-left: 1.25rem;
+        padding-left: 0;
+    }
+
+</style>

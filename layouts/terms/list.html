@@ -1,0 +1,24 @@
+{{ define "main" }}
+{{ partial "page/button.html" (dict
+"title" "Back"
+"href" "/"
+"variant" "back"
+"class" "") }}
+<main class='mt-6 lg:mt-10'>
+    <div id='content-header' class='animate'>
+        <h1 class='mb-6 text-3xl font-medium'>Site Policy</h1>
+    </div>
+    <div id='content' class="animate mt-8 max-w-none md:min-w-[45ch] prose text-base">
+        <h2 class='text-xl font-medium'>Site policy documentation</h2>
+        <div class="not-prose my-3 flex flex-col gap-y-2 rounded-xl border px-4 py-3 sm:py-4">
+            <p class="text-lg font-medium text-foreground">Terms content</p>
+            <ul class="flex flex-col gap-y-1">
+                <li><a href="/terms/privacy-policy" class="block text-foreground">Privacy Policy</a></li>
+                <li><a href="/terms/terms-and-conditions" class="block text-foreground">Terms and Conditions</a></li>
+                <li><a href="/terms/copyright" class="block text-foreground">Copyright</a></li>
+                <li><a href="/terms/disclaimer" class="block text-foreground">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+</main>
+{{ end }}

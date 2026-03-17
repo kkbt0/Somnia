@@ -1,0 +1,41 @@
+{{ define "main" }}
+{{ partial "page/button.html" (dict
+"title" "Back"
+"href" "/posts"
+"variant" "back"
+"class" "") }}
+<main class='mt-6 lg:mt-10'>
+    <div id='content-header' class='animate'>
+        <h1 class='mb-6 text-3xl font-medium'>Tags</h1>
+    </div>
+    <div id='content' class='animate'>
+        <ul class='flex flex-wrap gap-4'>
+            {{ $tags := .Site.Taxonomies.tags }}
+            {{ $sortedTags := $tags.ByCount }}
+            {{range $sortedTags }}
+            <li>
+                {{if gt .Count 2}}
+                <a class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline rounded-xl items-start px-3 text-xl"
+                    href="{{ .Page.Permalink }}">
+                    {{ .Page.Title }}
+                    <span class="text-base">{{ .Count }}</span>
+                </a>
+                {{else if gt .Count 1}}
+                <a class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline rounded-xl items-start text-lg"
+                    href="{{ .Page.Permalink }}">
+                    {{ .Page.Title }}
+                    <span class="text-xs">{{ .Count }}</span>
+                </a>
+                {{else}}
+                <a class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline rounded-xl items-start"
+                    href="{{ .Page.Permalink }}">
+                    {{ .Page.Title }}
+                    <span class="text-xs">{{ .Count }}</span>
+                </a>
+                {{end}}
+            </li>
+            {{end}}
+        </ul>
+    </div>
+</main>
+{{ end }}

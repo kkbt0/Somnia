@@ -1,0 +1,51 @@
+<!-- Attributes Inner Options  Ordinal Page PageInner Position Type-->
+<!-- Attributes {{ .Attributes }}<br>
+Inner {{ .Inner }}<br>
+Options {{ .Options }}<br>
+Ordinal {{ .Ordinal }}<br>
+Page {{ .Page }}<br>
+PageInner {{ .PageInner }}<br>
+Position {{ .Position }}<br>
+Type {{ .Type }}<br> -->
+{{ $result := transform.HighlightCodeBlock . }}
+{{- $title := .Attributes.title | default .Type | default "text" -}}
+{{- $lineNos := cond (eq .Options.linenos false) "" "show-line-numbers" -}}
+{{- $lines := len (split .Inner "\n") -}}
+{{- $maxShownLines := .Page.Params.code.maxshownlines | default site.Params.page.code.maxshownlines | default 10 -}}
+
+{{- $open := false -}}
+{{- if eq .Attributes.open true -}}
+{{- $open = true -}}
+{{- end -}}
+
+<div class="astro-code astro-code-themes github-light github-dark chroma {{if (and (gt $lines $maxShownLines) (not $open))}}collapsed{{end}}" style="overflow-x: auto;"
+    data-language="{{$title}}">
+    <pre><code>{{ $result.Inner }}</code></pre>
+    <span class="language ps-1 pe-3 text-sm bg-muted text-muted-foreground">{{$title}}</span>
+    <button class="copy text-muted-foreground p-1 box-content border rounded-lg bg-card" aria-label="Copy code"
+        data-code="{{ .Inner }}" onclick="
+          navigator.clipboard.writeText(this.dataset.code);
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 2000)
+        ">
+        <div class="ready">
+            <svg class="size-5">
+                <use href="/icons/code.svg#mingcute-clipboard-line"></use>
+            </svg>
+        </div>
+        <div class="success hidden">
+            <svg class="size-5">
+                <use href="/icons/code.svg#mingcute-file-check-line"></use>
+            </svg>
+        </div>
+    </button>
+    {{if gt $lines $maxShownLines}}
+    <button class="collapse-toggle bg-card text-muted-foreground rounded-lg m-2" aria-label="Toggle collapse code block"
+        onclick="this.parentElement.classList.toggle('collapsed')">
+        <svg class="size-5">
+            <use href="/icons/code.svg#mingcute-arrow-down-line"></use>
+        </svg>
+        <span class="desc"> code</span></button>
+    <div class="collapse-fade"></div>
+    {{end}}
+</div>

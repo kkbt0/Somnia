@@ -1,0 +1,14 @@
+<section class="flex flex-col gap-y-5 md:flex-row md:gap-y-0">
+    <div class='text-xl font-medium md:min-w-36'>
+        <h2>Education</h2>
+    </div>
+    <div class='flex flex-1 flex-col gap-y-3'>
+        <!-- section 内容 -->
+        {{ partial "card.html" (dict
+        "heading" "Lorem ipsum"
+        "subheading" "Lorem ipsum dolor sit amet, vidit suscipit at mei."
+        "date" "August 2021 - July 2025"
+        "href" "https://www.example.com"
+        ) }}
+    </div>
+</section>

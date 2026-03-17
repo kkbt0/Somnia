@@ -1,0 +1,12 @@
+<div class="flex flex-col gap-y-2 md:flex-row md:gap-x-5 md:gap-y-0">
+    <h3 class="w-1/5 font-medium">{{.title}}</h3>
+    <div class="flex flex-row flex-wrap gap-x-4 gap-y-2 md:w-4/5">
+        {{ range .skills }}
+        <button
+            class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline cursor-default rounded-xl"
+            data-astro-prefetch="true">
+            <p class="my-0">{{.name}}</p>
+        </button>
+        {{ end }}
+    </div>
+</div>

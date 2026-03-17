@@ -1,0 +1,47 @@
+<!-- list from .Inner -->
+<!-- Example
+2026-03-16 xxxx
+2026-03-16 xxxx
+2026-03-16 xxx
+2026-03-16 xx xxx
+2026-03-16 xxxx xxxxx
+-->
+{{- $list := slice -}}
+{{- $text := (trim .Inner " ")}}
+{{- range split $text "\n" -}}
+{{- if . -}}
+{{- $el:=  (trim . " ")}}
+{{- /* 提取前10个字符作为日期 (格式: YYYY-MM-DD) */ -}}
+{{- $date := substr $el 0 10 -}}
+{{- /* 跳过第11个字符(空格)，提取从第12个字符开始的所有内容 */ -}}
+{{- $content := substr $el 11 -}}
+{{- $list = $list | append (dict
+"date" (trim $date " ")
+"content" (trim $content " ")
+) -}}
+{{- end -}}
+{{- end -}}
+<div>
+    <ul class='ps-0 sm:ps-2'>
+        {{range $index, $value := $list -}}
+        <li class='group relative flex list-none gap-x-3 rounded-full ps-0 sm:gap-x-2'>
+            <!-- circle -->
+            <span
+                class='z-10 my-2 ms-2 h-3 w-3 min-w-3 rounded-full border-2 border-muted-foreground transition-transform group-hover:scale-125'></span>
+            <!-- line if index !== list.length - 1 -->
+            {{ if ne (add $index 1) (len $list) }}
+            <span class="absolute start-[12px] top-[20px] w-1 bg-border" style="height:calc(100% - 4px)"> </span>
+            {{ end }}
+            <div class='flex gap-2 max-sm:flex-col'>
+                <samp
+                    class='w-fit grow-0 rounded-md py-1 text-sm max-sm:bg-card max-sm:px-2 sm:min-w-[82px] sm:text-right'>
+                    {{$value.date}}
+                </samp>
+                <div>
+                    {{$value.content|markdownify}}
+                </div>
+            </div>
+        </li>
+        {{end}}
+    </ul>
+</div>

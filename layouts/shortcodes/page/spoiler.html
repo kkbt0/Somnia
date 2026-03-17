@@ -1,0 +1,9 @@
+<span class="spoiler bg-muted rounded text-transparent hover:text-inherit px-1 transition-colors">
+    {{.Inner}}
+</span>
+<style>
+    .spoiler:not(:hover) :global(*) {
+        color: inherit !important;
+        background-color: transparent !important;
+    }
+</style>

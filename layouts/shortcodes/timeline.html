@@ -1,0 +1,32 @@
+{{ $events := split .Inner "---" }}
+
+<div class="relative">
+  {{ range $index, $event := $events }}
+    {{ $event := trim $event " \n" }}
+    {{ if $event }}
+      {{ $parts := split $event "|" }}
+      {{ $date := trim (index $parts 0) " \n" }}
+      {{ $content := trim (index $parts 1) " \n" }}
+
+      <div class="flex gap-4 mb-8 last:mb-0">
+        <!-- 时间轴连线 -->
+        {{ if lt $index (sub (len $events) 1) }}
+          <div class="absolute left-2 top-8 bottom-0 w-0.5 bg-muted"></div>
+        {{ end }}
+
+        <!-- 时间轴节点 -->
+        <div class="flex-shrink-0 relative z-10 w-4 h-4 rounded-full bg-primary"></div>
+
+        <!-- 内容 -->
+        <div class="flex-1">
+          {{ if $date }}
+            <time class="block text-sm font-medium text-primary mb-1">{{ $date }}</time>
+          {{ end }}
+          <div class="prose prose-sm dark:prose-invert max-w-none">
+            {{ $content | markdownify }}
+          </div>
+        </div>
+      </div>
+    {{ end }}
+  {{ end }}
+</div>

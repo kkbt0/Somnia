@@ -1,0 +1,26 @@
+<div x-data="quoteComponent()" class="not-prose inline-block {{ .class }}">
+    <div class="flex flex-row items-center gap-x-3 rounded-full border px-4 py-2 text-sm shadow-sm">
+        <span class="relative flex items-center justify-center">
+            <span
+                class="absolute size-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75"></span>
+            <span class="size-2 rounded-full bg-green-400"></span>
+        </span>
+        <p id="quote-sentence" class="font-medium text-muted-foreground" x-text="quote"></p>
+        <!-- <span @click="getData()">刷新</span> -->
+        <script defer>
+            function quoteComponent() {
+                return {
+                    quote: '一切生命都是星海的孩子，我们将回归星空',
+                    init() {
+                        this.getData();
+                    },
+                    getData() {
+                        fetch('https://v1.hitokoto.cn/')
+                            .then(response => response.json())
+                            .then(data => this.quote = data.hitokoto)
+                    },
+                }
+            }
+        </script>
+    </div>
+</div>

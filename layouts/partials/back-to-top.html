@@ -1,0 +1,191 @@
+<div id='action-buttons' x-data="backToTopComponent()" :class="{'ended':(scrollPercent>=100), 'show':actionBtnsShow }"
+  @scroll.window="onScroll()" class='z-10 group fixed bottom-8 end-4 transition-all flex flex-col gap-y-4 sm:end-8'>
+  <!-- slot name='other-icons' -->
+   <!-- 调用父组件的 toggleSidebar() -->
+  <button slot='other-icons' aria-label='Toggle sidebar'
+    class='size-10 flex items-center justify-center rounded-full border-2 border-transparent bg-muted text-muted-foreground duration-300 hover:border-border/75 md:hidden sm:size-12'
+    id='sidebar-btn' @click="toggleSidebar()">
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;">
+      <g fill="none">
+        <path
+          d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z">
+        </path>
+        <path fill="currentColor"
+          d="M4.5 17.5a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3M20 18a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2zM4.5 10.5a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3M20 11a1 1 0 0 1 .117 1.993L20 13H9a1 1 0 0 1-.117-1.993L9 11zM4.5 3.5a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3M20 4a1 1 0 0 1 .117 1.993L20 6H9a1 1 0 0 1-.117-1.993L9 4z">
+        </path>
+      </g>
+    </svg>
+  </button>
+
+  <scroll-button>
+    <button @click="scrollToTop" aria-label='Back to Top'
+      class='relative size-10 flex items-center justify-center rounded-full border-2 border-transparent bg-muted text-muted-foreground duration-300 hover:border-border/75 sm:size-12 opacity-0'
+      id='to-top-btn'>
+      <div
+        class='top-text absolute bottom-0 end-0 start-0 top-0 flex items-center justify-center group-[.ended]:opacity-0'>
+        <!-- Alpinjs 显示进度 -->
+        <span class='text' x-text="scrollPercent">10</span>
+        <span class='text-xs'>%</span>
+      </div>
+      <svg aria-hidden="true" class="top-icon group-[.ended]:opacity-100" width="22" height="22" viewBox="0 0 24 24"
+        fill="currentColor" style="--sl-icon-size: 1em;">
+        <g fill="none" fill-rule="evenodd">
+          <path
+            d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z">
+          </path>
+          <path fill="currentColor"
+            d="M11.293 8.293a1 1 0 0 1 1.414 0l5.657 5.657a1 1 0 0 1-1.414 1.414L12 10.414l-4.95 4.95a1 1 0 0 1-1.414-1.414z">
+          </path>
+        </g>
+      </svg>
+    </button>
+  </scroll-button>
+</div>
+<script>
+  function backToTopComponent() {
+    return {
+      needPercent: true,      // 是否需要百分比功能
+      actionBtnsShow: false,  // actionBtns 是否可见
+      scrollPercent: 0,        // 当前滚动百分比 onScroll 绑定自动触发初始化
+
+      scrollHeight: 0,         // 文章总高度
+      articleTop: 0,           // 文章顶部偏移量
+      clientHeight: 0,         // 视口高度
+
+      ticking: false,           // 节流标志
+      observer: undefined, // for destroy
+      articleEl: undefined,// for destroy
+      contentHeaderEl: undefined,// for destroy
+      handleScrollReady: false,// for onScroll
+
+      init() {
+        // 错误处理：如果文章元素不存在，禁用百分比功能
+        const contentName = "content";
+        this.articleEl = document.getElementById(contentName);
+        if (!this.articleEl) {
+          console.error(`Element with ID ${contentName} not found.`)
+          this.needPercent = false;
+        }
+        // 根据页眉元素的可见性，控制按钮组显示/隐藏
+        // id content-header
+        const contentHeaderName = "content-header";
+        this.contentHeaderEl = document.getElementById(contentHeaderName);
+        if (this.contentHeaderEl) {
+          this.observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              this.actionBtnsShow = !entry.isIntersecting;
+            })
+          })
+          this.observer.observe(this.contentHeaderEl)
+        } else {
+          console.error(`Element with ID ${contentHeaderName} not found.`)
+        }
+        // 滚动百分比更新
+        if (this.needPercent) {
+          // 初始化必要的尺寸信息
+          this.scrollHeight = this.articleEl.scrollHeight; // 文章总高度（包含滚动部分）
+          this.articleTop = this.articleEl.offsetTop; // 文章顶部距离文档顶部的距离
+          this.clientHeight = document.documentElement.clientHeight; // 视口高度
+          // document.addEventListener("scroll", this.handleScroll)
+          this.handleScrollReady = true;
+        } else {
+          this.actionBtnsShow = true;
+        }
+      },
+      // 计算滚动百分比
+      calculateScrollPercent() {
+        const scrollTop = Math.max(0, window.scrollY || document.documentElement.scrollTop);
+        // 滚动位置在文章开始之前
+        if (scrollTop < this.articleTop) return 0;
+        // 计算最大可滚动距离
+        const maxScrollable = this.scrollHeight - this.clientHeight;
+        // 文章高度小于视口高度
+        if (maxScrollable <= 0) return 100;
+        // 计算实际滚动距离
+        const progress = Math.min(scrollTop - this.articleTop, maxScrollable);
+        // 计算百分比
+        return Math.round((progress / maxScrollable) * 100);
+      },
+
+      //更新滚动百分比显示
+      updateScrollPercent() {
+        this.scrollPercent = this.calculateScrollPercent();
+        this.ticking = false;
+      },
+
+      // 滚动事件处理
+      onScroll() {
+        if (this.handleScrollReady) {
+          if (!this.ticking) {
+            requestAnimationFrame(() => { this.updateScrollPercent() })
+            this.ticking = true;
+          }
+        }
+      },
+      // 滚动到顶部
+      scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      },
+
+      // 清理资源
+      destroy() {
+        if (this.observer && this.contentHeaderEl) {
+          this.observer.unobserve(this.contentHeaderEl);
+          this.observer.disconnect();
+        }
+        // 使用 Alpinejs @scroll.window="onScroll()" 写法
+        // if (this.needPercent) {
+        //   document.removeEventListener('scroll', this.handleScroll);
+        // }
+      },
+    };
+  }
+
+</script>
+
+<style>
+  #action-buttons {
+    /* 修复 按钮在某些情况被 TOC 覆盖导致无法点击的问题 */
+    /* z-index: 99; */
+
+    transform: translateY(4rem);
+
+    &.show {
+      transform: translateY(0);
+
+      & #to-top-btn {
+        opacity: 1;
+      }
+    }
+
+    /* To top button status change */
+    & #to-top-btn {
+
+      & .top-text,
+      & .top-icon {
+        transition-property: opacity;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+      }
+
+      & .top-text {
+        opacity: 1;
+      }
+
+      & .top-icon {
+        opacity: 0;
+      }
+    }
+
+    &.ended #to-top-btn,
+    & #to-top-btn:hover {
+      & .top-text {
+        opacity: 0;
+      }
+
+      & .top-icon {
+        opacity: 1;
+      }
+    }
+  }
+</style>

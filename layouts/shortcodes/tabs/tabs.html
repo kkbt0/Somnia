@@ -1,0 +1,81 @@
+{{- $tabs := .Scratch.Get "tabs" -}}
+<!-- {{if $tabs}}
+{{range $index, $tab := $tabs}}
+{{$tab.title}} | {{$tab.content}}
+{{end}}
+{{end}} -->
+
+<starlight-tabs x-data="{ activeTab: 'tab0' }">
+    <!-- 选项卡导航 -->
+    <div class="tablist-wrapper not-content">
+        <ul role='tablist' class='my-0 not-prose'>
+            {{with .Inner}}
+            {{range $index, $tab := $tabs}}
+            <li role='presentation' class='tab'>
+                <a role='tab' class='tab' @click="activeTab = 'tab{{ $index }}'"
+                    :aria-selected="activeTab === 'tab{{ $index }}'">{{ $tab.title }}</a>
+            </li>
+            {{end}}
+            {{end}}
+        </ul>
+    </div>
+    <!-- 选项卡内容区域 -->
+    <div>
+        {{with .Inner}}
+        {{range $index, $tab := $tabs}}
+        <div x-show="activeTab === 'tab{{ $index }}'" x-cloak role="tabpanel">
+            <p>{{ $tab.content }}</p>
+        </div>
+        {{end}}
+        {{end}}
+    </div>
+</starlight-tabs>
+
+<style>
+    starlight-tabs {
+        display: block;
+    }
+
+    .tablist-wrapper {
+        /* overflow-x: auto; */
+    }
+
+    [role='tablist'] {
+        display: flex;
+        list-style: none;
+        border-bottom: 2px solid hsl(var(--border) / var(--un-border-opacity, 1));
+        padding: 0;
+    }
+
+    .tab {
+        margin-bottom: -2px;
+    }
+
+    .tab>[role='tab'] {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.2rem 1.25rem;
+        text-decoration: none;
+        border-bottom: 2px solid hsl(var(--border) / var(--un-border-opacity, 1));
+        color: hsl(var(--foreground) / var(--un-text-opacity, 1));
+        outline-offset: -0.1875rem;
+        overflow-wrap: initial;
+        white-space: nowrap;
+    }
+
+    .tab [role='tab'][aria-selected='true'] {
+        color: hsl(var(--primary) / var(--un-text-opacity, 1));
+        border-color: hsl(var(--primary) / var(--un-text-opacity, 1));
+        font-weight: 600;
+    }
+
+    .tablist-wrapper~ :global([role='tabpanel']) {
+        margin-top: 1rem;
+    }
+
+    /* 仅用于基本功能演示，非样式要求 */
+    [x-cloak] {
+        display: none;
+    }
+</style>

@@ -1,0 +1,12 @@
+{{$title:=.Get "title" | default ""}}
+{{$href:=.Get "href"}}
+{{if $href }}
+<a class="flex flex-row items-center justify-center gap-x-2 hover:opacity-75 transition-all" href="{{$href}}"
+    target="_blank">
+    <p>{{$title}}</p>
+</a>
+{{else}}
+<div class="flex flex-row items-center justify-center gap-x-2">
+    <p>{{$title}}</p>
+</div>
+{{end}}

@@ -1,0 +1,144 @@
+{{ define "main" }}
+<div x-data="mainComponent()">
+  {{ partial "page/button.html" (dict
+  "title" "Back"
+  "href" "/posts"
+  "variant" "back"
+  "class" "") }}
+  <main class='mt-6 items-start gap-x-10 md:flex'>
+    <!-- Sidebar -->
+    <aside
+      class='animate top-20 min-w-48 basis-60 overflow-y-scroll max-md:hidden z-40 fixed md:sticky md:order-2 lg:shrink-0 max-md:border max-md:px-4 max-md:py-3 max-md:bg-muted max-md:rounded-xl'
+      style='height:calc(100vh - 7rem);' id='sidebar'
+      :class="{'show': sidebarShow, 'display':sidebarShow?'none':'block' }">
+      <!-- [INFO] sidebar -->
+      {{ partial "toc/toc.html" . }}
+    </aside>
+    <div id='sidebar-shade' @click="toggleSidebar()" class='fixed top-0 start-0 w-full h-full' x-show="sidebarShow"
+      style='display:none;background-color:#00000091;z-index:31'>
+    </div>
+
+    <article class='min-w-0 grow'>
+      <!-- Content header -->
+      <!-- [INFO] header -->
+      <div id='content-header' class='animate'>
+        <!--hero image-->
+        {{ partial "page/hero.html" . }}
+        <!-- <span class='text-red-500'>(Draft)</span>  -->
+        <!-- Blog 文章信息 日期 阅读时间 语言 标签 标题 描述 文章阅读评论量数据-->
+        {{ partial "page/blog-article-info.html" . }}
+        <!--分割线-->
+        <div class='mt-4 w-1/2 border-t max-md:mx-auto sm:mt-6 sm:w-1/3'></div>
+        <script>
+
+        </script>
+        <style>
+
+        </style>
+      </div>
+      <!-- Content -->
+      <div id='content' class="max-w-none animate mt-8 md:min-w-[45ch] overflow-x-hidden prose text-base">
+        <!-- Markdown -->
+        <!-- [TODO] Markdown -->
+        {{ .Content }}
+        <slot />
+      </div>
+    </article>
+  </main>
+
+  <div class='bottom mt-6 items-start gap-x-10 md:flex'>
+    <!-- Bottom -->
+    <div class='flex-1 text-muted-foreground md:min-w-[50ch]'>
+      <!-- [INFO] bottom -->
+      <!-- Copyright -->
+      {{ partial "page/copyright.html" . }}
+      <!-- Article recommend -->
+      {{ partial "page/blog-bottom.html" . }}
+      <!-- Comment -->
+      <div class="some-comments" style="display: none;">评论系统占位</div>
+    </div>
+    <div class='min-w-48 basis-60'>
+      <!-- [INFO] bottom-sidebar -->
+      <!-- 占位-->
+    </div>
+  </div>
+
+  {{ partial "back-to-top.html" . }}
+
+  <script>
+    function mainComponent() {
+      return {
+        sidebarShow: false,
+        init() {
+
+        },
+        toggleSidebar() {
+          this.sidebarShow = !this.sidebarShow;
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @media (min-width: 769px) {
+      #sidebar-shade {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 769px) {
+      aside.show {
+        display: block !important;
+        opacity: 1;
+      }
+
+      @keyframes fade-in-side {
+        0% {
+          transform: translateX(50%);
+          opacity: 0;
+        }
+
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      aside {
+        animation: 300ms fade-in-side !important;
+        animation-fill-mode: forwards;
+        right: 0;
+        top: 0 !important;
+        height: 100vh !important;
+        min-width: 40vw !important;
+        max-width: 75vw !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+      }
+
+      #sidebar-shade {
+        animation: 300ms fade-in;
+      }
+    }
+
+    @media (max-width: 640px) {
+      aside {
+        min-width: 55vw !important;
+      }
+    }
+  </style>
+</div>
+
+{{ end }}

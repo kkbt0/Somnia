@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="{{ or site.Language.LanguageCode site.Language.Lang }}" dir="{{ or site.Language.LanguageDirection `ltr` }}"
+  style="--highlightColor: #0B1335;">
+
+<head>
+  {{ partial "head.html" . }}
+  {{ partial "head/theme.html" . }}
+</head>
+
+<body class="flex justify-center bg-background text-foreground">
+  <!-- 渐变背景 -->
+  <div id='highlight-gradient' class='pointer-events-none absolute start-0 top-0 z-0 h-screen w-full opacity-25'
+    style="background-image:linear-gradient(var(--highlightColor),transparent);" />
+  </div>
+
+  <!-- 主容器 -->
+  <div id='main-container' class='w-full max-w-[70rem] min-h-[100dvh] flex flex-col justify-between'>
+
+    {{ partial "header.html" . }}
+    <div id="content-wrapper" class="flex-1 w-full">
+      {{ block "main" . }}{{ end }}
+    </div>
+    {{ partial "footer.html" . }}
+  </div>
+  {{ partial "search.html" . }}
+  {{ partial "medium-zoom.html" . }}
+  <style>
+    :global(.highlight) {
+      --highlight-fg: color-mix(in srgb,
+          var(--highlightColor) 40%,
+          hsl(var(--foreground)/var(--un-text-opacity, 1)));
+      color: var(--highlight-fg, hsl(var(--primary) / var(--un-text-opacity))) !important;
+    }
+
+    :global(.highlight-bg) {
+      background-color: var(--highlightColor,
+          hsl(var(--primary) / var(--un-text-opacity))) !important;
+    }
+
+    /* Extend safe area for some special screens
+       * https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/env
+       * https://webkit.org/blog/7929/designing-websites-for-iphone-x/
+       */
+    #main-container {
+      padding-top: env(safe-area-inset-top);
+      padding-left: calc(1rem + env(safe-area-inset-left));
+      padding-right: calc(1rem + env(safe-area-inset-right));
+    }
+
+    @media (min-width: 640px) {
+      #main-container {
+        padding-left: calc(1.75rem + env(safe-area-inset-left));
+        padding-right: calc(1.75rem + env(safe-area-inset-right));
+      }
+    }
+
+    @media (min-width: 1024px) {
+      #main-container {
+        padding-left: calc(2.5rem + env(safe-area-inset-left));
+        padding-right: calc(2.5rem + env(safe-area-inset-right));
+      }
+    }
+  </style>
+</body>
+
+</html>

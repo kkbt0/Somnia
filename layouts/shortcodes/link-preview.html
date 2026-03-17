@@ -1,0 +1,17 @@
+{{ $href := .Get "href" }}
+
+<div class='not-prose link-preview-container my-2 flex justify-center sm:my-4'>
+  Link {{ $href }} <br>
+  [TODO] 由 Hugo 请求并渲染（可能会阻塞 build ） or 后端获取
+</div>
+
+<style>
+  /* Default styles */
+  .link-preview img,
+  .link-preview video {
+    aspect-ratio: 1200 / 630;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+</style>

@@ -1,0 +1,35 @@
+{{ $as := .Get "as" | default "div" }}
+{{ $href := .Get "href" | default "#" }}
+{{ $heading := .Get "heading" }}
+{{ $subheading := .Get "subheading" }}
+{{ $date := .Get "date" }}
+{{ $content := .Inner }}
+
+<!-- a 虽然可以当 block 用 ,但是在 Hugo 解析 markdown 后，混排中会当成 inline 处理，会出 bug -->
+<!-- 
+<a class="not-prose block relative rounded-2xl border bg-muted px-5 py-3 transition-all hover:border-foreground/25 hover:shadow-sm" href="{{ $href }}">
+  <div class='flex flex-col gap-y-1.5'>
+    <div class='flex flex-col gap-y-0.5'>
+      <span class='text-lg font-medium font-bold'>{{ $heading }}</span>
+      <p class='text-muted-foreground'>{{ $subheading }}</p>
+      <p class='text-muted-foreground'>{{ $date }}</p>
+    </div>
+    {{ $content }}
+  </div>
+</a>
+-->
+
+
+<div
+  class="not-prose block relative rounded-2xl border bg-muted px-5 py-3 transition-all hover:border-foreground/25 hover:shadow-sm">
+  <a href="{{ $href }}">
+    <div class='flex flex-col gap-y-1.5'>
+      <div class='flex flex-col gap-y-0.5'>
+        <span class='text-lg font-medium font-bold'>{{ $heading }}</span>
+        <p class='text-muted-foreground'>{{ $subheading }}</p>
+        <p class='text-muted-foreground'>{{ $date }}</p>
+      </div>
+      {{ $content }}
+    </div>
+  </a>
+</div>

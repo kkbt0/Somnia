@@ -1,0 +1,17 @@
+{{ define "main" }}
+{{ partial "page/button.html" (dict
+"title" "Back"
+"href" "/posts"
+"variant" "back"
+"class" "") }}
+<main class='mt-6 lg:mt-10'>
+    <div id='content-header' class='animate'>
+        <h1 class='mb-6 text-3xl font-medium'>Search</h1>
+    </div>
+
+    <div id='content' class='animate'>
+        <p>Enter a search term or phrase to search the blog.</p>
+        {{ partial "page/pf-search.html" . }}
+    </div>
+</main>
+{{ end }}

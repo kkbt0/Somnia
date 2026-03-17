@@ -1,0 +1,10 @@
+<a class="project-card group overflow-hidden relative flex flex-col justify-end rounded-2xl border bg-muted  transition-all hover:border-foreground/25 hover:shadow-sm"
+    href="{{.href}}" target="_blank">
+    <img src="{{.image}}" alt="{{.heading}}" loading="lazy" decoding="async" fetchpriority="auto" inputtedwidth="360"
+        width="360" height="240"
+        class="absolute w-full h-full object-cover opacity-60 transition-opacity group-hover:opacity-100 dark:opacity-35">
+    <div class="project-card-fg z-10 flex flex-col gap-y-0.5 px-5 pb-4 pt-36 transition-all ">
+        <h2 class="text-lg font-medium ">{{.heading}}</h2>
+        <p class="text-muted-foreground ">{{.subheading}}</p>
+    </div>
+</a>

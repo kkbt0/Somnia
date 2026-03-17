@@ -1,0 +1,20 @@
+{{ $posts := where site.RegularPages "Type" "posts" }}
+{{ if $posts }}
+<section class="flex flex-col gap-y-5 md:flex-row md:gap-y-0">
+    <div class='text-xl font-medium md:min-w-36'>
+        <h2>Posts</h2>
+    </div>
+    <div class='flex flex-1 flex-col gap-y-3'>
+        <!-- section 内容 -->
+        <ul class='flex flex-col gap-y-1.5 sm:gap-y-2'>
+            {{ range first 5 $posts }}
+            <!-- [TODO] 这里 li 嵌套了，li 部分失效 -->
+            <li class='flex flex-col gap-x-2 sm:flex-row'>
+                {{ partial "home/components/post.html" . }}
+            </li>
+            {{ end }}
+        </ul>
+        {{ partial "home/components/button.html" (dict "title" "More posts" "href" "/posts/") }}
+    </div>
+</section>
+{{ end }}

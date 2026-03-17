@@ -1,0 +1,36 @@
+{{ define "main" }}
+{{ partial "page/button.html" (dict
+"title" "Back"
+"href" "/tags"
+"variant" "back"
+"class" "") }}
+<main class='mt-6 lg:mt-10'>
+    <div id='content-header' class='animate'>
+        <h1 class='mb-6 flex items-end gap-x-2 text-3xl font-medium'>
+            Tags: <span class='text-2xl'>#{{.Title}}</span>
+        </h1>
+    </div>
+    <section id='content' class='animate' aria-label='Blog post list'>
+        {{ $pages := .Pages }}
+        {{ $paginator := .Paginate ($pages.ByDate.Reverse) 5 }} <!-- 按日期倒序，每页5篇 -->
+        <ul class='flex flex-col gap-y-3 text-start'>
+            {{ range $paginator.Pages }}
+            {{ partial "page/blog-preview.html" . }}
+            {{ end }}
+        </ul>
+        <!-- [INFO] 分页-->
+        <nav class='mt-4 flex items-center gap-x-4 sm:mt-6'>
+            {{ if $paginator.HasPrev }}
+            <a class='me-auto py-2' href="{{ $paginator.Prev.URL }}">
+                ← Previous Tags
+            </a>
+            {{ end }}
+            {{ if $paginator.HasNext }}
+            <a class='ms-auto py-2' href="{{ $paginator.Next.URL }}">
+                Next Tags →
+            </a>
+            {{ end }}
+        </nav>
+    </section>
+</main>
+{{ end }}

@@ -1,0 +1,176 @@
+{{ define "main" }}
+{{- $docs := hugo.Data.docs -}}
+
+<div x-data="mainComponent()">
+  {{ partial "page/button.html" (dict
+  "title" "Back"
+  "href" "/docs"
+  "variant" "back"
+  "class" "") }}
+  <main class='mt-6 items-start gap-x-10 md:flex'>
+    <!-- Sidebar -->
+    <aside
+      class='animate top-20 min-w-48 basis-60 overflow-y-scroll max-md:hidden z-40 fixed md:sticky md:order-2 lg:shrink-0 max-md:border max-md:px-4 max-md:py-3 max-md:bg-muted max-md:rounded-xl'
+      style='height:calc(100vh - 7rem);' id='sidebar'
+      :class="{'show': sidebarShow, 'display':sidebarShow?'none':'block' }">
+      <!-- [INFO] sidebar -->
+      {{ partial "toc/toc.html" . }}
+      {{partial "docs/docs-contents.html" (dict "toc" $docs "type" "sidebar") }}
+    </aside>
+    <div id='sidebar-shade' @click="toggleSidebar()" class='fixed top-0 start-0 w-full h-full' x-show="sidebarShow"
+      style='display:none;background-color:#00000091;z-index:31'>
+    </div>
+
+    <article class='min-w-0 grow'>
+      <!-- Content header -->
+      <!-- [INFO] header -->
+      <div id='content-header' class='animate'>
+        <h1 class='text-2xl font-medium sm:mb-2 sm:text-3xl'>{{.Title}}</h1>
+        <div class='mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs leading-6 text-muted-foreground'>
+          <blockquote class='text-sm italic text-muted-foreground'>{{.Description|default "Without further ado"}}
+          </blockquote>
+        </div>
+      </div>
+      <!-- Content -->
+      <div id='content' class="max-w-none animate mt-8 md:min-w-[45ch] overflow-x-hidden prose text-base">
+        <!-- Markdown -->
+        <!-- [TODO] Markdown -->
+        {{ .Content }}
+        <slot />
+      </div>
+    </article>
+  </main>
+
+  <div class='bottom mt-6 items-start gap-x-10 md:flex'>
+    <!-- Bottom -->
+    <div class='flex-1 text-muted-foreground md:min-w-[50ch]'>
+      <!-- [TODO] bottom -->
+      <div class="some-comments" style="display: none;">评论系统占位</div>
+      <!-- [TODO] Edit on GitHub -->
+      <!-- [TODO] Report issue on GitHub -->
+      <!-- Show docs contents -->
+      <div class='rounded-xl border px-4 py-3 mt-3 sm:py-4 md:mt-6'>
+        {{partial "docs/docs-contents.html" (dict "toc" $docs "type" "bottom") }}
+      </div>
+    </div>
+    <div class='min-w-48 basis-60'>
+      <!-- [INFO] bottom-sidebar -->
+      <!-- 占位-->
+    </div>
+  </div>
+
+  {{ partial "back-to-top.html" . }}
+
+  <script>
+    function mainComponent() {
+      return {
+        sidebarShow: false,
+        init() {
+
+        },
+        toggleSidebar() {
+          this.sidebarShow = !this.sidebarShow;
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @media (min-width: 769px) {
+      #sidebar-shade {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 769px) {
+      aside.show {
+        display: block !important;
+        opacity: 1;
+      }
+
+      @keyframes fade-in-side {
+        0% {
+          transform: translateX(50%);
+          opacity: 0;
+        }
+
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      aside {
+        animation: 300ms fade-in-side !important;
+        animation-fill-mode: forwards;
+        right: 0;
+        top: 0 !important;
+        height: 100vh !important;
+        min-width: 40vw !important;
+        max-width: 75vw !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+      }
+
+      #sidebar-shade {
+        animation: 300ms fade-in;
+      }
+    }
+
+    @media (max-width: 640px) {
+      aside {
+        min-width: 55vw !important;
+      }
+    }
+  </style>
+
+
+  <!-- for docs single page css -->
+  <style>
+    @media (min-width: 1300px) {
+
+      main,
+      .bottom {
+        transform: translateX(7.9rem);
+      }
+
+      #sidebar {
+        overflow: inherit;
+      }
+
+      toc-heading {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      toc-heading>ul {
+        overflow-y: scroll;
+      }
+
+      .docs-toc {
+        position: fixed;
+        top: 0;
+        left: -64rem;
+        margin-top: 0;
+        max-height: calc(100vh - 7rem);
+        overflow-y: scroll;
+        padding-right: 1rem !important;
+      }
+    }
+  </style>
+</div>
+
+{{ end }}

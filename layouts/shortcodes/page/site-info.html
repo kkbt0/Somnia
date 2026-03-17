@@ -1,0 +1,24 @@
+{{$info:=(dict
+"Name" "超光速"
+"Desc" "我们的征途是星辰大海"
+"Link" "https://www.ftls.xyz/"
+"Avatar" "https://ftls.xyz/img/avatar.webp"
+)}}
+{{$keys := slice "Name" "Desc" "Link" "Avatar"}} <!-- 定义顺序 -->
+<blockquote x-data="infoComponent()" class='not-prose grid grid-cols-[auto_1fr] gap-x-2 break-words border-s-4 ps-4'>
+    {{range $key := $keys}}
+    <span class='text-end'>{{$key}}: </span>
+    <samp class="cursor-pointer" @click="infoClick('{{index $info $key}}')">{{index $info $key}}</samp>
+    {{end}}
+</blockquote>
+<script>
+    function infoComponent() {
+        return {
+            infoClick(text) {
+                navigator.clipboard.writeText(text);
+                showToast(`Copied "${text}" to clipboard!`);
+            },
+            init() { },
+        }
+    }
+</script>

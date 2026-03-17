@@ -1,0 +1,10 @@
+{{- $title := .Get 0 -}}
+{{- $content := .Inner | markdownify -}}
+{{- if not (.Parent.Scratch.Get "tabs") -}}
+{{- .Parent.Scratch.Set "tabs" slice -}}
+{{- end -}}
+
+{{- with .Inner -}}
+{{- $tab := dict "title" $title "content" $content -}}
+{{- $.Parent.Scratch.Add "tabs" $tab -}}
+{{- end -}}

@@ -1,0 +1,16 @@
+<div class="grid gap-3 sm:grid-cols-2 sm:gap-3.5 lg:grid-cols-3">
+    <!-- [TODO] read list -->
+    <div class='sponsor-card relative h-full overflow-hidden rounded-xl border px-4 py-3'>
+        <div class='font-medium mb-2 line-clamp-1'>sponsor.name</div>
+        <div class='text-xs text-muted-foreground'>
+            date on platform
+        </div>
+        <!-- sponsor.amount -->
+        <span class='absolute bottom-2 right-4 font-medium max-sm:text-lg'>¥100</span>
+        <!-- TODO 计算 amount/max amount 为宽度百分比 -->
+        <div
+          class='progress absolute h-full top-0 left-0 -z-10 bg-muted' 
+          style="width: 50%"
+          />
+    </div>
+</div>

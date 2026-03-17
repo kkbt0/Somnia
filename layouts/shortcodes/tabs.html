@@ -1,0 +1,56 @@
+{{ $activeTab := .Get "active" | default 0 }}
+
+{{ $tabs := split .Inner "---" }}
+
+<div class="border border-border rounded-lg overflow-hidden">
+  <!-- 标签导航 -->
+  <div class="flex border-b border-border bg-muted/30">
+    {{ range $index, $tab := $tabs }}
+      {{ $tab := trim $tab " \n" }}
+      {{ if $tab }}
+        {{ $parts := split $tab "|" }}
+        {{ $title := trim (index $parts 0) " \n" }}
+        {{ $content := trim (index $parts 1) " \n" }}
+
+        {{ if $title }}
+          <button
+            data-tab="{{ $index }}"
+            class="px-4 py-2 text-sm font-medium transition-colors hover:text-primary
+              {{ if eq $index $activeTab }}
+                text-primary bg-background border-t-2 border-primary -mt-px
+              {{ else }}
+                text-muted-foreground hover:bg-muted
+              {{ end }}"
+            onclick="document.querySelectorAll('[data-tab-content]').forEach(el => el.classList.add('hidden'));
+                     document.querySelectorAll('[data-tab]').forEach(el => el.classList.remove('text-primary', 'bg-background', 'border-t-2', 'border-primary', '-mt-px'));
+                     document.querySelectorAll('[data-tab-content]')[{{ $index }}].classList.remove('hidden');
+                     this.classList.add('text-primary', 'bg-background', 'border-t-2', 'border-primary', '-mt-px');
+                     this.classList.remove('text-muted-foreground', 'hover:bg-muted')">
+            {{ $title }}
+          </button>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+
+  <!-- 标签内容 -->
+  <div class="p-6 bg-background">
+    {{ range $index, $tab := $tabs }}
+      {{ $tab := trim $tab " \n" }}
+      {{ if $tab }}
+        {{ $parts := split $tab "|" }}
+        {{ $title := trim (index $parts 0) " \n" }}
+        {{ $content := trim (index $parts 1) " \n" }}
+
+        {{ if $content }}
+          <div
+            data-tab-content="{{ $index }}"
+            class="prose prose-sm dark:prose-invert max-w-none
+              {{ if ne $index $activeTab }} hidden {{ end }}">
+            {{ $content | markdownify }}
+          </div>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+</div>

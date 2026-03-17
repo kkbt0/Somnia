@@ -1,0 +1,23 @@
+{{ define "main" }}
+<main class='flex w-full flex-col items-center'>
+  <!-- profile -->
+  {{partial "home/profile.html" . }}
+  <!-- sections -->
+  <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
+    <!-- [TODO] 封装 Section 组件 但没有好用的 .Inner 可用 -->
+    <!-- About -->
+    {{partial "home/sections/about.html" . }}
+    <!-- Posts -->
+    {{partial "home/sections/posts.html" . }}
+    <!-- Education -->
+    {{partial "home/sections/education.html" . }}
+    <!-- Website List -->
+    {{partial "home/sections/website-list.html" . }}
+    <!-- Certifications -->
+    {{partial "home/sections/certifications.html" . }}
+    <!-- Skills -->
+    {{partial "home/sections/skills.html" . }}
+  </div>
+  {{ partial "quote.html" (dict "class" "mt-12") }}
+</main>
+{{ end }}

@@ -1,0 +1,32 @@
+<site-search>
+    <aside class='form my-4'>
+        <!-- <div class='w-full rounded-xl border-2 bg-transparent px-4 py-2 pe-3 outline-none focus:border-foreground'>
+            You are in Dev mode, the search is disabled.
+        </div> -->
+        <div id='site-search' />
+    </aside>
+</site-search>
+<script src="/pagefind/pagefind-ui.js" type="module"></script>
+<script type="module">
+    new PagefindUI({
+        element: "#site-search",
+        showSubResults: true,
+        showImages: false
+    });
+</script>
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<style>
+    #site-search {
+        --pagefind-ui-scale: 0.8;
+        --pagefind-ui-primary: hsl(var(--primary) / var(--un-bg-opacity, 1));
+        --pagefind-ui-text: hsl(var(--foreground) / var(--un-text-opacity, 1));
+        --pagefind-ui-background: hsl(var(--muted) / var(--un-bg-opacity, 1));
+        --pagefind-ui-border: hsl(var(--border) / var(--un-border-opacity, 1));
+        --pagefind-ui-tag: hsl(var(--muted-foreground) / var(--un-text-opacity, 1));
+        --pagefind-ui-border-width: 2px;
+        --pagefind-ui-border-radius: calc(var(--radius) + 2px);
+        --pagefind-ui-image-border-radius: calc(var(--radius) + 2px);
+        --pagefind-ui-image-box-ratio: 3 / 2;
+        --pagefind-ui-font: sans-serif;
+    }
+</style>

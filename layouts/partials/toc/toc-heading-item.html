@@ -1,0 +1,25 @@
+{{- $depth := .depth -}}
+{{- $slug  := .id    -}}
+{{- $text  := .title -}}
+{{- $subs  := .subheadings -}}
+
+<li>
+  <div class="relative">
+    <span
+      class="absolute top-[5%] w-[2px] rounded transition-colors duration-300 [&.highlight-bg]:bg-primary [&.is-read]:bg-border"
+    ></span>
+    <a 
+      aria-label="Scroll to section: {{ $text }}"
+      class="toc-item line-clamp-2 px-3 py-1 ms-2 text-foreground/75 transition-all hover:text-foreground [&.highlight]:font-medium [&.highlight]:text-primary [&.highlight-bg-translucent]:bg-muted{{ if gt $depth 2 }} ps-7{{ end }}"
+      href="#{{ .id }}"
+    >{{ $text }}</a>
+  </div>
+
+  {{- if $subs -}}
+  <ul>
+    {{- range $subs -}}
+      {{- partial "toc/toc-heading-item.html" . -}}
+    {{- end -}}
+  </ul>
+  {{- end -}}
+</li>
