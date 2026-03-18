@@ -1,4 +1,4 @@
-baseURL = 'https://kkbt0.github.io/Hugo-Landscape/Somnia/'
+baseURL = 'https://kkbt0.github.io/Somnia/'
 languageCode = 'zh-cn'
 title = 'Hugo Theme Somnia'
 theme = '../..'
