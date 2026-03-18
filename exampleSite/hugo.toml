@@ -35,10 +35,10 @@ github = 'https://github.com/kkbt0'
 bio = '浮生若梦 为欢几何'
 about = ''
 [params.education]
-# heading = 'Lorem ipsum.'
-# subheading = 'Lorem ipsum dolor sit amet, vidit suscipit at mei.'
-# date = 'August 2021 - July 2025'
-# url = '#'
+heading = 'Lorem ipsum.'
+subheading = 'Lorem ipsum dolor sit amet, vidit suscipit at mei.'
+date = 'August 2021 - July 2025'
+url = '#'
 [params.locale]
 lang = 'zh-CN'
 dateFormat = '2006年01月02日'
@@ -55,10 +55,10 @@ url = 'https://example.org'
 image = 'https://ts1.tc.mm.bing.net/th?id=ORMS.8801372fff8c9b7a95b4a984edae4011'
 
 [params.certifications]
-# heading = 'Lorem ipsum.'
-# subheading = 'Lorem ipsum dolor sit amet, vidit suscipit at mei.'
-# date = 'August 2021 - July 2025'
-# url = '#'
+heading = 'Lorem ipsum.'
+subheading = 'Lorem ipsum dolor sit amet, vidit suscipit at mei.'
+date = 'August 2021 - July 2025'
+url = '#'
 
 [[params.skills]]
 title = 'Languages'
