@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ partial "page/button.html" (dict
 "title" "Back"
-"href" "/"
+"href" ""
 "variant" "back"
 "class" "") }}
 <main class='mt-6 lg:mt-10'>
@@ -13,10 +13,10 @@
         <div class="not-prose my-3 flex flex-col gap-y-2 rounded-xl border px-4 py-3 sm:py-4">
             <p class="text-lg font-medium text-foreground">Terms content</p>
             <ul class="flex flex-col gap-y-1">
-                <li><a href="/terms/privacy-policy" class="block text-foreground">Privacy Policy</a></li>
-                <li><a href="/terms/terms-and-conditions" class="block text-foreground">Terms and Conditions</a></li>
-                <li><a href="/terms/copyright" class="block text-foreground">Copyright</a></li>
-                <li><a href="/terms/disclaimer" class="block text-foreground">Disclaimer</a></li>
+                <li><a href="{{"terms/privacy-policy"|relURL}}" class="block text-foreground">Privacy Policy</a></li>
+                <li><a href="{{"terms/terms-and-conditions"|relURL}}" class="block text-foreground">Terms and Conditions</a></li>
+                <li><a href="{{"terms/copyright"|relURL}}" class="block text-foreground">Copyright</a></li>
+                <li><a href="{{"terms/disclaimer"|relURL}}" class="block text-foreground">Disclaimer</a></li>
             </ul>
         </div>
     </div>

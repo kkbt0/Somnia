@@ -1,33 +1,19 @@
+{{with .Site.Params.skills}}
 <section class="flex flex-col gap-y-5 md:flex-row md:gap-y-0">
     <div class='text-xl font-medium md:min-w-36'>
         <h2>Skills</h2>
     </div>
     <div class='flex flex-1 flex-col gap-y-3'>
         <!-- section 内容 -->
-        {{ $skills1 := dict
-        "title" "Languages"
-        "skills" (slice
-        (dict "name" "Html")
-        (dict "name" "JavaScript")
-        (dict "name" "CSS")
-        (dict "name" "Shell")
-        )}}
-        {{ partial "home/components/skills.html" $skills1 }}
-        {{ $skills2 := dict
-        "title" "Frontend"
-        "skills" (slice
-        (dict "name" "TypeScript")
-        (dict "name" "Vite")
-        (dict "name" "Webpack")
-        (dict "name" "Astro")
-        )}}
-        {{ partial "home/components/skills.html" $skills2 }}
-        {{ $skills3 := dict
-        "title" "Languages"
-        "skills" (slice
-        (dict "name" "Go")
-        (dict "name" "JavaScript")
-        )}}
-        {{ partial "home/components/skills.html" $skills3 }}
+        {{range .}}
+        {{$items := slice }}
+        {{ range .items }}{{ $items = $items | append (dict "name" .) }}{{ end }}
+        {{$skills := dict
+        "title" .title
+        "skills" $items
+        }}
+        {{ partial "home/components/skills.html" $skills }}
+        {{end}}
     </div>
 </section>
+{{end}}

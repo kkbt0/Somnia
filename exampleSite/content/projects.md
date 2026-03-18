@@ -105,4 +105,7 @@ Please leave a message or contact me proactively after sponsorship. My email is:
 
 Thanks to the following sponsors:
 
-{{< page/sponsors >}}
+{{< page/sponsors max=100 >}}
+张三,2010-01-01,淘宝,100.00
+李四,2010-01-02,京东,10.00
+{{< /page/sponsors >}}

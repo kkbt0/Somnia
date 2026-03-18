@@ -11,10 +11,10 @@
             <h3 class='text-muted-foreground text-xs tracking-widest uppercase'>{{.title}}</h3>
             <ul class='mt-2 flex flex-col'>
                 {{range .children}}
-                <li :class="{ 'docs-hl': currentPath === '{{.link}}' }"
+                <li :class="{ 'docs-hl': currentPath.endsWith(`{{.link}}`) || currentPath === `/{{.link}}` }"
                     class='docs-item flex relative ms-2 px-3 py-1 text-foreground/75 transition-all rounded-2xl'>
                     <!-- -->
-                    <a class='flex-1 hover:text-foreground' href="{{.link}}">
+                    <a class='flex-1 hover:text-foreground' href="{{relURL .link}}">
                         {{.title}}
                     </a>
                 </li>

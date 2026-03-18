@@ -3,8 +3,7 @@
     <div class="flex flex-row flex-wrap gap-x-4 gap-y-2 md:w-4/5">
         {{ range .skills }}
         <button
-            class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline cursor-default rounded-xl"
-            data-astro-prefetch="true">
+            class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline cursor-default rounded-xl">
             <p class="my-0">{{.name}}</p>
         </button>
         {{ end }}

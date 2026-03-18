@@ -26,7 +26,7 @@
 
 <!-- [TODO] Open Graph -->
 <!-- [TODO] Sitemap -->
-<link href='/sitemap-index.xml' rel='sitemap' />
+<link href='{{absURL "sitemap.xml"}}' rel='sitemap' />
 <!-- [TODO] RSS auto-discovery -->
 {{ with .OutputFormats.Get "rss" }}
   {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}

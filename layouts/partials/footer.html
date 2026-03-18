@@ -5,12 +5,12 @@
         <div>
           <a href="https://icp.gov.moe/" target="_blank" class="text-sm">ICP</a>
         </div>
-        <div> © 2026 恐咖兵糖 & <span><a href="/terms" target="_blank">Site Policy</a></span>
+        <div> © 2026 恐咖兵糖 & <span><a href="{{relURL "terms"}}" target="_blank">Site Policy</a></span>
         </div>
-        <span><a href="https://gohugo.io/" target="_blank">Hugo</a> & K9 theme powered</span>
+        <span><a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="https://github.com/kkbt0/Somnia" target="_blank">Somnia</a> theme powered</span>
       </div>
       <div class='flex items-center gap-x-4'>
-        <a href="https://github.com/" aria-label="GitHub">
+        <a href="{{.Site.Params.author.github|default "https://github.com/kkbt0/Somnia"}}" aria-label="GitHub">
           <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"
             style="--sl-icon-size: 1em;">
             <g fill="none">
@@ -23,7 +23,7 @@
             </g>
           </svg>
         </a>
-        <a href="/rss.xml" aria-label="RSS">
+        <a href="{{relURL "index.xml"}}" aria-label="RSS" title="RSS" target="_blank">
           <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"
             style="--sl-icon-size: 1em;">
             <g fill="none">

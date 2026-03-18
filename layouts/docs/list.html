@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ partial "page/button.html" (dict
 "title" "Back"
-"href" "/"
+"href" ""
 "variant" "back"
 "class" "") }}
 <main class='mt-6 lg:mt-10'>
@@ -20,12 +20,12 @@
         {{ end }} -->
         <h2 class='text-xl font-medium'>Feedback</h2>
         <p>
-            If you have any problems, you can check <a href='https://github.com/' target='_blank'>Github Issues</a> for
+            If you have any problems, you can check <a href='https://github.com/kkbt0' target='_blank'>Github Issues</a> for
             community support.
         </p>
-        <h2 class='text-xl font-medium'>News Describe (Alpha)</h2>
+        <h2 class='text-xl font-medium'>News Describe</h2>
         <p>
-            <a href='/docs/rss.xml' target='_blank'>
+            <a href={{relURL "docs/index.xml" }} target='_blank'>
                 <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"
                     style="--sl-icon-size: 1em;">
                     <g fill="none">

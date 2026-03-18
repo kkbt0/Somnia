@@ -20,8 +20,7 @@
     <!-- Author -->
     <div class='flex gap-x-2 sm:flex-col'>
       <span>Author</span>
-      <span class='text-sm text-foreground max-sm:place-self-center'>{{ default .Site.Params.author .Params.author
-        }}</span>
+      <span class='text-sm text-foreground max-sm:place-self-center'>{{ .Params.author | default .Site.Params.author.name}}</span>
     </div>
     <!-- Published at -->
     <div class='flex gap-x-2 sm:min-w-16 sm:flex-col'>
@@ -49,7 +48,7 @@
       <span>{{.}}</span>
       {{ end }}
       {{ else }}
-      <span class='text-sm text-foreground max-sm:place-self-center'>© {{ now.Format "2006" }} 恐咖兵糖 版权所有</span>
+      <span class='text-sm text-foreground max-sm:place-self-center'>© {{ now.Format "2006" }} {{ .Params.author | default .Site.Params.author.name }} 版权所有</span>
       {{ end }}
     </div>
   </div>
@@ -88,7 +87,7 @@
     </div>
     <!-- QRCode -->
     <div id="qrcode-container" :class="{'expanded':qrcodeShow}"
-      class="absolute z-10 -mt-2 box-content max-h-0 max-w-44 overflow-hidden rounded-xl border bg-muted p-4 opacity-0 transition-all duration-300 ease-in-out astro-q62egrd7"
+      class="absolute z-10 -mt-2 box-content max-h-0 max-w-44 overflow-hidden rounded-xl border bg-muted p-4 opacity-0 transition-all duration-300 ease-in-out"
       :title="window.location.origin + window.location.pathname">
       <!-- <img :src="qrcodeImgSrc" style="display: block;" alt="QRCode"> -->
     </div>
@@ -97,7 +96,7 @@
 
 <!-- 赞助 -->
 <div class='mx-6 rounded-b-xl border border-t-0 px-3 pb-1.5 pt-1 sm:mx-8 sm:px-4'>
-  <a href='/projects#sponsorship' class='flex items-center justify-between text-muted-foreground no-underline'
+  <a href={{"projects#sponsorship"|relURL}} class='flex items-center justify-between text-muted-foreground no-underline'
     target='_blank'>
     <span>Buy me a cup of coffee ☕.</span>
     <svg aria-hidden="true" class="box-content size-5 p-1" width="22" height="22" viewBox="0 0 24 24"

@@ -73,8 +73,7 @@
 .mb-8{margin-bottom:2rem;}
 .me{margin-inline-end:1rem;}
 .me-2{margin-inline-end:0.5rem;}
-.me-auto,
-.mea{margin-inline-end:auto;}
+.me-auto{margin-inline-end:auto;}
 .ms-auto{margin-inline-start:auto;}
 .mt-0{margin-top:0;}
 .mt-1{margin-top:0.25rem;}

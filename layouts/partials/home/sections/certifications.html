@@ -1,3 +1,4 @@
+{{if .Site.Params.certifications}}
 <section class="flex flex-col gap-y-5 md:flex-row md:gap-y-0">
     <div class='text-xl font-medium md:min-w-36'>
         <h2>Certifications</h2>
@@ -5,10 +6,11 @@
     <div class='flex flex-1 flex-col gap-y-3'>
         <!-- section 内容 -->
         {{ partial "card.html" (dict
-        "heading" "Lorem ipsum"
-        "subheading" "Lorem ipsum dolor sit amet, vidit suscipit at mei."
-        "date" "July 2024"
-        "href" "https://www.example.com"
+        "heading" .Site.Params.certifications.heading
+        "subheading" .Site.Params.certifications.subheading
+        "date" .Site.Params.certifications.date
+        "href" .Site.Params.certifications.url
         ) }}
     </div>
 </section>
+{{end}}

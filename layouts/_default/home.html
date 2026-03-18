@@ -18,6 +18,6 @@
     <!-- Skills -->
     {{partial "home/sections/skills.html" . }}
   </div>
-  {{ partial "quote.html" (dict "class" "mt-12") }}
+  {{if .Site.Params.homepage.quote}}{{ partial "quote.html" (dict "class" "mt-12") }}{{end}}
 </main>
 {{ end }}

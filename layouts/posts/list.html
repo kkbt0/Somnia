@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ partial "page/button.html" (dict
 "title" "Back"
-"href" "/"
+"href" ""
 "variant" "back"
 "class" "") }}
 <main class='mt-6 lg:mt-10'>
@@ -18,7 +18,7 @@
                     Page {{$paginator.PageNumber}} / {{$paginator.TotalPages}} - Showing {{ len $paginator.Pages }} of
                     {{$paginator.TotalNumberOfElements}} posts
                 </span>
-                <a aria-label='View all blog by years' href='/archives'>
+                <a aria-label='View all blog by years' href='{{"archives"| relURL}}'>
                     View all posts by years →
                 </a>
             </div>
@@ -73,7 +73,7 @@
                 {{ end }}
             </ul>
             <span class='mt-4 block sm:text-end'>
-                <a aria-label='View all blog categories' href='/tags'>
+                <a aria-label='View all blog categories' href={{ "tags" | relURL }}>
                     View all →
                 </a>
             </span>

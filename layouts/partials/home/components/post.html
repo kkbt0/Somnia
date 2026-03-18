@@ -2,7 +2,8 @@
     <a class="block w-full relative group rounded-2xl border bg-background transition-colors ease-in-out px-5 py-2.5 hover:bg-muted hover:text-primary"
         href="{{ .RelPermalink }}">
         <div class="relative flex flex-col gap-1 sm:flex-row sm:items-center" style="z-index:1">
-            <span class="text-muted-foreground font-mono min-w-[95px] text-xs"> <time datetime="{{ .Date }}">
+            <span class="text-muted-foreground font-mono min-w-[95px] text-xs">
+                <time datetime="{{ .Date }}">
                     {{.Date.Format "2006-01-02" }}
                 </time>
             </span>

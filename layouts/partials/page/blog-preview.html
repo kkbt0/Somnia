@@ -76,7 +76,7 @@
                     {{ range $index, $tag := . }}
                     <li>
                         <a class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline rounded-xl"
-                            href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}">
+                            href="{{ "tags" | relLangURL }}/{{ $tag | urlize }}">
                             <p class="my-0">{{ $tag }}</p>
                         </a>
                     </li>
