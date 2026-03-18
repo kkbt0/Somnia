@@ -3,6 +3,7 @@ languageCode = 'zh-cn'
 title = 'Hugo Theme Somnia'
 theme = '../..'
 
+
 copyright = '© 2026 恐咖兵糖.'
 # 是否使用 robots.txt
 enableRobotsTXT = true
@@ -13,43 +14,83 @@ filename = "sitemap.xml"
 priority = 0.5
 # Permalinks 配置
 [Permalinks]
-  # posts = ":year/:month/:filename"
-  posts = "/posts/:slug"
+# posts = ":year/:month/:filename"
+posts = "/posts/:slug"
 
 
 [params]
 description = ''
 favicon = '/favicon/favicon.ico'
 socialCard = '/images/social-card.png'
-
+# Homepage 配置
 # 作者配置
 [params.author]
-  name = "恐咖兵糖"
-  email = "0@ftls.xyz"
-  link = "/kkbt/"
-  avatar = "https://ftls.xyz/img/avatar.webp"
-  gravatarEmail = ""
-
+name = "恐咖兵糖"
+email = "0@ftls.xyz"
+link = "/kkbt/"
+avatar = "https://ftls.xyz/img/avatar.webp"
+gravatarEmail = ""
+location = 'China'
+github = 'https://github.com/kkbt0'
+bio = '浮生若梦 为欢几何'
+about = ''
+[params.education]
+# heading = 'Lorem ipsum.'
+# subheading = 'Lorem ipsum dolor sit amet, vidit suscipit at mei.'
+# date = 'August 2021 - July 2025'
+# url = '#'
 [params.locale]
 lang = 'zh-CN'
 dateFormat = '2006年01月02日'
 
+[[params.websites]]
+name = 'heading'
+description = 'subheading'
+url = 'https://example.org'
+image = 'https://ts1.tc.mm.bing.net/th?id=ORMS.8801372fff8c9b7a95b4a984edae4011'
+[[params.websites]]
+name = 'heading'
+description = 'subheading'
+url = 'https://example.org'
+image = 'https://ts1.tc.mm.bing.net/th?id=ORMS.8801372fff8c9b7a95b4a984edae4011'
+
+[params.certifications]
+# heading = 'Lorem ipsum.'
+# subheading = 'Lorem ipsum dolor sit amet, vidit suscipit at mei.'
+# date = 'August 2021 - July 2025'
+# url = '#'
+
+[[params.skills]]
+title = 'Languages'
+items = ['HTML5', 'CSS3', 'Javascript', 'Typescript', 'Golang', 'Rust', 'Python', 'C', 'C++','Lua']
+[[params.skills]]
+title = 'Frontend'
+items = ['Alpinejs','Unocss']
+[[params.skills]]
+title = 'Backend'
+items = ['Golang', 'Rust', 'Python']
+
+[params.homepage]
+# homepage 配置
+posts = 5 # 主页显示的文章数量
+quote = true # 是否在主页显示一言
+
 [params.header]
 [[params.header.menu]]
 title = '博客'
-link = '/posts'
+link = 'posts'
 [[params.header.menu]]
 title = '文档'
-link = '/docs'
+link = 'docs'
 [[params.header.menu]]
 title = '项目'
-link = '/projects'
+link = 'projects'
 [[params.header.menu]]
 title = '链接'
-link = '/links'
+link = 'links'
 [[params.header.menu]]
 title = '关于'
-link = '/about'
+link = 'about'
 
 [params.footer]
 year = '2024'
