@@ -1,6 +1,9 @@
 ---
 title: Components
 date: 2025-01-01T10:00:00+08:00
+
+tag: ["Somnia"]
+categories: ["技术"]
 ---
 
 # Components

@@ -3,6 +3,9 @@ title: Markdown
 date: 2025-01-01T10:00:00+08:00
 math: true
 
+tag: ["Somnia"]
+categories: ["技术"]
+
 featuredImage: "https://api.yppp.net/api.php"
 featuredImagePreview: ""
 ---
