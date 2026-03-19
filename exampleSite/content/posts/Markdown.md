@@ -2,6 +2,9 @@
 title: Markdown
 date: 2025-01-01T10:00:00+08:00
 math: true
+
+featuredImage: "https://api.yppp.net/api.php"
+featuredImagePreview: ""
 ---
 
 ## 基本语法
