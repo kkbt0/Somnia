@@ -5,11 +5,10 @@
 
     <!-- 有 cover + max-md:pt-24 -->
     <a class="block w-full relative group rounded-2xl border bg-background transition-colors ease-in-out px-5 py-2.5 hover:bg-muted hover:text-primary max-sm:px-4 sm:py-5
-    {{if .Params.featuredImage}} max-md:pt-24 {{end}}"
-        href="{{.RelPermalink}}">
+    {{if .Params.featuredImage}} max-md:pt-24 {{end}}" href="{{.RelPermalink}}">
         {{if .Params.featuredImage }}
-        <img src="{{.Params.featuredImagePreview|default .Params.featuredImage}}" alt="{{.Title}}"
-            loading="lazy" decoding="async" fetchpriority="auto"
+        <img src="{{.Params.featuredImagePreview|default .Params.featuredImage}}" alt="{{.Title}}" loading="lazy"
+            decoding="async" fetchpriority="auto"
             class="cover-image absolute end-0 top-0 z-0 h-2/3 w-full rounded-2xl object-cover opacity-50 transition-opacity duration-300 group-hover:opacity-70 md:h-full md:w-3/5">
         {{end}}
         <div class="relative flex flex-col gap-1" style="z-index:1">
@@ -38,7 +37,8 @@
 
             <!-- Detail -->
             <!-- 有 cover + sm:me-24 -->
-            <p class="line-clamp-2 text-sm text-muted-foreground sm:line-clamp-3 {{if .Params.featuredImage}} sm:me-24 {{end}}">
+            <p
+                class="line-clamp-2 text-sm text-muted-foreground sm:line-clamp-3 {{if .Params.featuredImage}} sm:me-24 {{end}}">
                 {{.Description|default "Without further ado"}}
             </p>
             <div class='py-2 flex items-center gap-2 text-sm italic leading-4 text-muted-foreground'>
@@ -75,9 +75,20 @@
                 </span>
                 {{end}}
             </div>
-            {{ with .Params.tags }}
             <object title='Tags' aria-label='Tags' aria-labelledby='Tags'>
                 <ul class='tag-list mt-1 flex gap-2'>
+                    {{ with .Params.categories }}
+                    {{ range $index, $categories := . }}
+                    <li>
+                        <a class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline rounded-xl"
+                            href="{{ "categories" | relLangURL }}/{{ $categories | urlize }}">
+                            <p class="my-0">{{ $categories }}</p>
+                        </a>
+                    </li>
+                    {{ end }}
+                    {{ end }}
+                    {{if (and .Params.categories .Params.tags)}}{{end}}
+                    {{ with .Params.tags }}
                     {{ range $index, $tag := . }}
                     <li>
                         <a class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline rounded-xl"
@@ -86,9 +97,10 @@
                         </a>
                     </li>
                     {{ end }}
+                    {{ end }}
+
                 </ul>
             </object>
-            {{ end }}
         </div>
     </a>
 </li>

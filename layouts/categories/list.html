@@ -6,12 +6,12 @@
 "class" "") }}
 <main class='mt-6 lg:mt-10'>
     <div id='content-header' class='animate'>
-        <h1 class='mb-6 text-3xl font-medium'>Tags</h1>
+        <h1 class='mb-6 text-3xl font-medium'>Categories</h1>
     </div>
     <div id='content' class='animate'>
         <ul class='flex flex-wrap gap-4'>
-            {{ $tags := .Site.Taxonomies.tags }}
-            {{ $sortedPosts := $tags.ByCount }}
+            {{ $categories := .Site.Taxonomies.categories }}
+            {{ $sortedPosts := $categories.ByCount }}
             {{range $sortedPosts }}
             <li>
                 {{if gt .Count 2}}
@@ -36,6 +36,20 @@
             </li>
             {{end}}
         </ul>
+        {{ $categories := .Site.Taxonomies.categories }}
+        {{ $sortedPosts := $categories.ByCount }}
+        {{range $sortedPosts }}
+        <div class="not-prose my-3 flex flex-col gap-y-2 rounded-xl border px-4 py-3 sm:py-4 card-list">
+            <p class="text-lg font-medium text-foreground">
+                <a href="{{ .Page.Permalink }}">{{ .Page.Title }}<sup> {{.Count}}</sup></a>
+            </p>
+            <ul>
+                {{ range .Pages }}
+                <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+                {{ end }}
+            </ul>
+        </div>
+        {{end}}
     </div>
 </main>
 {{ end }}
