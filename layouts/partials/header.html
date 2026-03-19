@@ -9,7 +9,8 @@
         <!-- Menu links -->
         <div id='headerExpandContent'
             class='end-0 start-0 top-12 grid border border-transparent group-[.not-top]:rounded-xl group-[.expanded]:opacity-100 dark:group-[.expanded.not-top]:bg-muted max-sm:absolute max-sm:opacity-0 max-sm:group-[.not-top]:border-border max-sm:group-[.expanded.not-top]:bg-background max-sm:group-[.not-top]:px-4 max-sm:group-[.not-top]:py-2 sm:grid-rows-1'>
-            <div class='flex flex-col items-center justify-center overflow-hidden sm:flex-row'>
+            <!-- [Somnia-fix] del overflow-hidden 修复 pad 设备隐藏问题 -->
+            <div class='flex flex-col items-center justify-center sm:flex-row'>
                 {{ with site.Params.header.menu }}
                 {{ range . }}
                 <a href="{{ .link | relLangURL }}"
@@ -214,7 +215,8 @@
         }
 
         /* header component after */
-        header-component #headerExpandContent::after {
+        /* [Somnia-fix] 修复 pad 设备菜单栏阴影问题 */
+        .expanded #headerExpandContent::after {
             box-sizing: content-box;
             content: '';
             position: absolute;
