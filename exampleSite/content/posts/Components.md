@@ -156,6 +156,7 @@ Some Text
 svg or 可参考:
 - https://unocss.dev/presets/icons
 - https://icon-sets.iconify.design/
+- https://www.mingcute.com/
 
 # Advanced Components
 
