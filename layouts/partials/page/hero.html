@@ -1,10 +1,11 @@
 <!--hero image-->
+{{if .Params.featuredImage }}
 <div x-data="heroComponent()" @scroll.window="onScroll()" class="hero-image relative mb-6">
     <!--  max-w-[65ch] 好像不太够用-->
-    <img src="https://list.yppp.net/d/image/fd974ac38bec86b11fe3cb0f9101a87d.jpg" alt="Hero Image" fetchpriority="high"
+    <img src="{{.Params.featuredImage}}" alt="Hero Image" fetchpriority="high"
         loading="eager" decoding="async"
         class="cover-image relative z-10 h-auto w-full max-w-[80ch] rounded-2xl object-contain">
-    <img src="https://list.yppp.net/d/image/fd974ac38bec86b11fe3cb0f9101a87d.jpg" alt="Blur image" fetchpriority="high"
+    <img src="{{.Params.featuredImagePreview|default .Params.featuredImage}}" alt="Blur image" fetchpriority="high"
         loading="eager" id="blurImage" decoding="async"
         class="absolute end-0 top-4 z-0 mt-0 h-full max-w-[80ch] rounded-3xl opacity-60 transition-opacity duration-300"
         :style="`opacity: ${imageOpacity}`">
@@ -35,6 +36,7 @@
         }
     }
 </script>
+{{end}}
 <style>
     #blurImage {
         --un-blur: blur(24px);

@@ -9,27 +9,40 @@
 <!-- Primary Meta Tags-->
 <meta content="{{.Title}}" name='title' />
 <meta content="{{.Description}}" name='description' />
-<meta content="{{.Params.author|default .Site.Params.author}}" name='author' />
+<meta content="{{.Params.author|default .Site.Params.author.name}}" name='author' />
+<meta name="application-name" content="{{ site.Title }}">
+<meta name="apple-mobile-web-app-title" content="{{ site.Title }}">
+<meta name="theme-color" content="#161b22">
+<meta name="msapplication-TileColor" content="#da532c">
+<!--  icons-->
 
-<!-- [TODO] icons-->
-<!-- <link rel='icon' type={config.favicon.type} href={config.favicon.href} />
-<link rel='shortcut icon' type={config.favicon.type} href={config.favicon.href} />
-<link rel='icon' type='image/png' sizes='32x32' href='/favicon/favicon-32x32.png' />
-<link rel='icon' type='image/png' sizes='16x16' href='/favicon/favicon-16x16.png' />
-<link rel='apple-touch-icon' sizes='180x180' href='/favicon/apple-touch-icon.png' />
-<link rel='manifest' href='/favicon/site.webmanifest' /> -->
+<link rel="shortcut icon" type="image/x-icon" href="{{"favicon.ico"|relURL}}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{"favicon-32x32.png"|relURL}}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{"favicon-16x16.png"|relURL}}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{"apple-touch-icon.png"|relURL}}">
+<link rel="mask-icon" href="{{"safari-pinned-tab.svg"|relURL}}" color="#5bbad5">
+<link rel="manifest" href="{{"site.webmanifest"|relURL}}">
 
 <!-- [TODO] Font preloads-->
-<!-- [TODO] Article INFO -->
+<!-- Article INFO -->
 <meta content="{{.Params.author|default .Site.Params.author.name}}" property='article:author' />
 <meta content="{{.Params.date}}" property='article:published_time' />
 
-<!-- [TODO] Open Graph -->
-<!-- [TODO] Sitemap -->
+<!-- Open Graph -->
+<meta property="og:url" content="{{.Permalink}}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}">
+<meta property="og:description" content="{{.Description}}">
+<meta property="og:locale" content="{{.Site.LanguageCode}}">
+<meta property="og:type" content="{{if .IsHome}}website{{else}}article{{end}}">
+<meta property="og:image" content="{{"logo.png"|absURL}}">
+
+<!-- Sitemap -->
 <link href='{{absURL "sitemap.xml"}}' rel='sitemap' />
-<!-- [TODO] RSS auto-discovery -->
+<!-- RSS auto-discovery -->
 {{ with .OutputFormats.Get "rss" }}
   {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
+  {{ printf `<link rel=%q type=%q href=%q title=%q>` "feed" .MediaType.Type .Permalink site.Title | safeHTML }}
 {{ end }}
 {{ partialCached "head/css.html" . }}
 {{ partialCached "head/js.html" . }}

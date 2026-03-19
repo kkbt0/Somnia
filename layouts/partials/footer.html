@@ -2,12 +2,16 @@
   <div class='border-t pt-5'>
     <div class='flex items-center gap-y-3 max-sm:flex-col sm:justify-between sm:gap-y-0'>
       <div class='flex items-center gap-x-4 gap-y-2 text-muted-foreground max-sm:flex-col'>
+        {{if .Site.Params.footer.icp}}
         <div>
-          <a href="https://icp.gov.moe/" target="_blank" class="text-sm">ICP</a>
+          <a href="{{.Site.Params.footer.icp.link}}" target="_blank" class="text-sm">{{.Site.Params.footer.icp.title}}</a>
         </div>
+        {{end}}
         <div> © 2026 恐咖兵糖 & <span><a href="{{relURL "terms"}}" target="_blank">Site Policy</a></span>
         </div>
+        {{if .Site.Params.footer.powered}}
         <span><a href="https://gohugo.io/" target="_blank">Hugo</a> & <a href="https://github.com/kkbt0/Somnia" target="_blank">Somnia</a> theme powered</span>
+        {{end}}
       </div>
       <div class='flex items-center gap-x-4'>
         <a href="{{.Site.Params.author.github|default "https://github.com/kkbt0/Somnia"}}" aria-label="GitHub">

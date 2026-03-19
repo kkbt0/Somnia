@@ -46,16 +46,3 @@ a {
     color: hsl(var(--primary) / var(--un-text-opacity, 1));
   }
 }
-
-@font-face {
-  font-family: 'MapleMono';
-  src: url('/fonts/MapleMono-NF-CN-Regular.woff2 ') format('woff2'),
-       url('/fonts/MapleMono-NF-CN-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap; /* 优化加载显示 */
-}
-
-/* body {
-  font-family: 'MapleMono', ui-sans-serif,system-ui,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
-} */

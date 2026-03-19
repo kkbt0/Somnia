@@ -6,10 +6,11 @@
 "class" "") }}
 <main class='mt-6 lg:mt-10'>
     <div id='content-header' class='animate'>
-        <h1 class='mb-6 text-3xl font-medium'>Docs of Hugo Theme Somnia</h1>
+        <h1 class='mb-6 text-3xl font-medium'>Docs</h1>
     </div>
     <div id='content' class="animate mt-8 max-w-none md:min-w-[45ch] prose text-base">
-        <h2 class='text-xl font-medium'>Theme documentation</h2>
+        {{.Content}}
+        <!-- <h2 class='text-xl font-medium'>Theme documentation</h2> -->
         <!-- [TODO] 文档目录 or 项目卡片 or 其他 -->
         {{- $docs := hugo.Data.docs -}}
         {{partial "docs/docs-contents.html" (dict "toc" $docs "type" "docs") }}

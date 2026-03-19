@@ -1,5 +1,7 @@
 import { defineConfig, presetAttributify, presetWind4,presetMini, presetTypography, type Rule } from 'unocss'
 import type { TypographyOptions } from '@unocss/preset-typography'
+// import presetIcons from '@unocss/preset-icons'
+
 // [Typography]
 // https://unocss.dev/presets/typography
 const typographyCustom = {
@@ -178,6 +180,7 @@ const rules: Rule<object>[] = [
 
 export default defineConfig({
   presets: [
+  //  presetIcons(),
     presetMini(), // required
     // presetWind4(),
     presetAttributify(),

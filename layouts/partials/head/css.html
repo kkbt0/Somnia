@@ -1,64 +1,32 @@
-<!-- CSS Variables -->
-{{- with resources.Get "css/tailwind.css" }}
-  {{- if eq hugo.Environment "development" }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-    {{- end }}
+{{ if hugo.IsDevelopment }}
+
+  {{- with resources.Get "css/tailwind.css" }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
-{{- end }}
-
-{{- with resources.Get "css/app.css" }}
-  {{- if eq hugo.Environment "development" }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-    {{- end }}
+  {{- with resources.Get "css/app.css" }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
-{{- end }}
-
-{{- with resources.Get "css/main.css" }}
-  {{- if eq hugo.Environment "development" }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-    {{- end }}
+  {{- with resources.Get "css/main.css" }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
-{{- end }}
-
-<!-- Unocss 生成 -->
-{{- with resources.Get "css/uno.css" }}
-  {{- if eq hugo.Environment "development" }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-    {{- end }}
+  <!-- Unocss 生成 -->
+  {{- with resources.Get "css/uno.css" }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
-{{- end }}
-
-
-{{- with resources.Get "css/code/vs.css" }}
-  {{- if eq hugo.Environment "development" }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-    {{- end }}
+  {{- with resources.Get "css/code/vs.css" }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
-{{- end }}
-
-<!-- dark 主题 -->
-{{- with resources.Get "css/code/onedark.css" }}
-  {{- if eq hugo.Environment "development" }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-    {{- end }}
+  <!-- dark 主题 -->
+  {{- with resources.Get "css/code/onedark.css" }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
-{{- end }}
 
+{{else}}
+
+  {{ with resources.Get "css/style.css" | css.Build }}
+  {{ with . | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+  {{ end }}
+  {{ end }}
+
+{{end}}

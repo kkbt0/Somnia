@@ -20,7 +20,8 @@
     <!-- Author -->
     <div class='flex gap-x-2 sm:flex-col'>
       <span>Author</span>
-      <span class='text-sm text-foreground max-sm:place-self-center'>{{ .Params.author | default .Site.Params.author.name}}</span>
+      <span class='text-sm text-foreground max-sm:place-self-center'>{{ .Params.author | default
+        .Site.Params.author.name}}</span>
     </div>
     <!-- Published at -->
     <div class='flex gap-x-2 sm:min-w-16 sm:flex-col'>
@@ -48,7 +49,11 @@
       <span>{{.}}</span>
       {{ end }}
       {{ else }}
-      <span class='text-sm text-foreground max-sm:place-self-center'>© {{ now.Format "2006" }} {{ .Params.author | default .Site.Params.author.name }} 版权所有</span>
+      <a class='text-sm text-foreground max-sm:place-self-center'
+        href='https://creativecommons.org/licenses/by-nc-sa/4.0/' target='_blank'>
+        CC BY-NC-SA 4.0
+      </a>
+      <!-- <span class='text-sm text-foreground max-sm:place-self-center'>© {{ now.Format "2006" }} {{ .Params.author | default .Site.Params.author.name }} 版权所有</span> -->
       {{ end }}
     </div>
   </div>

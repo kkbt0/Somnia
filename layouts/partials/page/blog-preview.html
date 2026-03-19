@@ -3,12 +3,15 @@
 <li x-data="blogPreviewComponent()" class="post-preview"
     :style="`--preview-highlight:color-mix(in srgb,${heroColor} 40%,hsl(var(--foreground)/var(--un-text-opacity,1)));--preview-highlight-bg:hsl(from ${heroColor} h s l/20%)`">
 
-    <!-- [TODO] 有 cover + max-md:pt-24 -->
-    <a class="block w-full relative group rounded-2xl border bg-background transition-colors ease-in-out px-5 py-2.5 hover:bg-muted hover:text-primary max-sm:px-4 sm:py-5 max-md:pt-24"
+    <!-- 有 cover + max-md:pt-24 -->
+    <a class="block w-full relative group rounded-2xl border bg-background transition-colors ease-in-out px-5 py-2.5 hover:bg-muted hover:text-primary max-sm:px-4 sm:py-5
+    {{if .Params.featuredImage}} max-md:pt-24 {{end}}"
         href="{{.RelPermalink}}">
-        <img src="https://list.yppp.net/d/image/2025-10-36a6bdb741023f7e2a6b142ec7f54789.png" alt="{{.Title}}"
+        {{if .Params.featuredImage }}
+        <img src="{{.Params.featuredImagePreview|default .Params.featuredImage}}" alt="{{.Title}}"
             loading="lazy" decoding="async" fetchpriority="auto"
             class="cover-image absolute end-0 top-0 z-0 h-2/3 w-full rounded-2xl object-cover opacity-50 transition-opacity duration-300 group-hover:opacity-70 md:h-full md:w-3/5">
+        {{end}}
         <div class="relative flex flex-col gap-1" style="z-index:1">
             <span class="text-muted-foreground font-mono min-w-[95px] text-xs">
                 <time datetime="{{ .Date }}">
@@ -34,8 +37,8 @@
             </div>
 
             <!-- Detail -->
-            <!-- [TODO] 有 cover + sm:me-24 -->
-            <p class="line-clamp-2 text-sm text-muted-foreground sm:line-clamp-3 sm:me-24">
+            <!-- 有 cover + sm:me-24 -->
+            <p class="line-clamp-2 text-sm text-muted-foreground sm:line-clamp-3 {{if .Params.featuredImage}} sm:me-24 {{end}}">
                 {{.Description|default "Without further ado"}}
             </p>
             <div class='py-2 flex items-center gap-2 text-sm italic leading-4 text-muted-foreground'>
@@ -55,6 +58,7 @@
                     {{.ReadingTime}} min
                 </span>
                 <!-- Language -->
+                {{if .Params.language}}
                 <span class='flex items-center gap-1'>
                     <svg aria-hidden="true" class="size-4" width="22" height="22" viewBox="0 0 24 24"
                         fill="currentColor" style="--sl-icon-size: 1em;">
@@ -67,8 +71,9 @@
                             </path>
                         </g>
                     </svg>
-                    English
+                    {{.Params.language}}
                 </span>
+                {{end}}
             </div>
             {{ with .Params.tags }}
             <object title='Tags' aria-label='Tags' aria-labelledby='Tags'>

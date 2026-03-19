@@ -63,7 +63,7 @@
 
 ### 前置要求
 
-- Hugo 0.116.0 或更高版本（开发环境 hugo v0.157.0+extended+withdeploy linux/amd64 BuildDate=unknown）
+- Hugo 0.158.0 或更高版本（开发环境 hugo v0.158.0-f41be7959a44108641f1e081adf5c4be7fc1bb63+extended linux/amd64 BuildDate=2026-03-16T17:42:04Z VendorInfo=gohugoio）
 - pnpm (用于开发时构建 UnoCSS)
 
 ### 配置

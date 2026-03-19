@@ -183,7 +183,7 @@ svg or 可参考:
 
 ### Toast
 
-{{< page/button title="Lorem ipsum" href="#lorem-ipsum" variant="button" >}}
+{{< page/button title="Lorem ipsum" href="posts/components/#toast" variant="button" >}}
 
 {{< script >}}
 <script>
@@ -208,3 +208,6 @@ https://blog.yeqing.net/acg-api/
 
 ![随机图片](https://api.yppp.net/api.php "一张随机的图片")
 
+### Bilibili
+
+{{< bilibili BV15t4y1C75u >}}

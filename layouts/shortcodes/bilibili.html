@@ -1,0 +1,55 @@
+<!-- 注意: 使用了  UnoCSS Icons -->
+<!-- width: 视频宽度（默认 100%）
+height: 视频高度（默认 600px）
+autoplay: 是否自动播放（默认 false）
+danmaku: 是否开启弹幕（默认 true） -->
+{{- $bvid := "" -}}
+{{- $url := .Get 0 -}}
+
+{{- /* 从 URL 中提取 BV 号或直接使用 BV 号 */ -}}
+{{- if hasPrefix $url "BV" -}}
+{{- $bvid = $url -}}
+{{- else -}}
+{{- /* 尝试从完整 URL 中提取 BV 号 */ -}}
+{{- $patterns := slice `bilibili\.com/video/(BV\w+)` `bilibili\.com/video/\?bvid=(BV\w+)` -}}
+{{- range $patterns -}}
+{{- if not $bvid -}}
+{{- $match := findRE . $url 1 -}}
+{{- if $match -}}
+{{- $bvid = index (findRESubmatch . $url 1) 0 1 -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* 获取其他参数 */ -}}
+{{- $width := .Get "width" | default "100%" -}}
+{{- $height := .Get "height" | default "600px" -}}
+{{- $autoplay := .Get "autoplay" | default "false" -}}
+{{- $danmaku := .Get "danmaku" | default "true" -}}
+
+{{- if $bvid -}}
+<div class="not-prose bilibili-container my-4 rounded-xl overflow-hidden border border-border shadow-sm bg-card">
+    <div class="relative" style="aspect-ratio: 16/9;">
+        <iframe
+            src="https://player.bilibili.com/player.html?bvid={{ $bvid }}&autoplay={{ $autoplay }}&danmaku={{ $danmaku }}"
+            scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"
+            class="w-full h-full"></iframe>
+    </div>
+    <div class="flex items-center gap-2 px-4 py-3 bg-muted/30">
+        <a href="https://www.bilibili.com/video/{{ $bvid }}" target="_blank" rel="noopener noreferrer"
+            class="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+            <span class="i-mdi-play-circle text-base"></span>
+            <span>在 Bilibili 观看</span>
+            <span class="i-mdi-launch text-xs text-muted-foreground/50"></span>
+        </a>
+    </div>
+</div>
+{{- else -}}
+<div class="not-prose my-4 p-4 rounded-xl border border-destructive/30 bg-destructive/10">
+    <div class="flex items-center gap-2 text-destructive">
+        <span class="font-medium">无效的 Bilibili 链接或 BV 号</span>
+    </div>
+    <p class="text-sm text-destructive/70 mt-2">请提供有效的 Bilibili 视频链接或 BV 号（以 BV 开头）</p>
+</div>
+{{- end -}}

@@ -1,32 +1,20 @@
 {{ define "main" }}
-<div class="py-8">
-  {{ partial "page/button.html" (dict
-  "title" "Back"
-  "href" ""
-  "variant" "back"
-  "class" "") }}
-  <!-- 页面标题区域 -->
-  <header class="mb-12">
-    <h1 class="text-3xl font-bold">{{ .Title }}</h1>
-    {{ with .Description }}
-    <p class="text-muted-foreground mt-2">{{ . }}</p>
-    {{ end }}
-  </header>
-
-  <!-- 文章列表 -->
-  {{ if .Pages }}
-  <div class="grid gap-6 md:grid-cols-2">
-    {{ range .Paginator.Pages }}
-    {{ partial "post-card.html" . }}
-    {{ end }}
+{{ partial "page/button.html" (dict
+"title" "Back"
+"href" ""
+"variant" "back"
+"class" "") }}
+<main class='mt-6 lg:mt-10'>
+  <div id='content-header' class='animate' aria-label='{{.Title}} post list'>
+    <h1 class='mb-6 text-3xl font-medium'>{{.Title}}</h1>
   </div>
-
-  <!-- 分页 -->
-  {{ partial "pagination.html" . }}
-  {{ else }}
-  <div class="text-center py-12">
-    <p class="text-muted-foreground">暂无内容</p>
+  <div id='content' class='animate'>
+    <ul class='flex flex-col gap-y-3 text-start'>
+      {{ range .Pages }}
+      <!-- {{ partial "page/blog-preview.html" . }} -->
+      {{ partial "page/blog-preview-lite.html" . }}
+      {{ end }}
+    </ul>
   </div>
-  {{ end }}
-</div>
+</main>
 {{ end }}
