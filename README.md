@@ -3,17 +3,18 @@
 一个现代化、优雅的 Hugo 主题，基于 Astro Theme Pure 移植而来。
 
 > [!WARNING]  
-> 这并不是一个开箱即用的主题。如果你喜欢这个样式，可以使用 Astro 和原始主题：[Astro Theme Pure](https://github.com/cworld1/astro-theme-pure) by [cworld1](https://github.com/cworld1)
-> 如果想在 Hugo 中使用 Somnia，目前需要修改很多主题代码来自定义。代码仅供个人记录和感兴趣者参考。
+> 这是一个未经打磨和测试的项目。如果你喜欢这个样式，可以使用 Astro 和原始主题：[Astro Theme Pure](https://github.com/cworld1/astro-theme-pure) by [cworld1](https://github.com/cworld1)
+> 如果想在 Hugo 中使用 Somnia，目前可能需要覆写部分主题代码来自定义。代码仅供个人记录和感兴趣者参考。
 
 ## 特性
 
-使用了 Alpinejs + UnoCSS 构建。
+使用了 Alpine.js + UnoCSS 构建，支持现代化的网站开发体验。
 
-- 🎉 **轻量框架** - 由 Alpinejs 驱动
+- 🎉 **轻量框架** - 由 Alpine.js 驱动
+- 🔄 **无刷新导航** - 使用 Swup.js 实现平滑页面过渡
 - 🚀 **快速生成** - 1k+ markdown 仅个位数时间
-- 🌙 **深色模式** - 支持浅色/深色/系统三种主题自动切换
-- 📱 **响应式设计** - 完美适配各种设备尺寸
+- 🌙 **深色模式** - 支持浅色/深色/系统三种主题切换
+- 📱 **响应式设计** - 适配各种设备尺寸
 - 🔍 **内置搜索** - 快速找到你需要的内容
 - 📑 **目录导航** - 文章内容自动生成侧边目录
 - 🎨 **现代化 UI** - 使用 UnoCSS 原子化 CSS 框架
@@ -23,39 +24,24 @@
 
 ## 未完善说明
 
-这是一个正在开发中的主题，目前存在以下限制和待完善的地方：
-
-### 🚧 核心限制
-
-- **非开箱即用** - 主题中包含大量硬编码的内容和配置，需要直接修改主题代码才能正常使用
-- **配置不完整** - 很多功能无法通过配置文件自定义，必须编辑 HTML 模板
-- **缺少主题选项** - 配色、布局、功能开关等都没有提供配置项
-
-### 📝 内容相关
-
-- **首页组件硬编码** - `layouts/partials/home/` 下的组件包含大量示例内容，需要手动替换
-- **个人信息硬编码** - 作者信息、社交链接等可能需要直接修改模板
-
 ### 🔧 技术债务
 
 - **TODO 标记** - 部分代码中还有待实现的功能标记 搜索 `[TODO]` 以查看
-
-### 📚 文档和示例
-
-- **短代码文档不完整** - 很多短代码缺少使用说明和参数文档
-- **缺少教程** - 没有详细的自定义和开发教程
 
 ### 🎨 样式和定制
 
 - **UnoCSS 编译** - 修改模板需要同时运行 UnoCSS 构建流程
 - **主题色定制** - 高亮色等配色需要修改 CSS 变量
 
-### 📑 未来计划
+### 📑 已实现功能
 
-- 目前结构类似 Vue 组件，HTML CSS JS 混合。后续会将 HTML CSS JS 分离。（ shortcode 不会）
-- 分离 JS 后，计划引入 Swupjs 以实现无刷新翻页，并且 Alpinejs 可以正常工作
-- css 合并压缩
-- 无封面图文章相关
+- ✅ Swup.js 已引入，实现了无刷新翻页
+- ✅ Alpine.js 已集成并正常工作
+- ✅ CSS 合并压缩（生产环境自动处理）
+
+### 📋 未来计划
+
+- 目前结构类似 Vue 组件，HTML CSS JS 混合。后续会将 HTML CSS JS 分离。
 
 ## 快速开始
 
@@ -65,6 +51,18 @@
 
 - Hugo 0.158.0 或更高版本（开发环境 hugo v0.158.0-f41be7959a44108641f1e081adf5c4be7fc1bb63+extended linux/amd64 BuildDate=2026-03-16T17:42:04Z VendorInfo=gohugoio）
 - pnpm (用于开发时构建 UnoCSS)
+- just (可选，用于便捷命令执行)
+- pagefind (可选，用于构建搜索索引)
+
+### 可用命令
+
+项目提供了 justfile 来简化开发流程：
+
+- `just dev` - 启动 Hugo 开发服务器
+- `just build` - 构建生产版本
+- `just pf` - 使用 Pagefind 构建搜索索引
+- `just css` - 启动 UnoCSS 开发模式（监听文件变化）
+- `just css-build` - 构建 UnoCSS 生产版本
 
 ### 配置
 
@@ -77,18 +75,53 @@ Somnia/
 ├── archetypes/          # 内容原型模板
 ├── assets/              # 静态资源
 │   ├── css/            # 样式文件
+│   │   ├── uno.css     # UnoCSS 生成的样式文件
+│   │   ├── main.css    # 主样式文件
+│   │   ├── app.css     # 应用样式
+│   │   └── code/       # 代码高亮样式
 │   └── js/             # JavaScript 文件
+│       ├── alpinejs.min.js    # Alpine.js 框架
+│       ├── main.js             # 主脚本
+│       ├── components.js       # 组件脚本
+│       ├── custom.js           # 自定义脚本
+│       ├── medium-zoom.min.js  # 图片缩放库
+│       ├── sw.js               # PWA Service Worker
+│       └── swup/               # Swup.js 无刷新导航库
 ├── exampleSite/         # 示例站点
 ├── layouts/             # 布局模板
 │   ├── _default/       # 默认布局
 │   ├── partials/       # 可复用组件
+│   │   ├── home/       # 首页组件
+│   │   ├── head/       # 页面头部组件
+│   │   ├── page/       # 页面组件
+│   │   ├── toc/        # 目录组件
+│   │   ├── header.html # 顶部导航栏
+│   │   ├── footer.html # 底部
+│   │   └── icons.html  # 图标库
 │   ├── posts/          # 文章相关布局
+│   ├── docs/           # 文档布局
+│   ├── categories/     # 分类布局
+│   ├── tags/           # 标签布局
+│   ├── terms/          # 术语布局
+│   ├── page/           # 单页面布局
 │   └── shortcodes/     # 短代码组件
+│       ├── page/       # 页面相关短代码
+│       ├── tabs/       # 标签页短代码
+│       ├── icon/       # 图标短代码
+│       └── uno/        # UnoCSS 短代码
+├── static/              # 静态文件
+│   ├── fonts/          # 字体文件
+│   ├── icons/          # 图标文件
+│   ├── images/         # 图片文件
+│   └── logo.png        # Logo
+├── .github/             # GitHub 相关配置
 ├── hugo.toml           # Hugo 主题配置
 ├── theme.toml          # 主题元数据
 ├── package.json         # Node.js 依赖
 ├── pnpm-lock.yaml       # pnpm 锁文件
-└── uno.config.ts        # UnoCSS 配置
+├── uno.config.ts        # UnoCSS 配置
+├── justfile             # just 命令配置
+└── LICENSE              # 许可证文件
 ```
 
 ## 短代码
@@ -100,8 +133,8 @@ Somnia 提供了丰富的短代码，让你可以轻松创建丰富的内容：
 - `{{< card >}}` - 卡片组件
 - `{{< callout >}}` - 提示框
 - `{{< label >}}` - 标签
-- `{{< button >}}` - 按钮
 - `{{< quote >}}` - 引用
+- `{{< toast >}}` - 提示消息
 
 ### 布局组件
 
@@ -112,17 +145,25 @@ Somnia 提供了丰富的短代码，让你可以轻松创建丰富的内容：
 
 ### 内容增强
 
-- `{{< toc >}}` - 目录
 - `{{< qrcode >}}` - 二维码
 - `{{< link-preview >}}` - 链接预览
 - `{{< github-card >}}` - GitHub 卡片
+- `{{< bilibili >}}` - B站视频嵌入
+- `{{< formatted-date >}}` - 格式化日期
 
-### 页面组件
+### 工具短代码
 
-- `{{< projects-cards-group >}}` - 项目卡片组
-- `{{< friend-cards-group >}}` - 友链卡片组
-- `{{< tool-section >}}` - 工具展示区
-- `{{< sponsorship >}}` - 赞助模块
+- `{{< card-list >}}` - 卡片列表
+- `{{< date >}}` - 日期显示
+- `{{< md2html >}}` - Markdown 转 HTML
+- `{{< script >}}` - 脚本嵌入
+
+### 其他组件
+
+- `{{< page/social-sub-status >}}` - 社交订阅状态
+- `{{< page/sponsors >}}` - 赞助商模块
+
+> 注：目录 (TOC) 功能已内置在文章页面中，无需额外短代码。
 
 ## 开发
 
@@ -155,13 +196,16 @@ pnpm dev
 
 ## 技术栈
 
-- **Hugo** - 静态站点生成器
+- **Hugo** - 静态站点生成器（v0.158.0+）
 - **UnoCSS** - 原子化 CSS 引擎
   - `@unocss/preset-wind4` - Tailwind CSS v4 风格预设
   - `@unocss/preset-typography` - 排版预设
-  - `@unocss/preset-icons` - 图标预设
   - `@unocss/preset-attributify` - 属性化模式
-- **Alpine.js** - 轻量级交互框架（内联使用）
+  - `@unocss/preset-mini` - 基础预设
+- **Alpine.js** - 轻量级交互框架（v3.14+）
+- **Swup.js** - 无刷新页面过渡库
+- **Medium Zoom** - 图片缩放库
+- **KaTeX** - 数学公式渲染引擎（可选）
 
 ## 作者
 
