@@ -1,6 +1,6 @@
 {{- $u := urls.Parse .Destination -}}
 <a href="{{ .Destination | safeURL }}" {{- with .Title }} title="{{ . }}" {{ end -}} {{- if $u.IsAbs }}
-  rel="external nofollow noopener noreferrer" {{ end -}}>
+  rel="external nofollow noopener noreferrer" {{ end -}} target="_blank">
   {{- with .Text }}{{ . }}{{ end -}}
   {{- if $u.IsAbs }}<span style="user-select:none"> ↗</span>{{ end -}}
 </a>
