@@ -2,7 +2,7 @@
     class="group sticky top-4 z-50 max-md:z-30 mb-12 flex items-center justify-between rounded-xl border border-transparent max-sm:py-1 sm:rounded-2xl"
     :class="{ 'expanded': mobileMenuOpen, 'not-top': notTop }" @scroll.window="onScroll()" :data-show="headerShow">
     <a class="z-30 text-xl font-medium group-[.not-top]:ms-2 sm:group-[.not-top]:ms-3"
-        style="transition:margin-inline 0.3s" href="{{ site.BaseURL }}" aria-label="Brand">
+        style="transition:margin-inline 0.3s" href="{{ site.BaseURL }}" aria-label="Brand" @click="mobileMenuOpen = false">
         {{ site.Title }}
     </a>
     <div class='flex items-center gap-x-2'>
@@ -10,18 +10,18 @@
         <div id='headerExpandContent'
             class='end-0 start-0 top-12 grid border border-transparent group-[.not-top]:rounded-xl group-[.expanded]:opacity-100 dark:group-[.expanded.not-top]:bg-muted max-sm:absolute max-sm:opacity-0 max-sm:group-[.not-top]:border-border max-sm:group-[.expanded.not-top]:bg-background max-sm:group-[.not-top]:px-4 max-sm:group-[.not-top]:py-2 sm:grid-rows-1'>
             <!-- [Somnia-fix] del overflow-hidden 修复 pad 设备隐藏问题 -->
-            <div class='flex flex-col items-center justify-center sm:flex-row'>
+            <div class='flex flex-col items-center justify-center sm:flex-row max-sm:overflow-hidden'>
                 {{ with site.Params.header.menu }}
                 {{ range . }}
                 <a href="{{ .link | relLangURL }}"
                     class='w-full flex-none grow py-2 text-right font-medium transition-none hover:text-primary sm:w-fit sm:px-3'
-                    aria-label='Nav menu item'>
+                    aria-label='Nav menu item' @click="mobileMenuOpen = false">
                     {{ .title }}
                 </a>
                 {{ end }}
                 {{ end }}
                 <div class='flex w-full grow flex-row justify-end gap-x-3 sm:w-fit sm:gap-x-5'>
-                    <a class='px-1 py-2 transition-none sm:px-2' href={{relURL "search"}} title='Search'>
+                    <a class='px-1 py-2 transition-none sm:px-2' href={{relURL "search"}} title='Search' @click="mobileMenuOpen = false">
                         <span class='sr-only'>Search</span>
                         <svg aria-hidden="true" class="size-5" width="22" height="22" viewBox="0 0 24 24"
                             fill="currentColor" style="--sl-icon-size: 1em;">

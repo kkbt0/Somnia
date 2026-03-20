@@ -44,6 +44,7 @@
 .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr));}
 .m-0{margin:0;}
 .m-2{margin:0.5rem;}
+.m12\.345{margin:3.08625rem;}
 .m12\.593{margin:3.14825rem;}
 .m12\.594{margin:3.1485rem;}
 .m123\.471{margin:30.86775rem;}
@@ -111,8 +112,7 @@
 .h-3{height:0.75rem;}
 .h-4{height:1rem;}
 .h-5{height:1.25rem;}
-.h-6,
-.h6{height:1.5rem;}
+.h-6{height:1.5rem;}
 .h-8{height:2rem;}
 .h-auto{height:auto;}
 .h-full{height:100%;}
@@ -215,12 +215,12 @@
 .gap-y-4{row-gap:1rem;}
 .gap-y-5{row-gap:1.25rem;}
 .gap-y-7{row-gap:1.75rem;}
-.overflow-hidden{overflow:hidden;}
+.overflow-hidden,
+[overflow-hidden=""]{overflow:hidden;}
 .overflow-x-hidden{overflow-x:hidden;}
 .overflow-y-scroll{overflow-y:scroll;}
 .truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .break-words{overflow-wrap:break-word;}
-.b,
 .border,
 [border=""]{border-width:1px;}
 .border-0,
@@ -339,6 +339,7 @@
 .hover\:text-foreground:hover{--un-text-opacity:1;color:hsl(var(--foreground) / var(--un-text-opacity)) /* hsl(var(--foreground) / <alpha-value>) */;}
 .hover\:text-muted-foreground:hover{--un-text-opacity:1;color:hsl(var(--muted-foreground) / var(--un-text-opacity)) /* hsl(var(--muted-foreground) / <alpha-value>) */;}
 .hover\:text-primary:hover{--un-text-opacity:1;color:hsl(var(--primary) / var(--un-text-opacity)) /* hsl(var(--primary) / <alpha-value>) */;}
+[color~="\#5bbad5"]{--un-text-opacity:1;color:rgb(91 186 213 / var(--un-text-opacity)) /* #5bbad5 */;}
 .hover\:text-inherit:hover{color:inherit;}
 .\[\&\.highlight\]\:font-medium.highlight,
 .font-medium{font-weight:500;}
@@ -422,6 +423,7 @@
 .max-sm\:flex-col{flex-direction:column;}
 .max-sm\:flex-wrap{flex-wrap:wrap;}
 .max-sm\:place-self-center{place-self:center;}
+.max-sm\:overflow-hidden{overflow:hidden;}
 .group.not-top .max-sm\:group-\[\.not-top\]\:border-border{--un-border-opacity:1;border-color:hsl(var(--border) / var(--un-border-opacity));}
 .group.expanded.not-top .max-sm\:group-\[\.expanded\.not-top\]\:bg-background{--un-bg-opacity:1;background-color:hsl(var(--background) / var(--un-bg-opacity)) /* hsl(var(--background) / <alpha-value>) */;}
 .max-sm\:bg-card{--un-bg-opacity:1;background-color:hsl(var(--card) / var(--un-bg-opacity)) /* hsl(var(--card) / <alpha-value>) */;}
