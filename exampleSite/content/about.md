@@ -8,7 +8,7 @@ Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei r
 
 {{< page/spoiler >}}PHP是世界上最好的语言{{< /page/spoiler >}}<br>
 
-{{< page/button title="Sponsor Me" class="w-fit" href="/projects#sponsorship" variant="ahead">}}
+{{< page/button title="Sponsor Me" class="w-fit" href="projects/#sponsorship" variant="ahead">}}
 
 ## Features
 

@@ -104,23 +104,6 @@
         </div>
     </a>
 </li>
-
-<script>
-    function blogPreviewComponent() {
-        return {
-            heroColor: '#9698C1',
-            init() {
-                // 随机生成点颜色 或者使用主题色系 或者颜色列表随机
-                const r = Math.floor(Math.random() * 256);
-                const g = Math.floor(Math.random() * 256);
-                const b = Math.floor(Math.random() * 256);
-                const toHex = (num) => num.toString(16).padStart(2, '0');
-                this.heroColor = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-            },
-        }
-    }
-</script>
-
 <style>
     .post-preview {
         --preview-highlight-final: var(--preview-highlight, hsl(var(--primary) / var(--un-text-opacity, 1)));

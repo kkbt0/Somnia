@@ -61,20 +61,6 @@
 
   {{ partial "back-to-top.html" . }}
 
-  <script>
-    function mainComponent() {
-      return {
-        sidebarShow: false,
-        init() {
-
-        },
-        toggleSidebar() {
-          this.sidebarShow = !this.sidebarShow;
-        }
-      }
-    }
-  </script>
-
   <style>
     @media (min-width: 769px) {
       #sidebar-shade {

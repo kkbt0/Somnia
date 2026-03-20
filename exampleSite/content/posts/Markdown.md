@@ -141,6 +141,8 @@ impl Bar {
 
 ### 公式块
 
+如果 `hardWraps = true` ，公式要写在一行。
+
 ```markdown
 $$
 \hat{f}(\xi) = \int_{-\infty}^{\infty} f(x) e^{-2\pi i x \xi} \, dx
@@ -149,9 +151,7 @@ $$
 
 预览：
 
-$$
-\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x) e^{-2\pi i x \xi} \, dx
-$$
+$$\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x) e^{-2\pi i x \xi} \, dx$$
 
 当前使用 KaTeX 作为数学公式插件，支持的语法请参考 [KaTeX Supported Functions](https://katex.org/docs/supported.html)。
 

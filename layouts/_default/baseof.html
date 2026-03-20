@@ -17,13 +17,11 @@
   <div id='main-container' class='w-full max-w-[70rem] min-h-[100dvh] flex flex-col justify-between'>
 
     {{ partial "header.html" . }}
-    <div id="content-wrapper" class="flex-1 w-full">
+    <div x-data="contentComponent()" id="content-wrapper" class="flex-1 w-full" somnia-data="{{ if eq .Params.math true }}math{{ end }}">
       {{ block "main" . }}{{ end }}
     </div>
     {{ partial "footer.html" . }}
   </div>
-  <!-- Some js -->
-  {{ partial "medium-zoom.html" . }}
   <style>
     :global(.highlight) {
       --highlight-fg: color-mix(in srgb,

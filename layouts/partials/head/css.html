@@ -20,6 +20,10 @@
   {{- with resources.Get "css/code/onedark.css" }}
   <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
+  <!-- 其他 -->
+  {{- with resources.Get "css/medium-zoom.css" }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- end }}
 
 {{else}}
 

@@ -10,32 +10,6 @@
         class="absolute end-0 top-4 z-0 mt-0 h-full max-w-[80ch] rounded-3xl opacity-60 transition-opacity duration-300"
         :style="`opacity: ${imageOpacity}`">
 </div>
-<script>
-    function heroComponent() {
-        return {
-            viewportHeight: window.innerHeight,
-            threshold1: 0,
-            threshold2: 0,
-            threshold3: 0,
-            imageOpacity: 0.45,
-            init() {
-                this.threshold1 = this.viewportHeight / 9;
-                this.threshold2 = (this.viewportHeight * 2) / 9;
-                this.threshold3 = (this.viewportHeight * 3) / 9;
-            },
-            onScroll() {
-                const scrollDistance = window.scrollY;
-                if (scrollDistance >= this.threshold3) {
-                    this.imageOpacity = '0.15';
-                } else if (scrollDistance >= this.threshold2) {
-                    this.imageOpacity = '0.3';
-                } else if (scrollDistance >= this.threshold1) {
-                    this.imageOpacity = '0.45';
-                }
-            }
-        }
-    }
-</script>
 {{end}}
 <style>
     #blurImage {

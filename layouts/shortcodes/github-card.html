@@ -84,52 +84,6 @@
     </div>
   </a>
 </div>
-<script>
-  //   interface GithubProps {
-  //   stargazers_count: number  // 星标数
-  //   forks_count: number            // Fork 数
-  //   language: string         // 主要编程语言
-  //   owner: { avatar_url: string }  // 所有者头像 URL
-  //   license?: { spdx_id: string }  // 许可证标识（可选）
-  //   description: string      // 仓库描述
-  // }
-  function githubCardComponent() {
-    return {
-      loading: true,
-      repo: '',
-      // fetch 变量
-      stargazers_count: null,
-      forks_count: null,
-      language: null,
-      owner: { avatar_url: null },
-      license: { spdx_id: null },
-      description: null,
-      initGithubCardComponent(repo) {
-        this.repo = repo;
-        this.fetchGithub(repo);
-      },
-      fetchGithub() {
-        try {
-          fetch(`https://api.github.com/repos/${this.repo}`)
-            .then(res => res.json())
-            .then(json => {
-              this.stargazers_count = json.stargazers_count;
-              this.forks_count = json.forks_count;
-              this.language = json.language;
-              this.owner = json.owner;
-              this.license = json.license;
-              this.description = json.description;
-
-              this.loading = false;
-              // console.log(json);
-            });
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    }
-  }
-</script>
 <style>
   @keyframes pulsate {
     0% {

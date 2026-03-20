@@ -7,5 +7,7 @@
 /* 代码块主题 */
 @import "code/vs.css";
 @import "code/onedark.css";
+/* 其他 */
+@import "medium-zoom.css";
 /* Unocss 生成 */
 @import "uno.css";

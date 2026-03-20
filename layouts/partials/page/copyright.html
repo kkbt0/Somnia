@@ -117,48 +117,6 @@
     </svg>
   </a>
 </div>
-
-<script>
-  function copyrightComponent() {
-    return {
-      qrcodeShow: false,
-      qrcodeImgSrc: "",
-      qrcodeInit: false,
-      init() { },
-      copyLinkClick() {
-        navigator.clipboard.writeText(window.location.href);
-        showToast('Link copied!');
-      },
-      newQRCode() {
-        // 创建 script 标签
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js';
-        script.onload = () => {
-          // 加载后生成
-          // console.log("New QRCode " + window.location.origin + window.location.pathname);
-          new QRCode(document.getElementById("qrcode-container"), {
-            text: window.location.origin + window.location.pathname,
-            width: 256,
-            height: 256,
-          });
-        };
-        script.onerror = () => showToast("qrcode.min.js Script load failed");
-        document.head.appendChild(script);
-      },
-      getQRCodeClick() {
-        this.qrcodeShow = !this.qrcodeShow;
-        // 调用 API
-        // this.qrcodeImgSrc = "https://api.qrtool.cn/?text=" + window.location.origin + window.location.pathname;
-        // 或者加载 js 生成
-        if (!this.qrcodeInit) {
-          this.newQRCode();
-          this.qrcodeInit = true;
-        }
-      }
-    }
-  }
-</script>
-
 <style>
   #qrcode-container.expanded {
     max-height: 11rem;

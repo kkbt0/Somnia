@@ -1,15 +1,49 @@
-let currentDate = new Date();
-console.log("%c超光速", " text-shadow: 0 1px 0 #ccc,0 2px 0 #c9c9c9,0 3px 0 #bbb,0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);font-size:5em"),
-console.log("https://www.ftls.xyz 恐咖兵糖的主页")
-console.log(currentDate.toLocaleString('zh-u-ca-chinese', { dateStyle: 'full' }) + ' ' + currentDate.toLocaleTimeString(0, { hour12: false })) // 2022壬寅年九月廿九星期一 21:45:11
-// console.log(currentDate.toLocaleString('zh-chinese', { dateStyle: 'full' }) + ' ' + currentDate.toLocaleTimeString(0, { hour12: false })) // 2022年3月17日星期二 11:50:33
-console.log("你好，世界")
+// 使用示例：
+// example loadResource(el,rel,href,type,integrity,crossOrigin,defer)
+function loadResource({
+    element = document.head,        // 要追加到的DOM元素，默认为document.head
+    rel = 'stylesheet',            // 主要用于CSS的rel属性，默认'stylesheet'
+    href,                          // 资源URL（必需）
+    type,                           //  type module，可选
+    integrity,                     // 完整性哈希，可选
+    crossOrigin,                    // 跨域设置，可选
+    defer = false                     // 是否延迟加载，默认false
+} = {}) {
+    return new Promise((resolve, reject) => {
+        if (!href) {
+            reject(new Error('href is required'));
+            return;
+        }
 
-/**
- * showToast - Show a toast message on the bottom of the screen
- * @param {string} message - The message to be displayed
- * @param {number} time - The duration of the toast in milliseconds
- */
+        // 判断是否为CSS资源
+        let resource;
+        if (href.endsWith('.css')) {
+            // 创建CSS link元素
+            resource = document.createElement('link');
+            resource.rel = rel || 'stylesheet';
+            resource.href = href;
+        } else {
+            // 创建JS script元素
+            resource = document.createElement('script');
+            resource.src = href;
+        }
+
+        // 设置可选属性
+        if (integrity) resource.integrity = integrity;
+        if (crossOrigin) resource.crossOrigin = crossOrigin;
+        if (defer) resource.defer = true;
+        if (type) resource.type = type;
+
+        // 事件处理
+        resource.onload = () => resolve(resource);
+        resource.onerror = () => reject(new Error(`Failed to load resource: ${href}`));
+
+        // 追加到DOM
+        element.appendChild(resource);
+    });
+}
+
+
 function showToast(message, time) {
     const toast = document.createElement('div')
     toast.className =
@@ -25,5 +59,33 @@ function showToast(message, time) {
     }, time || 3000)
 }
 
+function swupPageInitMediumZoom() {
+    const images = Array.from(document.querySelectorAll('#content img')).filter(img => !img.classList.contains('medium-zoom-image'));
+    images.forEach(img => {
+        mediumZoom(img, { background: 'rgba(0, 0, 0, 0.8)' });
+    });
+}
 
+async function loadKaTeXResource(element) {
+    // 插入 KaTeX CSS
+    loadResource({ element: element, rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.16.38/dist/katex.min.css', integrity: 'sha384-/L6i+LN3dyoaK2jYG5ZLh5u13cjdsPDcFOSNJeFBFa/KgVXR5kOfTdiN3ft1uMAq', crossOrigin: 'anonymous' });
 
+    // 插入 KaTeX 主库 JS
+    await loadResource({ element: element, href: 'https://cdn.jsdelivr.net/npm/katex@0.16.38/dist/katex.min.js', integrity: 'sha384-H6s1ZrH2CKpFpqR680poRdStIRJGXty7fSkxAcIfxwl9iu6A4BOPtTk7vQ58Ovio', crossOrigin: 'anonymous', defer: true });
+
+    // 插入 KaTeX 自动渲染扩展
+    await loadResource({ element: element, href: 'https://cdn.jsdelivr.net/npm/katex@0.16.38/dist/contrib/auto-render.min.js', integrity: 'sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz', crossOrigin: 'anonymous', defer: true });
+
+    renderMathInElement(element, {
+        // customised options
+        // • auto-render specific keys, e.g.:
+        delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true }
+        ],
+        // • rendering keys, e.g.:
+        throwOnError: false
+    });
+}

@@ -11,14 +11,3 @@
     <samp class="cursor-pointer" @click="infoClick('{{index $info $key}}')">{{index $info $key}}</samp>
     {{end}}
 </blockquote>
-<script>
-    function infoComponent() {
-        return {
-            infoClick(text) {
-                navigator.clipboard.writeText(text);
-                showToast(`Copied "${text}" to clipboard!`);
-            },
-            init() { },
-        }
-    }
-</script>

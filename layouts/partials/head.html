@@ -8,8 +8,8 @@
 <meta name='color-scheme' content='light dark' />
 <!-- Primary Meta Tags-->
 <meta content="{{.Title}}" name='title' />
-<meta content="{{.Description}}" name='description' />
-<meta content="{{.Params.author|default .Site.Params.author.name}}" name='author' />
+<meta content="{{.Description|default site.Params.description}}" name='description' />
+<meta content="{{.Params.author|default site.Params.author.name}}" name='author' />
 <meta name="application-name" content="{{ site.Title }}">
 <meta name="apple-mobile-web-app-title" content="{{ site.Title }}">
 <meta name="theme-color" content="#161b22">
@@ -25,7 +25,7 @@
 
 <!-- [TODO] Font preloads-->
 <!-- Article INFO -->
-<meta content="{{.Params.author|default .Site.Params.author.name}}" property='article:author' />
+<meta content="{{.Params.author|default site.Params.author.name}}" property='article:author' />
 <meta content="{{.Params.date}}" property='article:published_time' />
 
 <!-- Open Graph -->
@@ -33,7 +33,7 @@
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}">
 <meta property="og:description" content="{{.Description}}">
-<meta property="og:locale" content="{{.Site.LanguageCode}}">
+<meta property="og:locale" content="{{site.LanguageCode}}">
 <meta property="og:type" content="{{if .IsHome}}website{{else}}article{{end}}">
 <meta property="og:image" content="{{"logo.png"|absURL}}">
 

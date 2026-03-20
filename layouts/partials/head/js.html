@@ -1,18 +1,49 @@
 {{ $alpinejs := resources.Get "js/alpinejs.min.js" }}
 {{ $mediumZoom := resources.Get "js/medium-zoom.min.js" }}
+{{ $components := resources.Get "js/components.js" }}
 {{ $main := resources.Get "js/main.js" }}
+{{ $custom := resources.Get "js/custom.js" }}
+
+{{ $swup := resources.Get "js/swup/Swup.umd.js" }}
+{{ $swupScroll := resources.Get "js/swup/scroll-plugin.js" }}
+{{/*  {{ $swupPreload := resources.Get "js/swup/preload-plugin.js" }}  */}}
 
 {{ if hugo.IsDevelopment }}
-    <script defer src="{{ $alpinejs.RelPermalink }}"></script>
-    <script defer src="{{ $mediumZoom.RelPermalink }}"></script>
-    <script defer src="{{ $main.RelPermalink }}"></script>
+<script defer src="{{ $main.RelPermalink }}"></script>
+<script defer src="{{ $components.RelPermalink }}"></script>
+<script defer src="{{ $mediumZoom.RelPermalink }}"></script>
+<script defer src="{{ $custom.RelPermalink }}"></script>
+<script defer src="{{ $alpinejs.RelPermalink }}"></script>
+
+<script defer src="{{ $swup.RelPermalink }}"></script>
+<script defer src="{{ $swupScroll.RelPermalink }}"></script>
+{{/*  <script defer src="{{ $swupPreload.RelPermalink }}"></script>  */}}
 {{ else }}
-    {{- $jsBundle := slice $alpinejs $mediumZoom $main | resources.Concat "js/bundle.js" | minify | fingerprint -}}
-    <script src="{{ $jsBundle.RelPermalink }}" defer></script>
+{{- $jsBundle := slice $main $components $mediumZoom $custom $alpinejs $swup $swupScroll | resources.Concat "js/bundle.js" | minify |
+fingerprint -}}
+<script defer src="{{ $jsBundle.RelPermalink }}"></script>
 {{ end }}
 
-<!-- Swup.js -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/swup@4.8.0/dist/Swup.min.js"></script> -->
+<script defer>
+    // tocComponent 依赖 scroll-plugin
+    document.addEventListener('DOMContentLoaded', () => {
+        swupPageInitMediumZoom();
+        swupPageInitCustom();
+        const swup = new Swup({
+            containers: ['#content-wrapper'],
+            plugins: [
+                new SwupScrollPlugin(),
+            ]
+        });
+        // Alpine.start(); // Alpinejs 已经启动
+        swup.hooks.on('page:view', () => {
+            swupPageInitMediumZoom();
+            swupPageInitCustom();
+        });
+    })
+</script>
+
+
 
 {{- if .Site.Params.enablePWA | and hugo.IsProduction -}}
 {{ $options := dict }}

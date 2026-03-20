@@ -1,20 +1,11 @@
 <site-search>
-    <aside class='form my-4'>
+    <aside class='form my-4' x-data="pfSearchComponent()">
         <!-- <div class='w-full rounded-xl border-2 bg-transparent px-4 py-2 pe-3 outline-none focus:border-foreground'>
             You are in Dev mode, the search is disabled.
         </div> -->
         <div id='site-search' />
     </aside>
 </site-search>
-<script src="{{"pagefind/pagefind-ui.js"|relURL}}" type="module"></script>
-<script type="module">
-    new PagefindUI({
-        element: "#site-search",
-        showSubResults: true,
-        showImages: false
-    });
-</script>
-<link href="{{"pagefind/pagefind-ui.css"|relURL}}" rel="stylesheet">
 <style>
     #site-search {
         --pagefind-ui-scale: 0.8;

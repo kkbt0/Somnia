@@ -1,0 +1,15 @@
+// user custom js
+console.log("%cSomnia", " text-shadow: 0 1px 0 #ccc,0 2px 0 #c9c9c9,0 3px 0 #bbb,0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);font-size:5em")
+console.log("Author: 恐咖兵糖 https://www.ftls.xyz")
+let currentDate = new Date();
+console.log(currentDate.toLocaleString('zh-u-ca-chinese', { dateStyle: 'full' }) + ' ' + currentDate.toLocaleTimeString(0, { hour12: false })) // 2022壬寅年九月廿九星期一 21:45:11
+// console.log(currentDate.toLocaleString('zh-chinese', { dateStyle: 'full' }) + ' ' + currentDate.toLocaleTimeString(0, { hour12: false })) // 2022年3月17日星期二 11:50:33
+console.log("你好，世界")
+
+// 可以放一些 js
+// function noticeComponent() {}
+
+// Swupjs 初次加载，和每次切换页面都会执行
+function swupPageInitCustom() {
+    console.log("[Swup] Page View");
+}
