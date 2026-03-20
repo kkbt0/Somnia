@@ -11,7 +11,7 @@
             <!-- avatar -->
             <div class='relative h-14 w-14 min-w-14 overflow-hidden rounded-full'>
                 <img src="{{ $avatar | default "images/default_avatar.webp" | relURL}}" alt="avatar" loading="lazy" decoding="async" fetchpriority="auto"
-                    class="my-0 bg-white">
+                    class="my-0 bg-white" onerror="this.src='{{"images/default_avatar.webp" | relURL}}'">
                 <div class='absolute start-0 top-0 h-full w-full'>
                     <div
                         class='flex h-full w-full items-center justify-center rounded-full bg-foreground opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-50'>
