@@ -17,7 +17,8 @@
   <div id='main-container' class='w-full max-w-[70rem] min-h-[100dvh] flex flex-col justify-between'>
 
     {{ partial "header.html" . }}
-    <div x-data="contentComponent()" id="content-wrapper" class="flex-1 w-full" somnia-data="{{ if eq .Params.math true }}math{{ end }}">
+    <div x-data="contentComponent()" id="content-wrapper" class="flex-1 w-full transition-fade"
+      somnia-data="{{ if eq .Params.math true }}math{{ end }}">
       {{ block "main" . }}{{ end }}
     </div>
     {{ partial "footer.html" . }}
@@ -57,6 +58,38 @@
         padding-left: calc(2.5rem + env(safe-area-inset-left));
         padding-right: calc(2.5rem + env(safe-area-inset-right));
       }
+    }
+  </style>
+  <style>
+    html.is-changing .transition-fade {
+      view-transition-name: main;
+    }
+  
+    ::view-transition-old(main) {
+      animation: fade 0.25s ease-in-out both;
+    }
+  
+    ::view-transition-new(main) {
+      animation: fade 0.25s ease-in-out both reverse;
+    }
+  
+    @keyframes fade {
+      from {
+        opacity: 1;
+      }
+  
+      to {
+        opacity: 0;
+      }
+    }
+  
+    html.is-changing:not(.swup-native) .transition-fade {
+      transition: 0.25s opacity;
+      opacity: 1;
+    }
+  
+    html.is-animating:not(.swup-native) .transition-fade {
+      opacity: 0;
     }
   </style>
 </body>
