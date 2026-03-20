@@ -44,15 +44,15 @@ lang = 'zh-CN'
 dateFormat = '2006年01月02日'
 
 [[params.websites]]
-name = 'heading'
-description = 'subheading'
+name = 'Columbina'
+description = 'Columbina Hyposelenia'
 url = 'https://example.org'
-image = 'https://ts1.tc.mm.bing.net/th?id=ORMS.8801372fff8c9b7a95b4a984edae4011'
+image = '/Somnia/images/default_bg.webp'
 [[params.websites]]
 name = 'heading'
 description = 'subheading'
 url = 'https://example.org'
-image = 'https://ts1.tc.mm.bing.net/th?id=ORMS.8801372fff8c9b7a95b4a984edae4011'
+image = '/Somnia/images/default_bg.webp'
 
 [params.certifications]
 heading = 'Lorem ipsum.'

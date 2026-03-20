@@ -10,7 +10,7 @@
         <div class='relative z-10 flex h-full items-center gap-3'>
             <!-- avatar -->
             <div class='relative h-14 w-14 min-w-14 overflow-hidden rounded-full'>
-                <img src="{{ $avatar }}" alt="avatar" loading="lazy" decoding="async" fetchpriority="auto"
+                <img src="{{ $avatar | default "images/default_avatar.webp" | relURL}}" alt="avatar" loading="lazy" decoding="async" fetchpriority="auto"
                     class="my-0 bg-white">
                 <div class='absolute start-0 top-0 h-full w-full'>
                     <div
@@ -32,7 +32,7 @@
                 <p class='my-0 line-clamp-1 text-xs text-muted-foreground'>{{ $desc }}</p>
             </div>
         </div>
-        <img src="{{ $bg_url | default "https://ts1.tc.mm.bing.net/th?id=ORMS.e243a5c92956202de3760913fcf1b5c8&pid=Wdp&w=612&h=304&qlt=90&c=1&rs=1&dpr=1&p=0" }}" alt="avatar bg" loading="lazy"
+        <img src="{{ $bg_url | default "images/default_bg.webp" | relURL }}" alt="avatar bg" loading="lazy"
             style="mask-image:linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);ms-mask-image:-ms-linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);-webkit-mask-image:-webkit-linear-gradient(to left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%)"
             decoding="async" fetchpriority="auto"
             class="absolute -start-2 top-0 z-0 my-0 h-full w-2/3 bg-white object-cover opacity-15">
