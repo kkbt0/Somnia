@@ -2,6 +2,8 @@
 title: 关于
 ---
 
+{{< github-card repo="kkbt0/Somnia" >}}
+
 Developer 
 
 Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum dissentiunt, cu meliore fuisset mei, vel quod voluptua ne.{{< page/spoiler >}}为什么要演奏春日影{{< /page/spoiler >}}。

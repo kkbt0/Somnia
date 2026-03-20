@@ -171,7 +171,7 @@ svg or 可参考:
 
 ### GitHub Card
 
-{{< github-card repo="unocss/unocss" >}}
+{{< github-card repo="kkbt0/Somnia" >}}
 <br>
 {{< github-card repo="cworld1/astro-theme-pure" >}}
 
