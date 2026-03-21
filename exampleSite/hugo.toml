@@ -1,5 +1,6 @@
 baseURL = 'https://kkbt0.github.io/Somnia/'
 languageCode = 'zh-cn'
+hasCJKLanguage = true
 title = 'Hugo Theme Somnia'
 theme = '../..'
 
