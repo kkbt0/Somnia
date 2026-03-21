@@ -18,7 +18,7 @@
  * 注意：Hugo 带 Hash 的资源文件本身已经自带版本信息，
  *       因此日常更新无需手动修改此处。
  */
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2026-0321';
 
 /**
  * 缓存桶名称
@@ -37,6 +37,8 @@ const PRE_CACHE_URLS = [
   '/',          // 首页
   '/offline/',  // 离线降级页（需自行创建 content/offline.md）
  // '/index.json' // 搜索索引（如有）
+  '/images/default_avatar.webp', // 默认头像
+  '/images/default_bg.webp' // 默认背景
 ];
 
 /**

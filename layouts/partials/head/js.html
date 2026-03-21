@@ -53,8 +53,8 @@
 <script defer>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.min.js')
-        .then(reg => console.log('[Somnia] [SW] 注册成功，scope:', reg.scope))
+      navigator.serviceWorker.register('/sw.min.js?v={{ now.Format "2006-0102-1504" }}')
+        .then(reg => console.log('[Somnia] [SW] 注册成功 scope:', reg.scope))
         .catch(err => console.error('[Somnia] [SW] 注册失败:', err));
     });
   }
