@@ -19,8 +19,7 @@
 <script defer src="{{ $swupScroll.RelPermalink }}"></script>
 {{/*  <script defer src="{{ $swupPreload.RelPermalink }}"></script>  */}}
 {{ else }}
-{{- $jsBundle := slice $main $components $mediumZoom $custom $alpinejs $swup $swupScroll | resources.Concat "js/bundle.js" | minify |
-fingerprint -}}
+{{- $jsBundle := slice $main $components $mediumZoom $custom $alpinejs $swup $swupScroll | resources.Concat "js/bundle.js" | minify | fingerprint -}}
 <script defer src="{{ $jsBundle.RelPermalink }}"></script>
 {{ end }}
 
@@ -31,7 +30,7 @@ fingerprint -}}
         swupPageInitCustom();
         const swup = new Swup({
             containers: ['#content-wrapper'],
-           // native: true,
+            // native: true,
             plugins: [
                 new SwupScrollPlugin(),
             ]
@@ -45,11 +44,19 @@ fingerprint -}}
 </script>
 
 
-
-{{- if .Site.Params.enablePWA | and hugo.IsProduction -}}
+{{- if and site.Params.enablePWA  hugo.IsProduction  -}}
 {{ $options := dict }}
 {{ $options = dict "targetPath" "sw.min.js" | merge $options }}
 {{ $options = dict "minify" true | merge $options }}
 {{ $js := resources.Get "js/sw.js" | js.Build $options }}
 {{ $_ := $js.RelPermalink }}
+<script defer>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.min.js')
+        .then(reg => console.log('[Somnia] [SW] 注册成功，scope:', reg.scope))
+        .catch(err => console.error('[Somnia] [SW] 注册失败:', err));
+    });
+  }
+</script>
 {{- end -}}
