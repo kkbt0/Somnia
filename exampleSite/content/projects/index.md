@@ -2,7 +2,18 @@
 title: Projects
 ---
 
+
 {{< page/status-card >}}
+
+
+## Somnia
+
+{{< github-card repo="kkbt0/Somnia" >}}
+
+Lighthouse 可以搞到 4x100
+
+![](Lighthouse.webp)
+
 
 <br>
 
