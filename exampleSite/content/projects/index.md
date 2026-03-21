@@ -80,7 +80,7 @@ You can verify the authenticity of the files I signed by checking the GPG signat
 
 Wechat or Alipay or [mbd](https://mbd.pub/o/kkbt)
 
-{{< page/sponsorship wechat="kkbt_wechat.jpg" alipay="kkbt_alipay.jpg" >}}
+{{< page/sponsorship wechat="kkbt_wechat.webp" alipay="kkbt_alipay.webp" >}}
 
 Please leave a message or contact me proactively after sponsorship. My email is: {{< page/copy-code>}}a2tidEBra2J0Lndvcms={{< /page/copy-code>}}(click code to transform base64).
 

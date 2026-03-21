@@ -129,7 +129,7 @@ function backToTopComponent() {
 // for Somnia/layouts/partials/quote.html
 function quoteComponent() {
     return {
-        quote: '一切生命都是星海的孩子，我们将回归星空',
+        quote: '我们的征途是星辰大海！',
         init() {
             this.getData();
         },
@@ -397,59 +397,7 @@ function timeComponent() {
     return {
         init() { },
         shichen(ts13) {
-            // 十二时辰对应
-            const tzArr = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
-            const sdArr = ['夜半', '鸡鸣', '平旦', '日出', '食时', '隅中', '日中', '日昳', '晡时', '日入', '黄昏', '人定'];
-            const sdArr2 = ['半夜', '凌晨', '黎明', '清晨', '早上', '上午', '中午', '午后', '下午', '傍晚', '晚上', '深夜'];
-
-
-            function formatTime(timestamp) {
-
-                const now = new Date();
-                const inputTime = new Date(timestamp);
-
-                const timeDiff = now - inputTime;
-
-                const seconds = Math.floor(timeDiff / 1000);
-                const minutes = Math.floor(seconds / 60);
-                const hours = Math.floor(minutes / 60);
-                const days = Math.floor(hours / 24);
-
-                if (seconds < 60) {
-                    return "刚刚";
-                } else if (minutes < 60) {
-                    return `${minutes} 分钟前`;
-                } else if (hours < 24) {
-                    return `${hours} 小时前`;
-                } else if (days < 7) {
-                    return `${days} 天前 ${formatHour(inputTime)}`;
-                }
-
-                const yearNow = now.getFullYear();
-                const yearInput = inputTime.getFullYear();
-
-                if (yearNow === yearInput) {
-                    return `${inputTime.getMonth() + 1} 月 ${inputTime.getDate()} 日 ${formatHour(inputTime)}`;
-                } else {
-                    return `${yearInput} 年 ${inputTime.getMonth() + 1} 月 ${inputTime.getDate()} 日 ${formatHour(inputTime)}`;
-                }
-            }
-
-            function formatHour(date) {
-                const hour = date.getHours();
-                const minute = date.getMinutes();
-
-                // 添加判断时辰的逻辑
-                const tzIndex = Math.floor((hour + 1) / 2) % 12;
-                const timeString = `${formatNumber(hour)}:${formatNumber(minute)}`;
-
-                return `${timeString} • ${tzArr[tzIndex]}时 ${sdArr[tzIndex]}  (${sdArr2[tzIndex]})`;
-            }
-
-            function formatNumber(number) {
-                return number < 10 ? `0${number}` : number;
-            }
-            return formatTime(ts13);
+            return timestampToShichen(ts13);
         }
     }
 }
