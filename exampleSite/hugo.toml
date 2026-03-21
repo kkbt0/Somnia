@@ -20,8 +20,14 @@ posts = "/posts/:slug"
 
 [params]
 description = ''
-favicon = '/favicon/favicon.ico'
-socialCard = '/images/social-card.png'
+# Posts Tags Categories 配置页数
+[params.limit]
+blogPosts = 5 # /posts/ 每页左侧文章数
+blogCategories = 10 # /posts/ 右侧分类数
+blogTags = 50 # /posts/ 右侧标签数
+categoriesPosts = 5 # /categories/xxx/ 每页文章数
+tagsPosts = 5 # /tags/xxx/ 每页文章数
+
 # Homepage 配置
 # 作者配置
 [params.author]
@@ -34,14 +40,17 @@ location = 'China'
 github = 'https://github.com/kkbt0'
 bio = '浮生若梦 为欢几何'
 about = ''
+
+[params.homepage]
+# homepage 配置
+posts = 5 # 主页显示的文章数量
+quote = true # 是否在主页显示一言
+
 [params.education]
 heading = 'Lorem ipsum.'
 subheading = 'Lorem ipsum dolor sit amet, vidit suscipit at mei.'
 date = 'August 2021 - July 2025'
 url = '#'
-[params.locale]
-lang = 'zh-CN'
-dateFormat = '2006年01月02日'
 
 [[params.websites]]
 name = 'Columbina'
@@ -70,26 +79,21 @@ items = ['Alpinejs','Unocss']
 title = 'Backend'
 items = ['Golang', 'Rust', 'Python']
 
-[params.homepage]
-# homepage 配置
-posts = 5 # 主页显示的文章数量
-quote = true # 是否在主页显示一言
-
 [params.header]
 [[params.header.menu]]
-title = '博客'
+title = 'Blog'
 link = 'posts'
 [[params.header.menu]]
-title = '文档'
+title = 'Docs'
 link = 'docs'
 [[params.header.menu]]
-title = '项目'
+title = 'Projects'
 link = 'projects'
 [[params.header.menu]]
-title = '链接'
+title = 'Links'
 link = 'links'
 [[params.header.menu]]
-title = '关于'
+title = 'About'
 link = 'about'
 
 [params.footer]

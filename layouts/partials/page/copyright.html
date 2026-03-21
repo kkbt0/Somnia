@@ -123,4 +123,13 @@
     transform: translateY(4px);
     opacity: 100;
   }
+
+  /* [Somnia-fix] 修复移动端二维码绘制到 canvas 导致使用默认尺寸 */
+  #qrcode-container img,
+  #qrcode-container canvas {
+    /* width: 176px; */
+    /* height: 176px; */
+    max-width: 100%;
+    height: auto;
+  }
 </style>

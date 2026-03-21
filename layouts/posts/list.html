@@ -11,7 +11,8 @@
     <div class='grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8'>
         <section aria-label='Blog posts list' class='animate' id='content'>
             {{ $pages := where .Pages "Type" "posts" }}
-            {{ $paginator := .Paginate ($pages.ByDate.Reverse) 5 }} <!-- 按日期倒序，每页5篇 -->
+            {{ $limit := .Site.Params.limit.blogPosts | default 5 }}
+            {{ $paginator := .Paginate ($pages.ByDate.Reverse) $limit }} <!-- 按日期倒序，默认每页5篇 -->
             <!-- header -->
             <div class='mb-3 flex flex-col justify-between text-sm sm:mb-5 sm:flex-row'>
                 <span class='text-muted-foreground'>
@@ -61,8 +62,9 @@
                 Categories
             </h2>
             <ul class='text-bgColor flex flex-wrap gap-2'>
-                {{ $tags := .Site.Taxonomies.categories }}
-                {{ range first 10 $tags.ByCount }}
+                {{ $categories := .Site.Taxonomies.categories }}
+                {{ $limit := .Site.Params.limit.blogCategories | default 10 }}
+                {{ range first $limit $categories.ByCount }}
                 <li>
                     <a class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline rounded-xl"
                         href="{{ .Page.Permalink }}">
@@ -95,7 +97,8 @@
             </h2>
             <ul class='text-bgColor flex flex-wrap gap-2'>
                 {{ $tags := .Site.Taxonomies.tags }}
-                {{ range first 50 $tags.ByCount }}
+                {{ $limit := .Site.Params.limit.blogTags | default 50 }}
+                {{ range first $limit $tags.ByCount }}
                 <li>
                     <a class="group inline-flex items-center gap-x-1 rounded-lg bg-muted border px-2 py-1 text-sm text-muted-foreground transition-all hover:bg-card no-underline rounded-xl"
                         href="{{ .Page.Permalink }}">

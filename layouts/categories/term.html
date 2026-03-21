@@ -12,7 +12,12 @@
     </div>
     <section id='content' class='animate' aria-label='Blog post list'>
         {{ $pages := .Pages }}
-        {{ $paginator := .Paginate ($pages.ByDate.Reverse) 5 }} <!-- 按日期倒序，每页5篇 -->
+        {{ $limit := .Site.Params.limit.categoriesPosts | default 5 }}
+        {{ $paginator := .Paginate ($pages.ByDate.Reverse) $limit }} <!-- 按日期倒序，默认每页5篇 -->
+        <div class='text-muted-foreground mb-3'>
+            Page {{$paginator.PageNumber}} / {{$paginator.TotalPages}} - Showing {{ len $paginator.Pages }} of
+            {{$paginator.TotalNumberOfElements}} posts
+        </div>
         <ul class='flex flex-col gap-y-3 text-start'>
             {{ range $paginator.Pages }}
             {{ partial "page/blog-preview.html" . }}
@@ -22,12 +27,12 @@
         <nav class='mt-4 flex items-center gap-x-4 sm:mt-6'>
             {{ if $paginator.HasPrev }}
             <a class='me-auto py-2' href="{{ $paginator.Prev.URL }}">
-                ← Previous Tags
+                ← Previous Categories
             </a>
             {{ end }}
             {{ if $paginator.HasNext }}
             <a class='ms-auto py-2' href="{{ $paginator.Next.URL }}">
-                Next Tags →
+                Next Categories →
             </a>
             {{ end }}
         </nav>
