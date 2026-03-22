@@ -27,6 +27,10 @@
   {{- with resources.Get "css/medium-zoom.css" }}
   <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
+  <!-- user custom css -->
+  {{- with resources.Get "css/custom.css" }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- end }}
 
 {{else}}
 

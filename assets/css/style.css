@@ -12,3 +12,6 @@
 @import "medium-zoom.css";
 /* Unocss 生成 */
 @import "uno.css";
+
+/* user custom css */
+@import "custom.css";
