@@ -5,3 +5,13 @@
 <div x-data="qrCodeComponent()" id="qrcode-container-component" class="{{$class}}" title="{{$text}}">
   <!-- <img :src="qrcodeImgSrc" style="display: block;" alt="QRCode"> -->
 </div>
+<style>
+  /* [Somnia-fix] 修复移动端二维码绘制到 canvas 导致使用默认尺寸 */
+  #qrcode-container-component img,
+  #qrcode-container-component canvas {
+    /* width: 176px; */
+    /* height: 176px; */
+    max-width: 100%;
+    height: auto;
+  }
+</style>
