@@ -118,7 +118,7 @@
 }
 
 @media (max-width: 769px) {
-    aside.show {
+    .single aside.show {
         display: block !important;
         opacity: 1;
     }
@@ -145,7 +145,7 @@
         }
     }
 
-    aside {
+    .single aside {
         animation: 300ms fade-in-side !important;
         animation-fill-mode: forwards;
         right: 0;
@@ -165,7 +165,7 @@
 }
 
 @media (max-width: 640px) {
-    aside {
+    .single aside {
         min-width: 55vw !important;
     }
 }
