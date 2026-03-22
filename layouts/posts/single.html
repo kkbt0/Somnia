@@ -59,66 +59,6 @@
 
   {{ partial "back-to-top.html" . }}
 
-  <style>
-    @media (min-width: 769px) {
-      #sidebar-shade {
-        display: none !important;
-      }
-    }
-
-    @media (max-width: 769px) {
-      aside.show {
-        display: block !important;
-        opacity: 1;
-      }
-
-      @keyframes fade-in-side {
-        0% {
-          transform: translateX(50%);
-          opacity: 0;
-        }
-
-        100% {
-          transform: translateX(0);
-          opacity: 1;
-        }
-      }
-
-      @keyframes fade-in {
-        0% {
-          opacity: 0;
-        }
-
-        100% {
-          opacity: 1;
-        }
-      }
-
-      aside {
-        animation: 300ms fade-in-side !important;
-        animation-fill-mode: forwards;
-        right: 0;
-        top: 0 !important;
-        height: 100vh !important;
-        min-width: 40vw !important;
-        max-width: 75vw !important;
-        border-top-right-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
-        padding-top: 1.5rem !important;
-        padding-bottom: 1.5rem !important;
-      }
-
-      #sidebar-shade {
-        animation: 300ms fade-in;
-      }
-    }
-
-    @media (max-width: 640px) {
-      aside {
-        min-width: 55vw !important;
-      }
-    }
-  </style>
 </div>
 
 {{ end }}

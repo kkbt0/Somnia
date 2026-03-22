@@ -4,6 +4,7 @@
 @import "tailwind.css";
 @import "app.css";
 @import "main.css";
+@import "components.css";
 /* 代码块主题 */
 @import "code/vs.css";
 @import "code/onedark.css";

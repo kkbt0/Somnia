@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ or site.Language.LanguageCode site.Language.Lang }}" dir="{{ or site.Language.LanguageDirection `ltr` }}"
-  style="--highlightColor: #0B1335;">
+  style="--highlightColor: #203880;">
 
 <head>
   {{ partial "head.html" . }}
@@ -24,14 +24,14 @@
     {{ partial "footer.html" . }}
   </div>
   <style>
-    :global(.highlight) {
+    .highlight {
       --highlight-fg: color-mix(in srgb,
           var(--highlightColor) 40%,
           hsl(var(--foreground)/var(--un-text-opacity, 1)));
       color: var(--highlight-fg, hsl(var(--primary) / var(--un-text-opacity))) !important;
     }
 
-    :global(.highlight-bg) {
+    .highlight-bg {
       background-color: var(--highlightColor,
           hsl(var(--primary) / var(--un-text-opacity))) !important;
     }

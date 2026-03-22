@@ -26,6 +26,53 @@ function contentComponent() {
     }
 }
 
+// for Somnia/layouts/partials/header.html
+// 由于 header 组件不会被 Suwpjs 重新渲染，所以内联也可以
+function headerComponent() {
+    return {
+        preScrollY: window.scrollY,
+        // 初始位置监测
+        notTop: window.scrollY > 20,
+        headerShow: true,
+        mobileMenuOpen: false,
+        theme: localStorage.getItem('theme') || 'system',
+        init() {
+            // theme 初始化
+            // this.theme = localStorage.getItem('theme') || 'system';
+        },
+        onScroll() {
+            // [TODO] 性能优化
+            // 是否顶部判断
+            this.notTop = window.scrollY > 20;
+            // 在页面顶部350px范围内 或 向上滚动时 隐藏 toString 不可省略
+            this.headerShow = (window.scrollY < 350 || window.scrollY < this.preScrollY).toString();
+            this.preScrollY = window.scrollY;
+        },
+        toggleTheme() {
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            // 循环切换
+            const themes = ['system', 'dark', 'light'];
+            const currentIndex = themes.indexOf(this.theme);
+            const newTheme = themes[(currentIndex + 1) % themes.length];
+            // 保存
+            localStorage.setItem('theme', newTheme);
+            // 设置 HTML
+            if (newTheme === 'dark' || (newTheme === 'system' && systemTheme === 'dark')) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            document.documentElement.setAttribute('data-theme', newTheme);
+
+            this.theme = newTheme;
+            // 改为 Alinejs 写法 :data-theme="theme" 让 theme 变量有点参与感
+            // toggleDarkModeElement.dataset.theme = newTheme;
+            showToast(`Set theme to ${newTheme}`);
+        }
+    };
+}
+
+
 // for Somnia/layouts/partials/back-to-top.html
 function backToTopComponent() {
     return {
