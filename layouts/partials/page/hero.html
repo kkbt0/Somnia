@@ -4,9 +4,11 @@
     <!--  max-w-[65ch] 好像不太够用-->
     <img src="{{.Params.featuredImage}}" alt="Hero Image" fetchpriority="high"
         loading="eager" decoding="async"
+        onerror="this.src='{{"images/default.webp" | relURL}}'"
         class="cover-image relative z-10 h-auto w-full max-w-[80ch] rounded-2xl object-contain">
     <img src="{{.Params.featuredImagePreview|default .Params.featuredImage}}" alt="Blur image" fetchpriority="high"
         loading="eager" id="blurImage" decoding="async"
+        onerror="this.src='{{"images/default.webp" | relURL}}'"
         class="absolute end-0 top-4 z-0 mt-0 h-full max-w-[80ch] rounded-3xl opacity-60 transition-opacity duration-300"
         :style="`opacity: ${imageOpacity}`">
 </div>

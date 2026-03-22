@@ -57,12 +57,12 @@ url = '#'
 name = 'Columbina'
 description = 'Columbina Hyposelenia'
 url = 'https://example.org'
-image = '/Somnia/images/default_bg.webp'
+image = '/Somnia/images/default.webp'
 [[params.websites]]
 name = 'heading'
 description = 'subheading'
 url = 'https://example.org'
-image = '/Somnia/images/default_bg.webp'
+image = '/Somnia/images/default.webp'
 
 [params.certifications]
 heading = 'Lorem ipsum.'
