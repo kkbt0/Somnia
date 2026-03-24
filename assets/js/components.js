@@ -494,3 +494,47 @@ function githubCardComponent() {
         }
     }
 }
+
+// for Somnia/layouts/partials/comment/mastodon.html 不用可删
+function mastodonCommentComponent() {
+    return {
+        info: "",
+        url: "",
+        status: {
+            content: "",
+            account: {
+                display_name: "",
+                url: "",
+            },
+            replies_count: 0,
+            reblogs_count: 0,
+            favourites_count: 0,
+        },
+        replies: [],
+        async initMastodonCommentComponent(url, id) {
+            this.url = url;
+            const api = `https://${url.split("/")[2]}/api/v1/statuses/${url.split("/")[4]}`;
+            console.log(api);
+            this.fetchStatus(api);
+        },
+        async fetchStatus(url) {
+            fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                    this.status = data;
+                    if (this.status.replies_count > 0) {
+                        this.fetchReplies(url + "/context");
+                    }
+                })
+                .catch((error) => this.info = error);
+        },
+        async fetchReplies(url) {
+            fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                    this.replies = data.descendants;
+                })
+                .catch((error) => this.info = error);
+        }
+    }
+}

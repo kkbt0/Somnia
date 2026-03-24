@@ -337,3 +337,30 @@ span.katex-display {
 .project-card:hover .project-card-fg {
   --un-gradient-to-position: 100%;
 }
+
+/* Alpine.js x-cloak */
+[x-cloak] {
+  display: none !important;
+}
+/* Alpine.js x-transition */
+/* 进入：开始状态 */
+.transition-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* 进入：动画过程 */
+.transition-enter-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* 离开：动画过程 */
+.transition-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* 离开：结束状态 */
+.transition-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}

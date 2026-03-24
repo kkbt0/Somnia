@@ -13,7 +13,7 @@
             {{range $index, $tab := $tabs}}
             <li role='presentation' class='tab'>
                 <a role='tab' class='tab' @click="activeTab = 'tab{{ $index }}'"
-                    :aria-selected="activeTab === 'tab{{ $index }}'">{{ $tab.title }}</a>
+                    :aria-selected="activeTab === 'tab{{ $index }}'">{{ $tab.title | default (print "Tab " (add $index 1)) }}</a>
             </li>
             {{end}}
             {{end}}
@@ -74,7 +74,7 @@
         margin-top: 1rem;
     }
 
-    /* 仅用于基本功能演示，非样式要求 */
+    /* 防止闪烁 */
     [x-cloak] {
         display: none;
     }
