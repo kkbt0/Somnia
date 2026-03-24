@@ -3,8 +3,7 @@
 一个现代化、优雅的 Hugo 主题，基于 Astro Theme Pure 移植而来。
 
 > [!WARNING]  
-> 这是一个未经打磨和测试的项目。如果你喜欢这个样式，可以使用 Astro 和原始主题：[Astro Theme Pure](https://github.com/cworld1/astro-theme-pure) by [cworld1](https://github.com/cworld1)
-> 如果想在 Hugo 中使用 Somnia，目前可能需要覆写部分主题代码来自定义。代码仅供个人记录和感兴趣者参考。
+> 这是一个未经严格测试的项目。如果你喜欢这个样式，也可以使用 Astro 和原始主题：[Astro Theme Pure](https://github.com/cworld1/astro-theme-pure) by [cworld1](https://github.com/cworld1)
 
 ## 特性
 
