@@ -535,6 +535,16 @@ function mastodonCommentComponent() {
                     this.replies = data.descendants;
                 })
                 .catch((error) => this.info = error);
+        },
+        sanitizeHTML(html) {
+            // 移除不安全的标签
+            html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+            html = html.replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '');
+
+            // 移除不安全的属性
+            html = html.replace(/javascript:/gi, '');
+
+            return html;
         }
     }
 }

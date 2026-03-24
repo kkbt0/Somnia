@@ -7,7 +7,7 @@
     </div>
     <div x-text="info"></div>
     {{/*  <a class="text-foreground" x-text="`${status.account.display_name}`" :href="status.account.url" target="_blank" rel="noopener noreferrer"></a>  */}}
-    <div x-html="status.content"></div>
+    <div x-html="sanitizeHTML(status.content)"></div>
     <a class="flex gap-x-4 justify-end" :href="url" target="_blank" rel="noopener noreferrer">
         <span class="mdi--reply"></span>
         <span x-text="status.replies_count"></span>
@@ -20,7 +20,7 @@
         <template x-for="reply in replies">
             <span class="gap-y-2 rounded-xl border px-3 sm:px-4 py-2 sm:py-3 mt-3">
                 <a class="text-foreground" x-text="reply.account.display_name" :href="reply.account.url" target="_blank" rel="noopener noreferrer"></a>
-                <span x-html="reply.content"></span>
+                <span x-html="sanitizeHTML(reply.content)"></span>
             </span>
         </template>
     </div>
