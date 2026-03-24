@@ -514,7 +514,6 @@ function mastodonCommentComponent() {
         async initMastodonCommentComponent(url, id) {
             this.url = url;
             const api = `https://${url.split("/")[2]}/api/v1/statuses/${url.split("/")[4]}`;
-            console.log(api);
             this.fetchStatus(api);
         },
         async fetchStatus(url) {
