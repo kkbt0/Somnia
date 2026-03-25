@@ -41,11 +41,16 @@
         font-weight: 500;
 
         & a {
-            color: hsl(var(--primary) / var(--un-text-opacity));
+            /* color: hsl(var(--primary) / var(--un-text-opacity)); */
+            /* [Somnia-fix] doc aside style */
+            --highlight-fg: color-mix(in srgb, var(--highlightColor) 40%, hsl(var(--foreground)/var(--un-text-opacity, 1)));
+            color: var(--highlight-fg, hsl(var(--primary) / var(--un-text-opacity))) !important;
         }
 
         &::before {
-            background-color: hsl(var(--primary) / var(--un-bg-opacity));
+            /* background-color: hsl(var(--primary) / var(--un-bg-opacity)); */
+            /* [Somnia-fix] doc aside style */
+            background-color: var(--highlightColor, hsl(var(--primary) / var(--un-text-opacity))) !important;
         }
     }
 </style>
