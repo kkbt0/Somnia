@@ -1,6 +1,6 @@
 ---
 title: Markdown
-date: 2025-01-01T01:00:00+08:00
+date: 2025-01-01T10:00:00+08:00
 math: true
 
 tag: ["Somnia"]
@@ -354,4 +354,3 @@ markdown 分段落是需要空一行的。
 ## Hugo Shortcode
 
 Hugo Shortcode 可以在 Markdown 中直接调用 Hugo 模板，详见 [Components](/posts/components/)
-

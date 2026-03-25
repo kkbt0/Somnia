@@ -56,7 +56,7 @@
             {{ $title }}
         </p>
         <div class='callout-content mt-2'>
-            {{ .Inner }}
+            {{ .Inner | markdownify }}
         </div>
     </div>
 </div>
