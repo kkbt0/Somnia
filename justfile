@@ -8,3 +8,10 @@ css:
     pnpm run dev
 css-build:
     pnpm run build
+
+### dev
+
+dev-dev:
+    ../../../bin/hugo  server -s exampleSite/ --disableFastRender -e production
+update:
+    ../../../bin/llrt scripts/version.js 
