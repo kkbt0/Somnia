@@ -129,6 +129,27 @@ impl Bar {
 一些不是代码的文本
 ```
 
+```rust {hl_lines=[1,"2-3"] add_lines=[5,"6-7"] del_lines=[9,"10-11"]}
+fn main() {
+    let mut input_data  = String::new();
+    std::io::stdin().read_line(&mut input_data).expect("read_line failed!");
+    match input_data.trim().parse::<i32>() {
+        Ok(data) => {
+            match data {
+                0..=10_0000 => println!("{}",f64::from(data)*0.1),
+                10_0001..=20_0000 => println!("{}",10.0*0.1+(f64::from(data-10))*0.75), //
+                20_0001..=40_0000 => println!("3ok"),
+                40_0001..=60_0000 => println!(""),
+                60_0001..=100_0000 => println!(""),
+                _ => println!("{}", data)
+            }
+        }
+        Err(_err) => {println!("{}",_err); }
+    }
+}
+// 模拟 知识点 : match
+```
+
 ### 行内公式
 
 ```markdown

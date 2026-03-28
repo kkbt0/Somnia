@@ -364,3 +364,18 @@ span.katex-display {
   opacity: 0;
   transform: scale(0.95);
 }
+
+/* Chroma 代码块 */
+.chroma .hl::before { background-color: #e5e5e5 !important; }
+.dark .chroma .hl::before { background-color: #3d4148 !important;}
+
+.chroma .add { background-color: rgba(16, 185, 129, 0.16) }
+.chroma .add::before {
+  background-color: rgba(16, 185, 129, 0.16) !important;
+  content: "+" !important;
+}
+.chroma .del  { background-color: rgba(244, 63, 94, 0.16); }
+.chroma .del::before {
+  background-color: rgba(244, 63, 94, 0.16) !important;
+  content: "-" !important;
+}

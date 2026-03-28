@@ -7,59 +7,7 @@ Page {{ .Page }}<br>
 PageInner {{ .PageInner }}<br>
 Position {{ .Position }}<br>
 Type {{ .Type }}<br> -->
-{{/* ── 1. 构建 add_lines 行号集合 ── */}}
-{{- $addLines := .Attributes.add_lines -}}
-{{- $addSet := slice -}}
-{{- if $addLines -}}
-  {{- range $addLines -}}
-    {{- $start := index . 0 -}}
-    {{- $end   := index . 1 -}}
-    {{- range seq $start $end -}}
-      {{- $addSet = $addSet | append . -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
-
-{{- $delLines := .Attributes.del_lines -}}
-{{- $delSet := slice -}}
-{{- if $delLines -}}
-  {{- range $delLines -}}
-    {{- $start := index . 0 -}}
-    {{- $end   := index . 1 -}}
-    {{- range seq $start $end -}}
-      {{- $delSet = $delSet | append . -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
-
-{{/* ── 2. Chroma 高亮，拿到 Inner（行级 HTML） ── */}}
-{{- $result := transform.HighlightCodeBlock . -}}
-
-{{/* ── 3. 按行处理，命中行注入 add class ── */}}
-{{/* Inner 每行结构: <span class="line">...</span>\n */}}
-{{- $lines := split $result.Inner "\n" -}}
-{{- $lineNum := -1 -}}
-{{- $rendered := slice -}}
-{{- range $lines -}}
-  {{/* 跳过末尾空行 */}}
-  {{- if . -}}
-    {{- $lineNum = add $lineNum 1 -}}
-    {{- if in $addSet $lineNum -}}
-      {{/* 将 class="line" 替换为 class="line add" */}}
-      {{- $rendered = $rendered | append (replace . `class="line"` `class="line add"`) -}}
-    {{- else if in $delSet $lineNum -}}
-      {{/* 将 class="line" 替换为 class="line del" */}}
-      {{- $rendered = $rendered | append (replace . `class="line"` `class="line del"`) -}}
-    {{- else -}}
-      {{- $rendered = $rendered | append . -}}
-    {{- end -}}
-  {{- else -}}
-    {{- $rendered = $rendered | append . -}}
-  {{- end -}}
-{{- end -}}
-
-
-{{/*  {{ $result := transform.HighlightCodeBlock . }}  */}}
+{{ $result := transform.HighlightCodeBlock . }}
 {{- $title := .Attributes.title | default .Type | default "text" -}}
 {{- $lineNos := cond (eq .Options.linenos false) "" "show-line-numbers" -}}
 {{- $lines := len (split .Inner "\n") -}}
@@ -74,7 +22,7 @@ Type {{ .Type }}<br> -->
 
 <div class="astro-code astro-code-themes chroma {{if (and (gt $lines $maxShownLines) (not $open))}}collapsed{{end}}" style="overflow-x: auto;"
     data-language="{{$title}}">
-    <pre><code>{{ delimit $rendered "\n" | safeHTML }}</code></pre>
+    <pre><code>{{ $result.Inner }}</code></pre>
     <span class="language ps-1 pe-3 text-sm bg-muted text-muted-foreground">{{$title}}</span>
     <button class="copy text-muted-foreground p-1 box-content border rounded-lg bg-card" aria-label="Copy code"
         data-code="{{ .Inner }}" onclick="
