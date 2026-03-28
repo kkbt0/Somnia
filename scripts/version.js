@@ -1,4 +1,8 @@
+// 更新js依赖
+// 运行此脚本需要 llrt
 // https://github.com/alpinejs/alpine/releases
+
+import { readFileSync, writeFileSync } from 'fs';
 
 async function getFinalUrl(url) {
     try {
@@ -22,7 +26,6 @@ async function getFinalUrl(url) {
 // getFinalUrl('https://unpkg.com/unpkg.com/alpinejs');
 
 
-import { readFileSync, writeFileSync } from 'fs';
 
 function SomniaPath(path) {
     if (path.startsWith('Somnia')) {
@@ -53,30 +56,20 @@ async function download(url, path) {
 async function updateVersion() {
     try {
         const ver = JSON.parse(readFileSync('./scripts/version.json', 'utf8'));
-        ver.dependencies['swup']['remote'] = await getFinalUrl(ver.dependencies['swup']['url']);
-        ver.dependencies['swup/preload-plugin']['remote'] = await getFinalUrl(ver.dependencies['swup/preload-plugin']['url']);
-        ver.dependencies['swup/scroll-plugin']['remote'] = await getFinalUrl(ver.dependencies['swup/scroll-plugin']['url']);
-        ver.dependencies['alpinejs']['remote'] = await getFinalUrl(ver.dependencies['alpinejs']['url']);
+        // 定义需要处理的依赖项名称
+        const depNames = ['swup', 'swup/preload-plugin', 'swup/scroll-plugin', 'alpinejs'];
 
-        if (ver.dependencies['swup']['local'] != ver.dependencies['swup']['remote']) {
-            const local = await download(ver.dependencies['swup']['remote'], ver.dependencies['swup']['path']);
-            ver.dependencies['swup']['local'] = local;
-            ver.updateDate = new Date();
-        }
-        if (ver.dependencies['swup/preload-plugin']['local'] != ver.dependencies['swup/preload-plugin']['remote']) {
-            await download(ver.dependencies['swup/preload-plugin']['remote'], ver.dependencies['swup/preload-plugin']['path']);
-            ver.dependencies['swup/preload-plugin']['local'] = ver.dependencies['swup/preload-plugin']['remote'];
-            ver.updateDate = new Date();
-        }
-        if (ver.dependencies['swup/scroll-plugin']['local'] != ver.dependencies['swup/scroll-plugin']['remote']) {
-            await download(ver.dependencies['swup/scroll-plugin']['remote'], ver.dependencies['swup/scroll-plugin']['path']);
-            ver.dependencies['swup/scroll-plugin']['local'] = ver.dependencies['swup/scroll-plugin']['remote'];
-            ver.updateDate = new Date();
-        }
-        if (ver.dependencies['alpinejs']['local'] != ver.dependencies['alpinejs']['remote']) {
-            await download(ver.dependencies['alpinejs']['remote'], ver.dependencies['alpinejs']['path']);
-            ver.dependencies['alpinejs']['local'] = ver.dependencies['alpinejs']['remote'];
-            ver.updateDate = new Date();
+        for (const depName of depNames) {
+            const dep = ver.dependencies[depName];
+            // 获取远程最新地址
+            dep.remote = await getFinalUrl(dep.url);
+
+            // 比较并更新
+            if (dep.local !== dep.remote) {
+                await download(dep.remote, dep.path);
+                dep.local = dep.remote;
+                ver.updateDate = new Date();
+            }
         }
         writeFileSync('./scripts/version.json', JSON.stringify(ver, null, 2));
 
