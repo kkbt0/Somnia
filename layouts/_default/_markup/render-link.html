@@ -1,7 +1,9 @@
 {{- $u := urls.Parse .Destination -}}
-<a href="{{ .Destination | safeURL }}" {{- with .Title }} title="{{ . }}" {{ end -}} {{- if $u.IsAbs }}
-  rel="external nofollow noopener noreferrer" {{ end -}} target="_blank">
+{{/*  {{- $isAbs := $u.IsAbs -}}  */}}
+{{- $isAbs:= hasPrefix .Destination "http" -}}
+<a href="{{ .Destination | safeURL }}" {{- with .Title }} title="{{ . }}" {{ end -}} {{- if $isAbs }}
+  rel="external nofollow noopener noreferrer" target="_blank"{{ end -}}>
   {{- with .Text }}{{ . }}{{ end -}}
-  {{- if $u.IsAbs }}<span style="user-select:none"> ↗</span>{{ end -}}
+  {{- if $isAbs }}<span style="user-select:none"> ↗</span>{{ end -}}
 </a>
 {{- /* chomp trailing newline */ -}}
