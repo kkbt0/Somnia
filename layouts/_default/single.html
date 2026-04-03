@@ -1,8 +1,9 @@
 {{ define "main" }}
 <div x-data="mainComponent()">
+  {{$back := .Params.back | default ""}}
   {{ partial "page/button.html" (dict
   "title" "Back"
-  "href" ""
+  "href" $back
   "variant" "back"
   "class" "") }}
   <main class='mt-6 items-start gap-x-10 md:flex single'>
