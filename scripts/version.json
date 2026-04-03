@@ -1,5 +1,5 @@
 {
-  "updateDate": "2026-03-28T01:32:36.217Z",
+  "updateDate": "2026-04-03T13:32:04.355Z",
   "dependencies": {
     "swup": {
       "url": "https://unpkg.com/swup@4",
@@ -21,8 +21,8 @@
     },
     "alpinejs": {
       "url": "https://unpkg.com/alpinejs",
-      "remote": "/alpinejs@3.15.9/dist/cdn.min.js",
-      "local": "/alpinejs@3.15.9/dist/cdn.min.js",
+      "remote": "/alpinejs@3.15.11/dist/cdn.min.js",
+      "local": "/alpinejs@3.15.11/dist/cdn.min.js",
       "path": "Somnia/assets/js/alpinejs.min.js"
     }
   }
