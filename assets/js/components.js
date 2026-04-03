@@ -20,7 +20,7 @@ function contentComponent() {
             const data = this.$el.getAttribute("somnia-data");
             if (data.includes("math")) {
                 console.log("somnia-data: ", data);
-                loadKaTeXResource(this.$el);
+                somnia.loadKaTeXResource(this.$el);
             }
         }
     }
@@ -67,7 +67,7 @@ function headerComponent() {
             this.theme = newTheme;
             // 改为 Alinejs 写法 :data-theme="theme" 让 theme 变量有点参与感
             // toggleDarkModeElement.dataset.theme = newTheme;
-            showToast(`Set theme to ${newTheme}`);
+            somnia.showToast(`Set theme to ${newTheme}`);
         }
     };
 }
@@ -325,7 +325,7 @@ function copyrightComponent() {
         init() { },
         copyLinkClick() {
             navigator.clipboard.writeText(window.location.href);
-            showToast('Link copied!');
+            somnia.showToast('Link copied!');
         },
         newQRCode() {
             // 创建 script 标签
@@ -340,7 +340,7 @@ function copyrightComponent() {
                     height: 256,
                 });
             };
-            script.onerror = () => showToast("qrcode.min.js Script load failed");
+            script.onerror = () => somnia.showToast("qrcode.min.js Script load failed");
             document.head.appendChild(script);
         },
         getQRCodeClick() {
@@ -372,8 +372,8 @@ function pfSearchComponent() {
         },
         async loadPFResource() {
             const el = document.getElementById('content-wrapper');
-            loadResource({ element: el, rel: 'stylesheet', href: '/pagefind/pagefind-ui.css', });
-            await loadResource({ element: el, type: 'module', href: '/pagefind/pagefind-ui.js', });
+            somnia.loadResource({ element: el, rel: 'stylesheet', href: '/pagefind/pagefind-ui.css', });
+            await somnia.loadResource({ element: el, type: 'module', href: '/pagefind/pagefind-ui.js', });
             new PagefindUI({
                 element: "#site-search",
                 showSubResults: true,
@@ -411,7 +411,7 @@ function qrCodeComponent() {
                     height: 256,
                 });
             };
-            script.onerror = () => showToast("qrcode.min.js Script load failed");
+            script.onerror = () => somnia.showToast("qrcode.min.js Script load failed");
             document.head.appendChild(script);
         },
     }
@@ -422,7 +422,7 @@ function infoComponent() {
     return {
         infoClick(text) {
             navigator.clipboard.writeText(text);
-            showToast(`Copied "${text}" to clipboard!`);
+            somnia.showToast(`Copied "${text}" to clipboard!`);
         },
         init() { },
     }
@@ -444,7 +444,7 @@ function timeComponent() {
     return {
         init() { },
         shichen(ts13) {
-            return timestampToShichen(ts13);
+            return somnia.timestampToShichen(ts13);
         }
     }
 }

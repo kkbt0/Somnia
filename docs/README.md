@@ -440,7 +440,7 @@ date: 2025-01-01T10:00:00+08:00
 ```markdown
 {{< script >}}
 <script>
-    showToast("提示内容", 3000);
+    somnia.showToast("提示内容", 3000);
 </script>
 {{< /script >}}
 ```

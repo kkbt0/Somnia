@@ -10,6 +10,6 @@ console.log("你好，世界")
 // function noticeComponent() {}
 
 // Swupjs 初次加载，和每次切换页面都会执行
-function swupPageInitCustom() {
+Somnia.prototype.swupPageInitCustom = function() {
     console.log("[Swup] Page View");
 }

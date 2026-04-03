@@ -202,7 +202,7 @@ svg or 可参考:
     if (targetP) {
         let parentElement = targetP.parentElement;
         parentElement.addEventListener('click', () => {
-            showToast("Clicked!", 3000);
+            somnia.showToast("Clicked!", 3000);
         })
     }
 </script>

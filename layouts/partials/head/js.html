@@ -26,8 +26,8 @@
 <script defer>
     // tocComponent 依赖 scroll-plugin
     document.addEventListener('DOMContentLoaded', () => {
-        swupPageInitMediumZoom();
-        swupPageInitCustom();
+        somnia.swupPageInitMediumZoom();
+        somnia.swupPageInitCustom();
         const swup = new Swup({
             containers: ['#content-wrapper'],
             // native: true,
@@ -37,8 +37,8 @@
         });
         // Alpine.start(); // Alpinejs 已经启动
         swup.hooks.on('page:view', () => {
-            swupPageInitMediumZoom();
-            swupPageInitCustom();
+            somnia.swupPageInitMediumZoom();
+            somnia.swupPageInitCustom();
         });
     })
 </script>

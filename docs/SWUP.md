@@ -121,8 +121,8 @@ Somnia 主题在每次页面切换后重新初始化以下功能：
 
 ```javascript
 swup.hooks.on('page:view', () => {
-    swupPageInitMediumZoom();  // 图片放大功能
-    swupPageInitCustom();      // 自定义初始化
+    somnia.swupPageInitMediumZoom();  // 图片放大功能
+    somnia.swupPageInitCustom();      // 自定义初始化
 });
 ```
 
@@ -271,10 +271,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 页面切换完成后
     swup.hooks.on('page:view', () => {
         // 重新初始化 Medium Zoom
-        swupPageInitMediumZoom();
+        somnia.swupPageInitMediumZoom();
 
         // 重新初始化自定义功能
-        swupPageInitCustom();
+        somnia.swupPageInitCustom();
 
         // 重新绑定事件
         bindEvents();

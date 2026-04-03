@@ -225,7 +225,7 @@ function copyrightComponent() {
         qrcodeInit: false,
         copyLinkClick() {
             navigator.clipboard.writeText(window.location.href);
-            showToast('Link copied!');
+            somnia.showToast('Link copied!');
         },
         getQRCodeClick() {
             this.qrcodeShow = !this.qrcodeShow;
@@ -273,13 +273,13 @@ function collapseComponent() {
 主题提供了 `showToast` 函数：
 
 ```javascript
-showToast("提示内容", 3000);  // 3秒后自动消失
+somnia.showToast("提示内容", 3000);  // 3秒后自动消失
 ```
 
 ### 加载外部资源
 
 ```javascript
-loadResource({
+somnia.loadResource({
     element: document.head,
     rel: 'stylesheet',
     href: 'https://example.com/style.css',
@@ -291,7 +291,7 @@ loadResource({
 ### 加载 KaTeX
 
 ```javascript
-loadKaTeXResource(element);
+somnia.loadKaTeXResource(element);
 // element 为要渲染数学公式的 DOM 元素
 ```
 

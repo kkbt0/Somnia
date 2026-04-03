@@ -21,8 +21,8 @@ Alpine.js 和 Swup.js 是两个互补的库：
 <script defer>
     document.addEventListener('DOMContentLoaded', () => {
         // 1. 初始化静态功能
-        swupPageInitMediumZoom();
-        swupPageInitCustom();
+        somnia.swupPageInitMediumZoom();
+        somnia.swupPageInitCustom();
 
         // 2. 初始化 Swup
         const swup = new Swup({
@@ -32,8 +32,8 @@ Alpine.js 和 Swup.js 是两个互补的库：
 
         // 3. 设置页面切换后的回调
         swup.hooks.on('page:view', () => {
-            swupPageInitMediumZoom();
-            swupPageInitCustom();
+            somnia.swupPageInitMediumZoom();
+            somnia.swupPageInitCustom();
         });
     });
 </script>
@@ -303,7 +303,7 @@ function lazyComponent() {
         loaded: false,
         load() {
             if (this.loaded) return;
-            loadResource({
+            somnia.loadResource({
                 href: 'https://example.com/script.js',
                 type: 'module'
             }).then(() => {
