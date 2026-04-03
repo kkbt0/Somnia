@@ -20,7 +20,7 @@
         <template x-for="reply in replies">
             <span class="gap-y-2 rounded-xl border px-3 sm:px-4 py-2 sm:py-3 mt-3">
                 <a class="text-foreground" x-text="reply.account.display_name" :href="reply.account.url" target="_blank" rel="noopener noreferrer"></a>
-                <span x-html="sanitizeHTML(reply.content)"></span>
+                <div x-html="sanitizeHTML(reply.content)"></div>
             </span>
         </template>
     </div>
