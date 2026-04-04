@@ -38,7 +38,9 @@ const PRE_CACHE_URLS = [
   '/offline/',  // 离线降级页（需自行创建 content/offline.md）
  // '/index.json' // 搜索索引（如有）
   '/images/default_avatar.webp', // 默认头像
-  '/images/default.webp' // 默认图片
+  '/images/default.webp', // 默认图片
+  '/icons/main.svg', // 默认图标
+  '/icons/code.svg' // 默认代码图标
 ];
 
 /**
