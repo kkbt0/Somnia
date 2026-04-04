@@ -75,7 +75,7 @@ Type {{ .Type }}<br> -->
 <div class="astro-code astro-code-themes chroma {{if (and (gt $lines $maxShownLines) (not $open))}}collapsed{{end}}" style="overflow-x: auto;"
     data-language="{{$title}}">
     <pre><code>{{ delimit $rendered "\n" | safeHTML }}</code></pre>
-    <span class="language ps-1 pe-3 text-sm bg-muted text-muted-foreground">{{$title}}</span>
+    <span class="language ps-1 pe-3 text-sm bg-muted text-muted-foreground rounded-bl">{{$title}}</span>
     <button class="copy text-muted-foreground p-1 box-content border rounded-lg bg-card" aria-label="Copy code"
         data-code="{{ .Inner }}" onclick="
           navigator.clipboard.writeText(this.dataset.code);
