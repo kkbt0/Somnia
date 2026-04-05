@@ -1,3 +1,5 @@
+/*! Somnia | (c) 2026 kkbt | https://github.com/kkbt0/Somnia */
+
 class Somnia {
     // Toast
     showToast(message, time) {
