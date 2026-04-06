@@ -390,7 +390,7 @@ html.is-changing .transition-fade .bottom {
 html.is-animating .transition-fade main,
 html.is-animating .transition-fade .bottom {
   /* opacity: 0; */
-  opacity: 0.8;
+  opacity: 0.7;
   transition: opacity 0.25s ease-out;
   /* 确保可点击区域不穿透 */
   pointer-events: none;
