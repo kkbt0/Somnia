@@ -379,3 +379,99 @@ span.katex-display {
   background-color: rgba(244, 63, 94, 0.16) !important;
   content: "-" !important;
 }
+
+/* Swup.js 动画 */
+html.is-changing .transition-fade main,
+html.is-changing .transition-fade .bottom {
+  transition: 0.15s opacity;
+  opacity: 1;
+}
+
+html.is-animating .transition-fade main,
+html.is-animating .transition-fade .bottom {
+  /* opacity: 0; */
+  opacity: 0.8;
+  transition: opacity 0.25s ease-out;
+  /* 确保可点击区域不穿透 */
+  pointer-events: none;
+}
+
+/* 顶/底扫描线 — 纯 CSS，挂在 Swup 的 is-animating 状态上 */
+/* 扫描线颜色变量 */
+:root {
+    --scan-color-a: #5a4fd4;
+    --scan-color-b: #2a96d4;
+    --scan-opacity-peak: 1;
+    --scan-opacity-mid: 0.75;
+  }
+
+.dark {
+  --scan-color-a: #7c6fea;
+  --scan-color-b: #5bb5e8;
+  --scan-opacity-peak: 1;
+  --scan-opacity-mid: 0.6;
+}
+
+/* 顶/底扫描线 */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  /* height: 2px; */
+  height: 3px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transform: scaleX(0.05);
+  transform-origin: center;
+}
+
+body::before {
+  top: 0;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--scan-color-a) 25%,
+      var(--scan-color-b) 75%,
+      transparent 100%);
+}
+
+body::after {
+  bottom: 0;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--scan-color-b) 25%,
+      var(--scan-color-a) 75%,
+      transparent 100%);
+}
+
+html.is-animating body::before {
+  animation: scanLine 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+html.is-animating body::after {
+  animation: scanLine 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.06s infinite;
+}
+
+@keyframes scanLine {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.05);
+  }
+
+  20% {
+    opacity: var(--scan-opacity-peak);
+    transform: scaleX(1);
+  }
+
+  70% {
+    opacity: var(--scan-opacity-mid);
+    transform: scaleX(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleX(0.05);
+  }
+}
