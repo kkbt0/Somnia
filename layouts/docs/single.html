@@ -11,7 +11,7 @@
     <!-- Sidebar -->
     <aside
       class='animate top-20 min-w-48 basis-60 overflow-y-scroll max-md:hidden z-40 fixed md:sticky md:order-2 lg:shrink-0 max-md:border max-md:px-4 max-md:py-3 max-md:bg-muted max-md:rounded-xl'
-      style='height:calc(100vh - 7rem);' id='sidebar'
+      style='max-height:calc(100vh - 7rem);' id='sidebar'
       :class="{'show': sidebarShow, 'display':sidebarShow?'none':'block' }">
       <!-- [INFO] sidebar -->
       {{ partial "toc/toc.html" . }}
@@ -43,7 +43,8 @@
 
   <div class='bottom mt-6 items-start gap-x-10 md:flex'>
     <!-- Bottom -->
-    <div class='flex-1 text-muted-foreground md:min-w-[50ch]'>
+    <!-- [Somnia-fix] flex-1 -> lg:flex-1 修复小于1024px的屏幕 文章与底部大小不一致的问题 -->
+    <div class='lg:flex-1 text-muted-foreground md:min-w-[50ch]'>
       <!-- [TODO] bottom -->
       {{ partial "comment/comment.html" . }}
       <div class="some-comments" style="display: none;">评论系统占位</div>
