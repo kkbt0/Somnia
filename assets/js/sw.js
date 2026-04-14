@@ -25,8 +25,8 @@ const CACHE_VERSION = 'v0114';
  * - STATIC_CACHE：长期缓存带 Hash 的 CSS/JS/字体/图片（内容不变）
  * - PAGE_CACHE：  缓存 HTML 页面（网络优先，支持离线回退）
  */
-const STATIC_CACHE = `hugo-static-${CACHE_VERSION}`;
-const PAGE_CACHE   = `hugo-pages-${CACHE_VERSION}`;
+const STATIC_CACHE = `somnia-static-${CACHE_VERSION}`;
+const PAGE_CACHE   = `somnia-pages-${CACHE_VERSION}`;
 
 /**
  * 安装阶段预缓存的资源列表。
@@ -36,11 +36,9 @@ const PAGE_CACHE   = `hugo-pages-${CACHE_VERSION}`;
 const PRE_CACHE_URLS = [
   '/',          // 首页
   '/offline/',  // 离线降级页（需自行创建 content/offline.md）
- // '/index.json' // 搜索索引（如有）
   '/images/default_avatar.webp', // 默认头像
   '/images/default.webp', // 默认图片
-  '/icons/main.svg', // 默认图标
-  '/icons/code.svg' // 默认代码图标
+  '/icons/main.svg' // 默认图标
 ];
 
 /**
@@ -101,7 +99,7 @@ self.addEventListener('activate', (event) => {
           .filter((name) => {
             // 删除不属于当前版本的缓存桶
             return (
-              name.startsWith('hugo-') &&
+              name.startsWith('somnia-') &&
               name !== STATIC_CACHE &&
               name !== PAGE_CACHE
             );
@@ -281,12 +279,12 @@ self.addEventListener('message', (event) => {
   }
 
   if (event.data?.type === 'CLEAR_CACHE') {
-    // 手动清除所有 hugo- 缓存桶（调试或强制刷新时使用）
+    // 手动清除所有 somnia- 缓存桶（调试或强制刷新时使用）
     console.log('[Somnia] [SW] 收到 CLEAR_CACHE 指令，清除所有缓存');
     event.waitUntil(
       caches.keys().then((keys) =>
         Promise.all(
-          keys.filter((k) => k.startsWith('hugo-')).map((k) => caches.delete(k))
+          keys.filter((k) => k.startsWith('somnia-')).map((k) => caches.delete(k))
         )
       )
     );
