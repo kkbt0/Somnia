@@ -3,7 +3,7 @@
   <!-- slot name='other-icons' -->
    <!-- 调用父组件的 toggleSidebar() -->
   <button slot='other-icons' aria-label='Toggle sidebar'
-    class='size-10 flex items-center justify-center rounded-full border-2 border-transparent bg-muted text-muted-foreground duration-300 hover:border-border/75 md:hidden sm:size-12'
+    class='size-10 flex items-center justify-center rounded-full border-2 border-transparent bg-muted text-muted-foreground duration-300 hover:border-border/75 md:hidden sm:size-12 z-99'
     id='sidebar-btn' @click="toggleSidebar()">
     <svg aria-hidden="true" width="22" height="22" style="--sl-icon-size: 1em;">
       <use href='{{"icons/main.svg#list"|relURL}}' />
@@ -12,7 +12,7 @@
 
   <scroll-button>
     <button @click="scrollToTop" aria-label='Back to Top'
-      class='relative size-10 flex items-center justify-center rounded-full border-2 border-transparent bg-muted text-muted-foreground duration-300 hover:border-border/75 sm:size-12 opacity-0'
+      class='relative size-10 flex items-center justify-center rounded-full border-2 border-transparent bg-muted text-muted-foreground duration-300 hover:border-border/75 sm:size-12 opacity-0 z-99'
       id='to-top-btn'>
       <div
         class='top-text absolute bottom-0 end-0 start-0 top-0 flex items-center justify-center group-[.ended]:opacity-0'>

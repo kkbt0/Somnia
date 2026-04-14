@@ -91,6 +91,7 @@ function backToTopComponent() {
         articleEl: undefined, // for destroy
         contentHeaderEl: undefined, // for destroy
         _onResize: undefined, // for destroy
+        _articleResizeObserver: undefined, // 文章内容变化监测
 
         init() {
             // 容错处理，缺少元素则不启用百分比功能，直接显示按钮
@@ -122,6 +123,12 @@ function backToTopComponent() {
                     this.updateScrollPercent(); // 立即更新百分比，避免尺寸变化后显示错误的百分比
                 };
                 window.addEventListener('resize', this._onResize);
+                // 监测文章内容变化，动态调整 scrollHeight
+                this._articleResizeObserver = new ResizeObserver(() => {
+                    this.scrollHeight = this.articleEl.scrollHeight;
+                    this.updateScrollPercent(); // 立即更新百分比，避免内容变化后显示错误的百分比
+                });
+                this._articleResizeObserver.observe(this.articleEl);
             } else {
                 this.actionBtnsShow = true;
             }
@@ -156,6 +163,7 @@ function backToTopComponent() {
             this.observer?.unobserve(this.contentHeaderEl);  // 可选链
             this.observer?.disconnect();
             window.removeEventListener('resize', this._onResize); // 清理 resize 监听
+            this._articleResizeObserver?.disconnect(); // 清理文章内容监测
         },
     };
 }

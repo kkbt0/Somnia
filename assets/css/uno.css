@@ -38,6 +38,7 @@
 .z-30{z-index:30;}
 .z-40{z-index:40;}
 .z-50{z-index:50;}
+.z-99{z-index:99;}
 .grid{display:grid;}
 .grid-cols-\[auto_1fr\]{grid-template-columns:auto 1fr;}
 .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr));}
