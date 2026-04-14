@@ -1,6 +1,6 @@
 ---
 title: Components
-date: 2025-01-01T11:00:00+08:00
+date: 2025-01-01T11:30:00+08:00
 
 tag: ["Somnia"]
 categories: ["技术"]
@@ -191,7 +191,7 @@ svg or 可参考:
 
 {{< page/button title="Lorem ipsum" href="posts/components/#toast" variant="button" >}}
 
-{{< script >}}
+{{< html >}}
 <script>
     // 找到包含"Lorem ipsum"文本的最后的p标签
     let targetP = Array.from(document.querySelectorAll('p')).findLast(p =>
@@ -206,7 +206,7 @@ svg or 可参考:
         })
     }
 </script>
-{{< /script >}}
+{{< /html >}}
 
 ### Medium Zoom
 

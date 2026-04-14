@@ -475,3 +475,10 @@ html.is-animating body::after {
     transform: scaleX(0.05);
   }
 }
+
+/* toc 自动折叠 */
+.toc-item.ps-7:not(li:has(.highlight.toc-item) li .toc-item),
+.toc-item.ps-14:not(li:has(.highlight.toc-item) li .toc-item) {
+  height: 0px;
+  padding: 0px;
+}

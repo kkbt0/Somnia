@@ -10,7 +10,10 @@
     ></span>
     <a 
       aria-label="Scroll to section: {{ $text }}"
-      class="toc-item line-clamp-2 px-3 py-1 ms-2 text-foreground/75 transition-all hover:text-foreground [&.highlight]:font-medium [&.highlight]:text-primary [&.highlight-bg-translucent]:bg-muted{{ if gt $depth 2 }} ps-7{{ end }}"
+      class="toc-item line-clamp-2 px-3 py-1 ms-2 text-foreground/75 transition-all hover:text-foreground [&.highlight]:font-medium [&.highlight]:text-primary [&.highlight-bg-translucent]:bg-muted
+      {{ if eq $depth 3 }} ps-7 {{ end }}
+      {{ if eq $depth 4 }} ps-14 {{ end }}
+      "
       href="#{{ .id }}"
     >{{ $text }}</a>
   </div>
@@ -23,3 +26,31 @@
   </ul>
   {{- end -}}
 </li>
+
+<!-- 移动到 main.css
+<style>
+  /*
+  :not(.highlight).ps-7,
+  :not(.highlight).ps-14 {
+    height: 0px;
+    padding: 0px;
+  }
+  li:has(.highlight.ps-7) li .ps-7,
+  li:has(.highlight.ps-14) li .ps-14 {
+    height: auto;
+  } -> 取反
+  .ps-7:not(li:has(.highlight.ps-7) li .ps-7),
+  .ps-14:not(li:has(.highlight.ps-14) li .ps-14) {
+    height: 0px;
+    padding: 0px;
+  }
+  */
+  
+  .toc-item.ps-7:not(li:has(.highlight.toc-item) li .toc-item),
+  .toc-item.ps-14:not(li:has(.highlight.toc-item) li .toc-item) {
+    height: 0px;
+    padding: 0px;
+  }
+</style>
+
+-->

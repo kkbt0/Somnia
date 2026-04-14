@@ -38,6 +38,10 @@ hugo server -s exampleSite/ --disableFastRender
 
 这在你需要不修改 Somnia 主题的情况下定制你的主题，或编写 shortcode 的时候会用到。
 
+## 自定义组件
+
+见 [Custom Components](/Somnia/posts/custom-components/)
+
 ## 评论系统
 
 ### Mastodon
