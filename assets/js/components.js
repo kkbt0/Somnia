@@ -74,101 +74,88 @@ function headerComponent() {
 
 
 // for Somnia/layouts/partials/back-to-top.html
+const CONTENT_ID = 'content';
+const HEADER_ID = 'content-header';
 function backToTopComponent() {
     return {
-        needPercent: true,      // 是否需要百分比功能
-        actionBtnsShow: false,  // actionBtns 是否可见
-        scrollPercent: 0,        // 当前滚动百分比 onScroll 绑定自动触发初始化
+        needPercent: true, // 是否需要百分比功能
+        actionBtnsShow: false, // actionBtns 是否可见
+        scrollPercent: 0, // 当前滚动百分比 onScroll 绑定自动触发初始化
 
-        scrollHeight: 0,         // 文章总高度
-        articleTop: 0,           // 文章顶部偏移量
-        clientHeight: 0,         // 视口高度
+        scrollHeight: 0, // 文章总高度
+        articleTop: 0, // 文章顶部偏移量
+        clientHeight: 0, // 视口高度
 
-        ticking: false,           // 节流标志
+        ticking: false, // 节流标志
         observer: undefined, // for destroy
-        articleEl: undefined,// for destroy
-        contentHeaderEl: undefined,// for destroy
-        handleScrollReady: false,// for onScroll
+        articleEl: undefined, // for destroy
+        contentHeaderEl: undefined, // for destroy
+        _onResize: undefined, // for destroy
 
         init() {
-            // 错误处理：如果文章元素不存在，禁用百分比功能
-            const contentName = "content";
-            this.articleEl = document.getElementById(contentName);
+            // 容错处理，缺少元素则不启用百分比功能，直接显示按钮
+            this.articleEl = document.getElementById(CONTENT_ID);
             if (!this.articleEl) {
-                console.error(`Element with ID ${contentName} not found.`)
+                console.error(`Element #${CONTENT_ID} not found.`);
                 this.needPercent = false;
             }
-            // 根据页眉元素的可见性，控制按钮组显示/隐藏
-            // id content-header
-            const contentHeaderName = "content-header";
-            this.contentHeaderEl = document.getElementById(contentHeaderName);
+            // content-header 监测，控制按钮显示隐藏
+            this.contentHeaderEl = document.getElementById(HEADER_ID);
             if (this.contentHeaderEl) {
-                this.observer = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        this.actionBtnsShow = !entry.isIntersecting;
-                    })
-                })
-                this.observer.observe(this.contentHeaderEl)
+                this.observer = new IntersectionObserver(([entry]) => {
+                    this.actionBtnsShow = !entry.isIntersecting;
+                });
+                this.observer.observe(this.contentHeaderEl);
             } else {
-                console.error(`Element with ID ${contentHeaderName} not found.`)
+                console.error(`Element #${HEADER_ID} not found.`);
+                this.actionBtnsShow = true;
             }
-            // 滚动百分比更新
+            // 只有在需要百分比功能时才计算高度和监听 resize，避免不必要的性能开销
             if (this.needPercent) {
-                // 初始化必要的尺寸信息
-                this.scrollHeight = this.articleEl.scrollHeight; // 文章总高度（包含滚动部分）
-                this.articleTop = this.articleEl.offsetTop; // 文章顶部距离文档顶部的距离
-                this.clientHeight = document.documentElement.clientHeight; // 视口高度
-                // document.addEventListener("scroll", this.handleScroll)
-                this.handleScrollReady = true;
+                this.scrollHeight = this.articleEl.scrollHeight;
+                this.articleTop = this.articleEl.offsetTop;
+                this.clientHeight = document.documentElement.clientHeight;
+
+                this._onResize = () => {                                    // 响应窗口大小变化
+                    this.scrollHeight = this.articleEl.scrollHeight;
+                    this.clientHeight = document.documentElement.clientHeight;
+                    this.updateScrollPercent(); // 立即更新百分比，避免尺寸变化后显示错误的百分比
+                };
+                window.addEventListener('resize', this._onResize);
             } else {
                 this.actionBtnsShow = true;
             }
         },
-        // 计算滚动百分比
+
         calculateScrollPercent() {
-            const scrollTop = Math.max(0, window.scrollY || document.documentElement.scrollTop);
-            // 滚动位置在文章开始之前
+            const scrollTop = Math.max(0, window.scrollY ?? document.documentElement.scrollTop);
             if (scrollTop < this.articleTop) return 0;
-            // 计算最大可滚动距离
             const maxScrollable = this.scrollHeight - this.clientHeight;
-            // 文章高度小于视口高度
             if (maxScrollable <= 0) return 100;
-            // 计算实际滚动距离
             const progress = Math.min(scrollTop - this.articleTop, maxScrollable);
-            // 计算百分比
             return Math.round((progress / maxScrollable) * 100);
         },
 
-        //更新滚动百分比显示
         updateScrollPercent() {
             this.scrollPercent = this.calculateScrollPercent();
             this.ticking = false;
         },
 
-        // 滚动事件处理
         onScroll() {
-            if (this.handleScrollReady) {
-                if (!this.ticking) {
-                    requestAnimationFrame(() => { this.updateScrollPercent() })
-                    this.ticking = true;
-                }
-            }
-        },
-        // 滚动到顶部
-        scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' })
+            if (!this.needPercent || this.ticking) return;  // 移除冗余标志
+            requestAnimationFrame(() => this.updateScrollPercent());
+            this.ticking = true;
         },
 
-        // 清理资源
+        scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            this.contentHeaderEl?.focus({ preventScroll: true }); // 键盘无障碍优化
+        },
+
         destroy() {
-            if (this.observer && this.contentHeaderEl) {
-                this.observer.unobserve(this.contentHeaderEl);
-                this.observer.disconnect();
-            }
-            // 使用 Alpinejs @scroll.window="onScroll()" 写法
-            // if (this.needPercent) {
-            //   document.removeEventListener('scroll', this.handleScroll);
-            // }
+            this.observer?.unobserve(this.contentHeaderEl);  // 可选链
+            this.observer?.disconnect();
+            window.removeEventListener('resize', this._onResize); // 清理 resize 监听
         },
     };
 }
@@ -223,7 +210,9 @@ function tocComponent() {
         headings: [],
         tocLinks: [],
         headingProgress: {},
-        intervalId: null,
+        _scrollHandler: null,
+        _rafId: null,
+        _dirty: false,
 
         init() {
             this.headings = Array.from(
@@ -231,10 +220,11 @@ function tocComponent() {
                     'article h1, article h2, article h3, article h4, article h5, article h6'
                 )
             )
+
             this.tocLinks = Array.from(this.$el.querySelectorAll('a[href^="#"]')).map((link) => ({
                 element: link,
                 progressBar: link.previousElementSibling,
-                slug: decodeURIComponent((link.getAttribute('href') || '').substring(1))
+                slug: decodeURIComponent((link.getAttribute('href') ?? '').substring(1))
             }))
 
             this.tocLinks.forEach((link) => {
@@ -244,55 +234,71 @@ function tocComponent() {
                         (h) => decodeURIComponent(h.id) === link.slug
                     )
                     if (heading) {
-                        history.pushState(null, heading.textContent || '', link.element.getAttribute('href'))
+                        history.pushState(null, '', link.element.getAttribute('href'))
                         heading.scrollIntoView({ behavior: 'smooth' })
-
                     }
                 })
             })
 
-            this.updatePositionAndStyle()
-            this.intervalId = setInterval(() => this.updatePositionAndStyle(), 100)
-            window.addEventListener('scroll', () => this.updatePositionAndStyle())
+            // 用 rAF 节流，避免 setInterval + scroll 双重触发
+            this._scrollHandler = () => {
+                if (this._dirty) return
+                this._dirty = true
+                this._rafId = requestAnimationFrame(() => {
+                    this._updateProgress()
+                    this._updateStyles()
+                    this._dirty = false
+                })
+            }
+
+            window.addEventListener('scroll', this._scrollHandler, { passive: true })
+            this._scrollHandler() // 初始化执行一次
         },
 
         destroy() {
-            if (this.intervalId) clearInterval(this.intervalId)
+            if (this._scrollHandler)
+                window.removeEventListener('scroll', this._scrollHandler)
+            if (this._rafId)
+                cancelAnimationFrame(this._rafId)
         },
 
-        updatePositionAndStyle() {
-            const windowHeight = window.innerHeight
-            const content = document.querySelector('#content')
-            const pageOffset = window.scrollY - (content?.offsetTop || 0)
-            const postOffset = (content?.offsetHeight || 0) + 127
+        // 只负责计算每个 heading 的阅读进度
+        _updateProgress() {
+            const vh = window.innerHeight
 
             this.headings.forEach((el, index) => {
-                const nextHeadingTop = this.headings[index + 1]?.offsetTop || postOffset
-                const range = [el.offsetTop - pageOffset, nextHeadingTop - pageOffset - el.offsetHeight]
-                const progress = (windowHeight - range[0]) / (range[1] - range[0])
+                const rect = el.getBoundingClientRect()
+                const nextRect = this.headings[index + 1]?.getBoundingClientRect()
+
+                // 当前标题顶部到下一标题顶部（或视口底部兜底）为该节的阅读区间
+                const sectionTop = rect.top
+                const sectionBottom = nextRect ? nextRect.top : rect.bottom + 127
+
+                // progress：视口底部扫过该区间的比例
+                const progress = (vh - sectionTop) / (sectionBottom - sectionTop)
+
                 this.headingProgress[decodeURIComponent(el.id)] = {
-                    inView: range[0] < windowHeight && range[1] > 0,
+                    inView: sectionTop < vh && sectionBottom > 0,
                     progress: Math.max(0, Math.min(1, progress))
                 }
             })
+        },
 
+        // 只负责把进度映射到 DOM 样式
+        _updateStyles() {
             this.tocLinks.forEach(({ element: el, progressBar: bar, slug }, i) => {
                 const state = this.headingProgress[slug]
                 if (!state) return
+
                 const { inView, progress } = state
+                const prevInView = !!this.headingProgress[this.tocLinks[i - 1]?.slug]?.inView
+                const nextInView = !!this.headingProgress[this.tocLinks[i + 1]?.slug]?.inView
 
                 el.classList.toggle('highlight', inView)
                 el.classList.toggle('highlight-bg-translucent', inView)
-                el.classList.toggle(
-                    'rounded-t-2xl',
-                    inView && (i === 0 || !this.headingProgress[this.tocLinks[i - 1]?.slug]?.inView)
-                )
-                el.classList.toggle(
-                    'rounded-b-2xl',
-                    inView &&
-                    (i === this.tocLinks.length - 1 ||
-                        !this.headingProgress[this.tocLinks[i + 1]?.slug]?.inView)
-                )
+                el.classList.toggle('rounded-t-2xl', inView && !prevInView)
+                el.classList.toggle('rounded-b-2xl', inView && !nextInView)
+
                 bar.classList.toggle('is-read', !inView && progress === 1)
                 bar.classList.toggle('highlight-bg', inView)
                 bar.style.setProperty('height', `${progress * 90}%`)
