@@ -15,10 +15,11 @@ Somnia 使用了 UnoCSS + Alpine.js 。因此可以使用一些 `Alpine + Tailwi
 - https://devdojo.com/pines/
 - https://github.com/thedevdojo/pines
 
-**注意**: 由于 Swup.js 的原因，使用 `<script>` 标签会导致无法正常运行。解决方法
+**注意**: 由于 Swup.js 的原因，使用 `<script>` 标签在 Swup 切换页面后不会自动执行。解决方法
 
-1. 将 `<script>` 标签放到 `assets/js/custom.js` 中，新增例如 `xxxxComponent()`，然后`<div x-data="xxxxComponent()"></div>` 使用。
-2. 直接写 `<div x-data="{ foo: 'bar' , func1() { ... }}"></div>`。
+1. 使用 Swup.js 插件解决。
+2. 将 `<script>` 标签内容放到 `assets/js/custom.js` 中，新增例如 `xxxxComponent()`，然后通过 `<div x-data="xxxxComponent()"></div>` 使用。
+3. 直接写 `<div x-data="{ foo: 'bar' , func1() { ... }}"></div>`。
 
 例如：
 
@@ -38,7 +39,7 @@ class="flex justify-center p-2">
 </div>
 {{</html>}}
 
-https://devdojo.com/pines/docs/text-animation
+一个复杂些的例子：https://devdojo.com/pines/docs/text-animation
 
 {{<html>}}
 <h1 x-data="{
