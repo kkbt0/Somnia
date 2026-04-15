@@ -486,10 +486,27 @@ li .toc-item {
   max-height: 10rem;
 }
 
+/* toc h4 跟随 h3 自动折叠展开 */
+/* 使用 max-height 可以实现过渡动画。设置 height: 0 -> auto 不会有过渡动画 */
+/* 
 .toc-item.ps-7:not(li:has(.highlight.toc-item) li .toc-item),
 .toc-item.ps-14:not(li:has(.highlight.toc-item) li .toc-item) {
-  /* height: 0px; */
   padding-top: 0rem;
   padding-bottom: 0rem;
   max-height: 0rem;
+}
+ */
+
+/* h4 自动折叠展开 调试 */
+/* li:has(.highlight.ps-7) li .ps-7,
+li:has(.highlight.ps-14) li:has(.highlight.ps-14) .ps-14 {
+  border: 1px solid red;
+} */
+
+/* h4 自动折叠展开 */
+.toc-item.ps-7:not(li:has(.highlight.ps-7) li .ps-7),
+.toc-item.ps-14:not(li:has(.highlight.ps-14) li:has(.highlight.ps-14) .ps-14) {
+  max-height: 0rem;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
 }
