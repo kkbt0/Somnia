@@ -489,6 +489,7 @@ li .toc-item {
 .toc-item.ps-7:not(li:has(.highlight.toc-item) li .toc-item),
 .toc-item.ps-14:not(li:has(.highlight.toc-item) li .toc-item) {
   /* height: 0px; */
-  padding: 0px;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
   max-height: 0rem;
 }
