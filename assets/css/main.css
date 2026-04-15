@@ -476,9 +476,19 @@ html.is-animating body::after {
   }
 }
 
+/* 侧边栏固定高度 */
+/* .single aside {
+  height: calc(100vh - 7rem);
+} */
+
 /* toc 自动折叠 */
+li .toc-item {
+  max-height: 10rem;
+}
+
 .toc-item.ps-7:not(li:has(.highlight.toc-item) li .toc-item),
 .toc-item.ps-14:not(li:has(.highlight.toc-item) li .toc-item) {
-  height: 0px;
+  /* height: 0px; */
   padding: 0px;
+  max-height: 0rem;
 }
