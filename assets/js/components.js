@@ -156,11 +156,12 @@ function backToTopComponent() {
 
         scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            this.contentHeaderEl?.focus({ preventScroll: true }); // 键盘无障碍优化
+            this.contentHeaderEl?.setAttribute('tabindex', '-1'); // 键盘无障碍优化，允许 focus
+            this.contentHeaderEl?.focus({ preventScroll: true }); // 键盘无障碍优化 
         },
 
         destroy() {
-            this.observer?.unobserve(this.contentHeaderEl);  // 可选链
+            this.observer?.unobserve(this.contentHeaderEl);  // 清理 content-header 监测
             this.observer?.disconnect();
             window.removeEventListener('resize', this._onResize); // 清理 resize 监听
             this._articleResizeObserver?.disconnect(); // 清理文章内容监测
@@ -336,34 +337,41 @@ function copyrightComponent() {
         qrcodeShow: false,
         qrcodeImgSrc: "",
         qrcodeInit: false,
+        qrcodeScriptLoaded: window.QRCode !== undefined, // 检测全局 QRCode 对象，避免重复加载
         qrcodeScriptLoading: false,
-        init() { },
+        init() {
+            // console.log("QRCode library 加载状态:", this.qrcodeScriptLoaded);
+        },
         copyLinkClick() {
             navigator.clipboard.writeText(window.location.href);
             somnia.showToast('Link copied!');
         },
         newQRCode() {
+            // 加载后生成
+            // console.log("New QRCode " + window.location.origin + window.location.pathname);
+            new QRCode(this.$refs.qrcode, {
+                text: window.location.origin + window.location.pathname,
+                width: 256,
+                height: 256,
+            });
+            this.qrcodeInit = true;
+            this.qrcodeShow = true;
+        },
+        newQRCodeScript() {
             somnia.scanLine({ act: "show" });
             this.qrcodeScriptLoading = true;
             // 创建 script 标签
             const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js';
+            script.src = '//cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js';
             script.onload = () => {
-                // 加载后生成
-                // console.log("New QRCode " + window.location.origin + window.location.pathname);
-                new QRCode(this.$refs.qrcode, {
-                    text: window.location.origin + window.location.pathname,
-                    width: 256,
-                    height: 256,
-                });
-                somnia.scanLine({ act: "hide", time: 300 });
+                somnia.scanLine({ act: "hide", time: 0 });
+                this.newQRCode();
+                this.qrcodeScriptLoaded = true;
                 this.qrcodeScriptLoading = false;
-                this.qrcodeInit = true;
-                this.qrcodeShow = true;
             };
             script.onerror = () => {
+                somnia.scanLine({ act: "hide", time: 0 });
                 somnia.showToast("qrcode.min.js Script load failed");
-                somnia.scanLine({ act: "hide", time: 300 });
                 this.qrcodeScriptLoading = false;
             };
             document.head.appendChild(script);
@@ -372,12 +380,15 @@ function copyrightComponent() {
             // 调用 API
             // this.qrcodeImgSrc = "https://api.qrtool.cn/?text=" + window.location.origin + window.location.pathname;
             // 或者加载 js 生成
-            if (this.qrcodeScriptLoading) return;
-            if (!this.qrcodeInit) {
-                this.newQRCode();
-            } else {
-                this.qrcodeShow = !this.qrcodeShow;
+            // console.log("脚本加载:", this.qrcodeScriptLoaded, "生成状态:", this.qrcodeInit, "加载中:", this.qrcodeScriptLoading, "显示:", this.qrcodeShow);
+            if (this.qrcodeScriptLoading) { }
+            else if (!this.qrcodeScriptLoaded && !this.qrcodeInit) {
+                this.newQRCodeScript();
             }
+            else if (this.qrcodeScriptLoaded && !this.qrcodeInit) {
+                this.newQRCode();
+            }
+            else this.qrcodeShow = !this.qrcodeShow;
         }
     }
 }
