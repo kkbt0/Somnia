@@ -14,6 +14,7 @@ Somnia 使用了 UnoCSS + Alpine.js 。因此可以使用一些 `Alpine + Tailwi
 
 - https://devdojo.com/pines/
 - https://github.com/thedevdojo/pines
+- https://pinemix.com/
 
 **注意**: 由于 Swup.js 的原因，使用 `<script>` 标签在 Swup 切换页面后不会自动执行。解决方法
 

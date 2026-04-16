@@ -32,6 +32,10 @@ hugo server -s exampleSite/ --disableFastRender
 
 配置参考 `Somnia/exampleSite/config/_default` 下文件，以及 `Somnia/exampleSite/hugo.toml` 文件。
 
+## 快速开始
+
+将 `Somnia/exampleSite/` 目录复制到你的 Hugo 站点目录，然后执行 `hugo server` 命令即可。
+
 ## 自定义 CSS/JS
 
 编写自定义的 CSS/JS 可以参考`your_website/themes/Somnia/assets/js/custom.js` 和 `your_website/themes/Somnia/assets/css/custom.css`，在 `your_website/assets/css/custom.css` 和 `your_website/assets/js/custom.js` 中编写代码。以覆盖原有的 custom 样式/脚本。
