@@ -145,6 +145,22 @@ class Somnia {
             throwOnError: false
         });
     }
+
+    // 扫描线动画，act 默认显示后自动隐藏 time: 自动隐藏时间，默认900ms （与 CSS 动画时间一致）
+    scanLine({ act, time = 900 } = {}) {
+        const { classList } = document.documentElement;
+        const add = () => classList.add('somnia-loading');
+        const remove = () => classList.remove('somnia-loading');
+
+        if (act === 'show') {
+            add();
+        } else if (act === 'hide') {
+            setTimeout(remove, time);
+        } else {
+            add();
+            setTimeout(remove, time);
+        }
+    }
 }
 
 const somnia = new Somnia();

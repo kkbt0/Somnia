@@ -67,8 +67,8 @@
       <!-- More Share -->
     </div>
     <!-- QRCode -->
-    <div id="qrcode-container" :class="{'expanded':qrcodeShow}"
-      class="absolute z-10 -mt-2 box-content max-h-0 max-w-44 overflow-hidden rounded-xl border bg-muted p-4 opacity-0 transition-all duration-300 ease-in-out"
+    <div :class="{'expanded':qrcodeShow}" x-ref="qrcode"
+      class="qrcode-container absolute z-10 -mt-2 box-content max-h-0 max-w-44 overflow-hidden rounded-xl border bg-muted p-4 opacity-0 transition-all duration-300 ease-in-out"
       :title="window.location.origin + window.location.pathname">
       <!-- <img :src="qrcodeImgSrc" style="display: block;" alt="QRCode"> -->
     </div>
@@ -85,15 +85,15 @@
   </a>
 </div>
 <style>
-  #qrcode-container.expanded {
+  .qrcode-container.expanded {
     max-height: 11rem;
     transform: translateY(4px);
     opacity: 100;
   }
 
   /* [Somnia-fix] 修复移动端二维码绘制到 canvas 导致使用默认尺寸 */
-  #qrcode-container img,
-  #qrcode-container canvas {
+  .qrcode-container img,
+  .qrcode-container canvas {
     /* width: 176px; */
     /* height: 176px; */
     max-width: 100%;

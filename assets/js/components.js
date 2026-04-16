@@ -336,35 +336,47 @@ function copyrightComponent() {
         qrcodeShow: false,
         qrcodeImgSrc: "",
         qrcodeInit: false,
+        qrcodeScriptLoading: false,
         init() { },
         copyLinkClick() {
             navigator.clipboard.writeText(window.location.href);
             somnia.showToast('Link copied!');
         },
         newQRCode() {
+            somnia.scanLine({ act: "show" });
+            this.qrcodeScriptLoading = true;
             // 创建 script 标签
             const script = document.createElement('script');
             script.src = 'https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js';
             script.onload = () => {
                 // 加载后生成
                 // console.log("New QRCode " + window.location.origin + window.location.pathname);
-                new QRCode(document.getElementById("qrcode-container"), {
+                new QRCode(this.$refs.qrcode, {
                     text: window.location.origin + window.location.pathname,
                     width: 256,
                     height: 256,
                 });
+                somnia.scanLine({ act: "hide", time: 300 });
+                this.qrcodeScriptLoading = false;
+                this.qrcodeInit = true;
+                this.qrcodeShow = true;
             };
-            script.onerror = () => somnia.showToast("qrcode.min.js Script load failed");
+            script.onerror = () => {
+                somnia.showToast("qrcode.min.js Script load failed");
+                somnia.scanLine({ act: "hide", time: 300 });
+                this.qrcodeScriptLoading = false;
+            };
             document.head.appendChild(script);
         },
         getQRCodeClick() {
-            this.qrcodeShow = !this.qrcodeShow;
             // 调用 API
             // this.qrcodeImgSrc = "https://api.qrtool.cn/?text=" + window.location.origin + window.location.pathname;
             // 或者加载 js 生成
+            if (this.qrcodeScriptLoading) return;
             if (!this.qrcodeInit) {
                 this.newQRCode();
-                this.qrcodeInit = true;
+            } else {
+                this.qrcodeShow = !this.qrcodeShow;
             }
         }
     }
@@ -397,39 +409,6 @@ function pfSearchComponent() {
     }
 }
 
-// for Somnia/layouts/shortcodes/qrcode.html
-// copyrightComponent 复制过来的
-function qrCodeComponent() {
-    return {
-        qrcodeInit: false,
-        qrcodeImgSrc: "",
-        init() {
-            // 调用 API
-            // this.qrcodeImgSrc = "https://api.qrtool.cn/?text=" + window.location.origin + window.location.pathname;
-            // 或者加载 js 生成
-            if (!this.qrcodeInit) {
-                this.newQRCode();
-                this.qrcodeInit = true;
-            }
-        },
-        newQRCode() {
-            // 创建 script 标签
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js';
-            script.onload = () => {
-                // 加载后生成
-                // console.log("New QRCode " + window.location.origin + window.location.pathname);
-                new QRCode(document.getElementById("qrcode-container-component"), {
-                    text: window.location.origin + window.location.pathname,
-                    width: 256,
-                    height: 256,
-                });
-            };
-            script.onerror = () => somnia.showToast("qrcode.min.js Script load failed");
-            document.head.appendChild(script);
-        },
-    }
-}
 
 // for Somnia/layouts/shortcodes/page/site-info.html
 function infoComponent() {

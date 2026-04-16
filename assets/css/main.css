@@ -446,11 +446,13 @@ body::after {
       transparent 100%);
 }
 
-html.is-animating body::before {
+html.is-animating body::before,
+html.somnia-loading body::before {
   animation: scanLine 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-html.is-animating body::after {
+html.is-animating body::after,
+html.somnia-loading body::after {
   animation: scanLine 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.06s infinite;
 }
 

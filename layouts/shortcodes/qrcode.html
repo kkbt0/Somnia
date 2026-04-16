@@ -2,16 +2,53 @@
 {{$text:=.Get "text"}}
 {{$class:=.Get "class"}}
 <!-- 可能传入的 class inline-flex max-w-44 p-3 bg-muted rounded-lg border -->
-<div x-data="qrCodeComponent()" id="qrcode-container-component" class="{{$class}}" title="{{$text}}">
+<div x-data="{qrcodeInit:false,qrcodeImgSrc:'',init(){if(!this.qrcodeInit){this.newQRCode();this.qrcodeInit=true}},newQRCode(){const script=document.createElement('script');script.src='https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js';script.onload=()=>{new QRCode(this.$el,{text:window.location.origin+window.location.pathname,width:256,height:256,})};script.onerror=()=>somnia.showToast('qrcode.min.js Script load failed');document.head.appendChild(script)}}" class="{{$class}} qrcode-container-component" title="{{$text}}">
   <!-- <img :src="qrcodeImgSrc" style="display: block;" alt="QRCode"> -->
 </div>
 <style>
   /* [Somnia-fix] 修复移动端二维码绘制到 canvas 导致使用默认尺寸 */
-  #qrcode-container-component img,
-  #qrcode-container-component canvas {
+  .qrcode-container-component img,
+  .qrcode-container-component canvas {
     /* width: 176px; */
     /* height: 176px; */
     max-width: 100%;
     height: auto;
   }
 </style>
+<!--
+<script>
+  // for Somnia/layouts/shortcodes/qrcode.html
+  // copyrightComponent 复制过来的
+  function qrCodeComponent() {
+    return {
+      qrcodeInit: false,
+      qrcodeImgSrc: '',
+      init() {
+        // 调用 API
+        // this.qrcodeImgSrc = 'https://api.qrtool.cn/?text=' + window.location.origin + window.location.pathname;
+        // 或者加载 js 生成
+        if (!this.qrcodeInit) {
+          this.newQRCode();
+          this.qrcodeInit = true;
+        }
+      },
+      newQRCode() {
+        // 创建 script 标签
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js';
+        script.onload = () => {
+          // 加载后生成
+          // console.log('New QRCode ' + window.location.origin + window.location.pathname);
+          new QRCode(this.$el, {
+            text: window.location.origin + window.location.pathname,
+            width: 256,
+            height: 256,
+          });
+        };
+        script.onerror = () => somnia.showToast('qrcode.min.js Script load failed');
+        document.head.appendChild(script);
+      },
+    }
+  }
+</script>
+-->
