@@ -1,4 +1,4 @@
-.medium-zoom-overlay {
+/* .medium-zoom-overlay {
     position: fixed;
     top: 0;
     right: 0;
@@ -29,4 +29,9 @@
     cursor: zoom-out;
     will-change: transform;
     z-index: 999;
+} */
+/* 使用 js 内置 css */
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 999;
 }
