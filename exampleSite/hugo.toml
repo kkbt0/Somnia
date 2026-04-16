@@ -28,6 +28,7 @@ blogCategories = 10 # /posts/ 右侧分类数
 blogTags = 50 # /posts/ 右侧标签数
 categoriesPosts = 5 # /categories/xxx/ 每页文章数
 tagsPosts = 5 # /tags/xxx/ 每页文章数
+archivesPosts = 50 # 归档每页文章数
 
 # Homepage 配置
 # 作者配置
