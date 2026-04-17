@@ -16,6 +16,7 @@
   --ring: 240 5.9% 10%;
   --radius: 0.5rem;
 }
+
 .dark {
   /* Primary */
   --primary: 195 95% 85%;
@@ -32,9 +33,11 @@
   --input: 240 3.7% 17.9%;
   --ring: 240 4.9% 83.9%;
 }
+
 :root {
   --un-default-border-color: hsl(var(--border) / 1);
 }
+
 html.dark {
   color-scheme: dark;
 }
@@ -42,7 +45,46 @@ html.dark {
 /* Global */
 a {
   transition: color 0.2s ease;
+
   &:hover {
     color: hsl(var(--primary) / var(--un-text-opacity, 1));
+  }
+}
+
+/* 原 baseof.html 内联样式 */
+
+.highlight {
+  --highlight-fg: color-mix(in srgb,
+      var(--highlightColor) 40%,
+      hsl(var(--foreground)/var(--un-text-opacity, 1)));
+  color: var(--highlight-fg, hsl(var(--primary) / var(--un-text-opacity))) !important;
+}
+
+.highlight-bg {
+  background-color: var(--highlightColor,
+      hsl(var(--primary) / var(--un-text-opacity))) !important;
+}
+
+/* Extend safe area for some special screens
+* https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/env
+* https://webkit.org/blog/7929/designing-websites-for-iphone-x/
+*/
+#main-container {
+  padding-top: env(safe-area-inset-top);
+  padding-left: calc(1rem + env(safe-area-inset-left));
+  padding-right: calc(1rem + env(safe-area-inset-right));
+}
+
+@media (min-width: 640px) {
+  #main-container {
+    padding-left: calc(1.75rem + env(safe-area-inset-left));
+    padding-right: calc(1.75rem + env(safe-area-inset-right));
+  }
+}
+
+@media (min-width: 1024px) {
+  #main-container {
+    padding-left: calc(2.5rem + env(safe-area-inset-left));
+    padding-right: calc(2.5rem + env(safe-area-inset-right));
   }
 }

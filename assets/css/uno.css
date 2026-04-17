@@ -358,7 +358,6 @@
 .font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;}
 .font-sans{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";}
 .italic{font-style:italic;}
-.underline{text-decoration-line:underline;}
 .hover\:underline:hover{text-decoration-line:underline;}
 .hover\:underline-offset-4:hover{text-underline-offset:4px;}
 .no-underline{text-decoration:none;}

@@ -321,6 +321,13 @@ span.katex-display {
   }
 }
 
+/* Footer */
+footer a {
+  color: hsl(var(--foreground) / var(--un-text-opacity, 1));
+  text-decoration: underline;
+  font-weight: 500;
+}
+
 
 /* project-card.html 样式 */
 .project-card-fg {
