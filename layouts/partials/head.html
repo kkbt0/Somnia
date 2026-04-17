@@ -46,6 +46,5 @@
 {{ end }}
 {{ partialCached "head/css.html" . }}
 {{ partialCached "head/js.html" . }}
-
-<!-- KaTeX 由页面参数控制 -->
-{{ if eq .Params.math true }}{{ partialCached "head/math.html" . }}{{ end}}
+<!-- 外部 libs -->
+{{ partial "head/libs.html" . }}

@@ -18,9 +18,14 @@ function contentComponent() {
     return {
         init() {
             const data = this.$el.getAttribute("somnia-data");
+            if (data.trim() !== "") {
+                console.log("[Somnia] [Data]", data.trim());
+            }
             if (data.includes("math")) {
-                console.log("somnia-data: ", data);
-                somnia.loadKaTeXResource(this.$el);
+                somnia.libs.katex.run(this.$el);
+            }
+            if (data.includes("mermaid")) {
+                somnia.libs.mermaid.run();
             }
         }
     }
@@ -405,17 +410,18 @@ function docsTocComponent() {
 function pfSearchComponent() {
     return {
         init() {
-            this.loadPFResource();
+            this.pfSearchInit();
         },
-        async loadPFResource() {
-            const el = document.getElementById('content-wrapper');
-            somnia.loadResource({ element: el, rel: 'stylesheet', href: '/pagefind/pagefind-ui.css', });
-            await somnia.loadResource({ element: el, type: 'module', href: '/pagefind/pagefind-ui.js', });
-            new PagefindUI({
-                element: "#site-search",
-                showSubResults: true,
-                showImages: false
-            });
+        async pfSearchInit() {
+            // const el = document.getElementById('content-wrapper'); // 加载到哪里 Swup.js 切换页面都不会彻底拆卸
+            // somnia.loadResource({ rel: 'stylesheet', href: '/pagefind/pagefind-ui.css',  dataSomnia: 'pagefind.css' });
+            // await somnia.loadResource({ type: 'module', href: '/pagefind/pagefind-ui.js',  dataSomnia: 'pagefind.js' });
+            // new PagefindUI({
+            //     element: "#site-search",
+            //     showSubResults: true,
+            //     showImages: false
+            // });
+            somnia.libs.pagefind.run();
         }
     }
 }

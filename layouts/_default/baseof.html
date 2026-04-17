@@ -18,7 +18,7 @@
 
     {{ partial "header.html" . }}
     <div x-data="contentComponent()" id="content-wrapper" class="flex-1 w-full transition-fade"
-      somnia-data="{{ if eq .Params.math true }}math{{ end }}">
+      somnia-data='{{ if .Params.math  }}math{{ end }} {{ if .Params.mermaid }}mermaid{{ end }}'>
       {{ block "main" . }}{{ end }}
     </div>
     {{ partial "footer.html" . }}
