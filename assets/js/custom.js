@@ -9,7 +9,16 @@ console.log("你好，世界")
 // 可以放一些 js
 // function noticeComponent() {}
 
-// Swupjs 初次加载，和每次切换页面都会执行
-Somnia.prototype.swupPageInitCustom = function() {
-    console.log("[Swup] Page View");
+// 修改 CDN or 其他路径 或通过覆盖 js 实现
+BASE_URL = '/Somnia';
+SOMNIA_LIBS.pagefind.css = `${BASE_URL}/pagefind/pagefind-ui.css`;
+SOMNIA_LIBS.pagefind.js = `${BASE_URL}/pagefind/pagefind-ui.js`;
+
+// PageInitCustom DOMContentLoaded 时执行
+Somnia.prototype.PageInitCustom = function () {
+    console.log("[Somnia] 你好，世界");
+}
+// Swupjs 初次加载和每次切换页面都会执行
+Somnia.prototype.swupPageInitCustom = function () {
+    console.log("[Swup] Page View", location.pathname);
 }

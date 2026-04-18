@@ -369,10 +369,12 @@ function copyrightComponent() {
         newQRCode() {
             // 加载后生成
             // console.log("New QRCode " + window.location.origin + window.location.pathname);
-            new QRCode(this.$refs.qrcode, {
-                text: window.location.origin + window.location.pathname,
-                width: 256,
-                height: 256,
+            somnia.libs.qrcode.run({
+                el: this.$refs.qrcode, opt: {
+                    text: window.location.origin + window.location.pathname,
+                    width: 256,
+                    height: 256,
+                }
             });
             this.qrcodeInit = true;
             this.qrcodeShow = true;
@@ -380,21 +382,18 @@ function copyrightComponent() {
         newQRCodeScript() {
             somnia.scanLine({ act: "show" });
             this.qrcodeScriptLoading = true;
-            // 创建 script 标签
-            const script = document.createElement('script');
-            script.src = '//cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js';
-            script.onload = () => {
-                somnia.scanLine({ act: "hide", time: 0 });
+            somnia.libs.qrcode.load().then(() => {
                 this.newQRCode();
                 this.qrcodeScriptLoaded = true;
+            }).catch((e) => {
+                somnia.showToast("QRCode.js Load failed");
+                console.error(e);
                 this.qrcodeScriptLoading = false;
-            };
-            script.onerror = () => {
+            }).finally(() => {
                 somnia.scanLine({ act: "hide", time: 0 });
-                somnia.showToast("qrcode.min.js Script load failed");
+                // 无论成功失败都确保加载状态重置，避免卡在加载中
                 this.qrcodeScriptLoading = false;
-            };
-            document.head.appendChild(script);
+            });
         },
         getQRCodeClick() {
             // 调用 API

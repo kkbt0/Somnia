@@ -1,12 +1,11 @@
 /*! Somnia | (c) 2026 kkbt | https://github.com/kkbt0/Somnia */
-
 class Somnia {
     // Toast
     showToast(message, time) {
         const toast = document.createElement('div')
         toast.className =
             'animate fixed bottom-8 z-20 px-4 py-2 bg-muted text-foreground rounded-lg border shadow-lg flex items-center gap-2'
-        toast.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"></path><path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16m-.01 6c.558 0 1.01.452 1.01 1.01v5.124A1 1 0 0 1 12.5 18h-.49A1.01 1.01 0 0 1 11 16.99V12a1 1 0 1 1 0-2zM12 7a1 1 0 1 1 0 2a1 1 0 0 1 0-2"></path></g></svg><span>${message}</span>`
+        toast.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><g fill="none"><path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16m-.01 6c.558 0 1.01.452 1.01 1.01v5.124A1 1 0 0 1 12.5 18h-.49A1.01 1.01 0 0 1 11 16.99V12a1 1 0 1 1 0-2zM12 7a1 1 0 1 1 0 2a1 1 0 0 1 0-2"></path></g></svg><span>${message}</span>`
         if (!document.body) {
             console.error("Body Not Ready")
             return;
@@ -172,8 +171,8 @@ Somnia.prototype.libs = {
         loaded: () => !!document.head.querySelector('link[data-somnia="pagefind.css"]') && !!document.head.querySelector('script[data-somnia="pagefind.js"]'),
         ok: () => typeof window.PagefindUI !== 'undefined',
         async load() {
-            await somnia.loadResource({ rel: 'stylesheet', href: '/pagefind/pagefind-ui.css', dataSomnia: 'pagefind.css' });
-            await somnia.loadResource({ type: 'module', href: '/pagefind/pagefind-ui.js', dataSomnia: 'pagefind.js' });
+            await somnia.loadResource({ rel: 'stylesheet', href: SOMNIA_LIBS.pagefind.css, dataSomnia: 'pagefind.css' });
+            await somnia.loadResource({ type: 'module', href: SOMNIA_LIBS.pagefind.js, dataSomnia: 'pagefind.js' });
         },
         async run() {
             if (!this.loaded()) await this.load();
@@ -189,18 +188,35 @@ Somnia.prototype.libs = {
             }
         }
     },
+    qrcode: {
+        loaded: () => !!document.head.querySelector('script[data-somnia="qrcode.js"]'),
+        ok: () => typeof window.QRCode !== 'undefined',
+        async load() {
+            await somnia.loadResource({ href: SOMNIA_LIBS.qrcode.js, dataSomnia: 'qrcode.js' });
+        },
+        async run({ el, opt } = {}) {
+            if (!this.loaded()) await this.load();
+            if (this.ok()) {
+                new QRCode(el, opt);
+            } else {
+                console.warn('[Somnia] Lib QRCode Error');
+                somnia.showToast('二维码组件加载失败，请刷新页面重试');
+            }
+        }
+    },
     katex: {
         loaded: () => !!document.head.querySelector('link[data-somnia="katex.css"]') && !!document.head.querySelector('script[data-somnia="katex.js"]') && !!document.head.querySelector('script[data-somnia="katex-auto-render.js"]'),
         ok: () => typeof window.renderMathInElement !== 'undefined',
         async load() {
+            const katex = SOMNIA_LIBS.katex;
             // 插入 KaTeX CSS
-            somnia.loadResource({ rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/katex@0.16.38/dist/katex.min.css', integrity: 'sha384-/L6i+LN3dyoaK2jYG5ZLh5u13cjdsPDcFOSNJeFBFa/KgVXR5kOfTdiN3ft1uMAq', crossOrigin: 'anonymous', dataSomnia: 'katex.css' });
+            somnia.loadResource({ rel: 'stylesheet', href: katex.css.href, crossOrigin: 'anonymous', dataSomnia: 'katex.css' });
 
             // 插入 KaTeX 主库 JS
-            await somnia.loadResource({ href: 'https://cdn.jsdelivr.net/npm/katex@0.16.38/dist/katex.min.js', integrity: 'sha384-H6s1ZrH2CKpFpqR680poRdStIRJGXty7fSkxAcIfxwl9iu6A4BOPtTk7vQ58Ovio', crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex.js' });
+            await somnia.loadResource({ href: katex.js.href, integrity: katex.js.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex.js' });
 
             // 插入 KaTeX 自动渲染扩展
-            await somnia.loadResource({ href: 'https://cdn.jsdelivr.net/npm/katex@0.16.38/dist/contrib/auto-render.min.js', integrity: 'sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz', crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex-auto-render.js' });
+            await somnia.loadResource({ href: katex.autoRenderJs.href, integrity: katex.autoRenderJs.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex-auto-render.js' });
 
         },
         async run(element) {
@@ -234,12 +250,12 @@ Somnia.prototype.libs = {
                 script.type = 'module';
                 // script.src = '/js/mermaid.js';
                 script.defer = true;
-                script.textContent = `import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';mermaid.initialize({ startOnLoad: false });window.mermaid = mermaid;`;
+                script.textContent = `import mermaid from '${SOMNIA_LIBS.mermaid.js}';mermaid.initialize({ startOnLoad: false });window.mermaid = mermaid;`;
                 script.setAttribute('data-somnia', 'mermaid.js');
                 // script.onload = () => resolve(script);
                 // 轮询检查是否加载完成
                 const checkInterval = setInterval(() => {
-                    if (window.mermaid.initialize) {
+                    if (window.mermaid && window.mermaid.initialize) {
                         clearInterval(checkInterval);
                         resolve(script);
                     }
