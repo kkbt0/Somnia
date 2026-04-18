@@ -1,4 +1,16 @@
 // Alpinejs components script
+// 全局状态
+document.addEventListener('alpine:init', () => {
+    Alpine.store('somnia', {
+        theme: localStorage.getItem('theme') || 'system',
+        isDark: document.documentElement.classList.contains('dark'),
+        init() {
+            // console.log("[Somnia] [Init]",this.theme, this.isDark);
+        },
+        // 统一调用接口，方便未来改为全局事件总线 由 Somnia 负责
+    });
+
+})
 
 // for Somnia/layouts/_default/single.html
 function mainComponent() {
@@ -24,9 +36,10 @@ function contentComponent() {
             if (data.includes("math")) {
                 somnia.libs.katex.run(this.$el);
             }
-            if (data.includes("mermaid")) {
-                somnia.libs.mermaid.run();
-            }
+            // 由 render-codeblock-mermaid.html 运行
+            // if (data.includes("mermaid")) {
+            //     somnia.libs.mermaid.run();
+            // }
         }
     }
 }
@@ -40,7 +53,7 @@ function headerComponent() {
         notTop: window.scrollY > 20,
         headerShow: true,
         mobileMenuOpen: false,
-        theme: localStorage.getItem('theme') || 'system',
+        // theme: localStorage.getItem('theme') || 'system', // 使用 store
         init() {
             // theme 初始化
             // this.theme = localStorage.getItem('theme') || 'system';
@@ -57,7 +70,7 @@ function headerComponent() {
             const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             // 循环切换
             const themes = ['system', 'dark', 'light'];
-            const currentIndex = themes.indexOf(this.theme);
+            const currentIndex = themes.indexOf(Alpine.store('somnia').theme);
             const newTheme = themes[(currentIndex + 1) % themes.length];
             // 保存
             localStorage.setItem('theme', newTheme);
@@ -69,9 +82,11 @@ function headerComponent() {
             }
             document.documentElement.setAttribute('data-theme', newTheme);
 
-            this.theme = newTheme;
+            // this.theme = newTheme;
             // 改为 Alinejs 写法 :data-theme="theme" 让 theme 变量有点参与感
             // toggleDarkModeElement.dataset.theme = newTheme;
+            Alpine.store('somnia').theme = newTheme;
+            Alpine.store('somnia').isDark = document.documentElement.classList.contains('dark');
             somnia.showToast(`Set theme to ${newTheme}`);
         }
     };

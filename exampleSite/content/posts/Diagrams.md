@@ -1,6 +1,5 @@
 ---
 title: 'Diagrams'
-mermaid: true
 ---
 
 

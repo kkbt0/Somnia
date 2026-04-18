@@ -239,7 +239,7 @@ Somnia.prototype.libs = {
                 // script.onload = () => resolve(script);
                 // 轮询检查是否加载完成
                 const checkInterval = setInterval(() => {
-                    if (window.mermaid) {
+                    if (window.mermaid.initialize) {
                         clearInterval(checkInterval);
                         resolve(script);
                     }
@@ -257,10 +257,13 @@ Somnia.prototype.libs = {
         async run() {
             if (!this.loaded()) await this.load();
             if (this.ok()) {
-                mermaid.initialize({
-                    theme: document.documentElement.classList.contains('dark') ? 'dark' : 'default',
-                });
-                mermaid.run();
+                const isDarkMode = document.documentElement.classList.contains('dark');
+                const showEl = document.querySelectorAll(isDarkMode ? '.mermaid-dark' : '.mermaid');
+                showEl.forEach(e => { e.style.display = 'block'; });
+                const hideEl = document.querySelectorAll(isDarkMode ? '.mermaid' : '.mermaid-dark');
+                hideEl.forEach(e => { e.style.display = 'none'; });
+                mermaid.initialize({ startOnLoad: false, theme: isDarkMode ? 'dark' : 'default' });
+                mermaid.run({ querySelector: isDarkMode ? ".mermaid-dark" : ".mermaid" }); // 幂等
             } else {
                 console.warn('[Somnia] Lib Mermaid Error');
                 somnia.showToast('流程图组件加载失败，请刷新页面重试');

@@ -32,7 +32,7 @@
         </div>
         <!-- Buttons -->
         <div class='z-30 flex gap-x-4 group-[.not-top]:gap-x-2' style='transition:gap 0.3s'>
-            <button id='toggleDarkMode' @click="toggleTheme()" :data-theme="theme"
+            <button id='toggleDarkMode' @click="toggleTheme()" :data-theme="$store.somnia.theme"
                 class='group/dark box-content size-5 rounded-md border p-1.5 transition-colors hover:bg-border sm:group-[.not-top]:rounded-xl'>
                 <svg aria-hidden="true" class="system size-5 group-hover/dark:text-primary" width="22" height="22" style="--sl-icon-size: 1em;">
                     <use href='{{"icons/main.svg#system"|relURL}}' />
