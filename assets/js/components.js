@@ -12,6 +12,26 @@ document.addEventListener('alpine:init', () => {
 
 })
 
+// 处理页面数据 负责动态加载 js 等
+function somniaData() {
+    return {
+        init() {
+            const data = this.$el.dataset.somnia;
+            if (data.trim() !== "[]") {
+                console.log("[Somnia] [Data]", data.trim());
+            }
+            if (data.includes("katex")) {
+                somnia.libs.katex.run(document.getElementById("content-wrapper"));
+            }
+            // 由 render-codeblock-mermaid.html 运行
+            // if (data.includes("mermaid")) {
+            //     somnia.libs.mermaid.run();
+            // }
+        }
+    }
+}
+
+
 // for Somnia/layouts/_default/single.html
 function mainComponent() {
     return {
@@ -28,19 +48,7 @@ function mainComponent() {
 // for Somnia/layouts/_default/baseof.html
 function contentComponent() {
     return {
-        init() {
-            const data = this.$el.getAttribute("somnia-data");
-            if (data.trim() !== "") {
-                console.log("[Somnia] [Data]", data.trim());
-            }
-            if (data.includes("math")) {
-                somnia.libs.katex.run(this.$el);
-            }
-            // 由 render-codeblock-mermaid.html 运行
-            // if (data.includes("mermaid")) {
-            //     somnia.libs.mermaid.run();
-            // }
-        }
+        init() { }
     }
 }
 

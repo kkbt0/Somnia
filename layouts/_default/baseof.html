@@ -17,9 +17,9 @@
   <div id='main-container' class='w-full max-w-[70rem] min-h-[100dvh] flex flex-col justify-between'>
 
     {{ partial "header.html" . }}
-    <div x-data="contentComponent()" id="content-wrapper" class="flex-1 w-full transition-fade"
-      somnia-data='{{ if .Params.math  }}math{{ end }}'>
+    <div x-data="contentComponent()" id="content-wrapper" class="flex-1 w-full transition-fade">
       {{ block "main" . }}{{ end }}
+      {{ partial "data.html" . }}
     </div>
     {{ partial "footer.html" . }}
   </div>

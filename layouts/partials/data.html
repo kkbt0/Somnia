@@ -1,0 +1,12 @@
+{{- $libs := slice -}}
+
+{{- if .Params.math -}}
+{{- $libs = $libs | append  "katex" -}}
+{{- end -}}
+
+{{- if .Store.Get "mermaid" -}}
+{{- $libs = $libs | append  "mermaid" -}}
+{{- end -}}
+
+<!-- 页面数据 -->
+<div x-data="somniaData()" data-somnia='{{ $libs }}' style="display: none;"></div>
