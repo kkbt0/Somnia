@@ -10,3 +10,10 @@ noClasses = false
 # https://gohugo.io/functions/transform/highlight/
 # https://gohugo.io/functions/transform/highlightcodeblock/
 guessSyntax = true
+
+# 数学公式 https://gohugo.io/content-management/mathematics/
+[goldmark.extensions.passthrough]
+enable = true
+[goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)']]
