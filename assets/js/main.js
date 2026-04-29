@@ -145,6 +145,16 @@ class Somnia {
             add();
             setTimeout(remove, time);
         }
+        // 超时提示  Somnia.prototype.showToast('加载超时', 3000);
+        if (this._scanLineTimeoutTimer) {
+            clearTimeout(this._scanLineTimeoutTimer);
+            this._scanLineTimeoutTimer = null;
+        }
+        this._scanLineTimeoutTimer = setTimeout(() => {
+            if (classList.contains('somnia-loading')) {
+                Somnia.prototype.showToast('加载超时，<a href="javascript:window.location.reload();">刷新</a>', 1e8);
+            }
+        }, 1e4);
     }
 }
 
@@ -171,8 +181,8 @@ Somnia.prototype.libs = {
         loaded: () => !!document.head.querySelector('link[data-somnia="pagefind.css"]') && !!document.head.querySelector('script[data-somnia="pagefind.js"]'),
         ok: () => typeof window.PagefindUI !== 'undefined',
         async load() {
-            await somnia.loadResource({ rel: 'stylesheet', href: SOMNIA_LIBS.pagefind.css, dataSomnia: 'pagefind.css' });
-            await somnia.loadResource({ type: 'module', href: SOMNIA_LIBS.pagefind.js, dataSomnia: 'pagefind.js' });
+            await Somnia.prototype.loadResource({ rel: 'stylesheet', href: SOMNIA_LIBS.pagefind.css, dataSomnia: 'pagefind.css' });
+            await Somnia.prototype.loadResource({ type: 'module', href: SOMNIA_LIBS.pagefind.js, dataSomnia: 'pagefind.js' });
         },
         async run() {
             if (!this.loaded()) await this.load();
@@ -184,7 +194,7 @@ Somnia.prototype.libs = {
                 });
             } else {
                 console.warn('[Somnia] Lib Pagefind Error');
-                somnia.showToast('搜索组件加载失败，请刷新页面重试');
+                Somnia.prototype.showToast('搜索组件加载失败，请刷新页面重试');
             }
         }
     },
@@ -192,7 +202,7 @@ Somnia.prototype.libs = {
         loaded: () => !!document.head.querySelector('script[data-somnia="qrcode.js"]'),
         ok: () => typeof window.QRCode !== 'undefined',
         async load() {
-            await somnia.loadResource({ href: SOMNIA_LIBS.qrcode.js, dataSomnia: 'qrcode.js' });
+            await Somnia.prototype.loadResource({ href: SOMNIA_LIBS.qrcode.js, dataSomnia: 'qrcode.js' });
         },
         async run({ el, opt } = {}) {
             if (!this.loaded()) await this.load();
@@ -200,7 +210,7 @@ Somnia.prototype.libs = {
                 new QRCode(el, opt);
             } else {
                 console.warn('[Somnia] Lib QRCode Error');
-                somnia.showToast('二维码组件加载失败，请刷新页面重试');
+                Somnia.prototype.showToast('二维码组件加载失败，请刷新页面重试');
             }
         }
     },
@@ -210,13 +220,13 @@ Somnia.prototype.libs = {
         async load() {
             const katex = SOMNIA_LIBS.katex;
             // 插入 KaTeX CSS
-            somnia.loadResource({ rel: 'stylesheet', href: katex.css.href, crossOrigin: 'anonymous', dataSomnia: 'katex.css' });
+            Somnia.prototype.loadResource({ rel: 'stylesheet', href: katex.css.href, crossOrigin: 'anonymous', dataSomnia: 'katex.css' });
 
             // 插入 KaTeX 主库 JS
-            await somnia.loadResource({ href: katex.js.href, integrity: katex.js.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex.js' });
+            await Somnia.prototype.loadResource({ href: katex.js.href, integrity: katex.js.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex.js' });
 
             // 插入 KaTeX 自动渲染扩展
-            await somnia.loadResource({ href: katex.autoRenderJs.href, integrity: katex.autoRenderJs.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex-auto-render.js' });
+            await Somnia.prototype.loadResource({ href: katex.autoRenderJs.href, integrity: katex.autoRenderJs.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex-auto-render.js' });
 
         },
         async run(element) {
@@ -236,7 +246,7 @@ Somnia.prototype.libs = {
                 });
             } else {
                 console.warn('[Somnia] Lib KaTeX Error');
-                somnia.showToast('数学公式组件加载失败，请刷新页面重试');
+                Somnia.prototype.showToast('数学公式组件加载失败，请刷新页面重试');
             }
         }
     },
@@ -282,7 +292,7 @@ Somnia.prototype.libs = {
                 mermaid.run({ querySelector: isDarkMode ? ".mermaid-dark" : ".mermaid" }); // 幂等
             } else {
                 console.warn('[Somnia] Lib Mermaid Error');
-                somnia.showToast('流程图组件加载失败，请刷新页面重试');
+                Somnia.prototype.showToast('流程图组件加载失败，请刷新页面重试');
             }
         }
     }

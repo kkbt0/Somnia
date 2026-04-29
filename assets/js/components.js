@@ -102,8 +102,6 @@ function headerComponent() {
 
 
 // for Somnia/layouts/partials/back-to-top.html
-const CONTENT_ID = 'content';
-const HEADER_ID = 'content-header';
 function backToTopComponent() {
     return {
         needPercent: true, // 是否需要百分比功能
@@ -123,20 +121,20 @@ function backToTopComponent() {
 
         init() {
             // 容错处理，缺少元素则不启用百分比功能，直接显示按钮
-            this.articleEl = document.getElementById(CONTENT_ID);
+            this.articleEl = document.getElementById('content');
             if (!this.articleEl) {
-                console.error(`Element #${CONTENT_ID} not found.`);
+                console.error(`Element #content not found.`);
                 this.needPercent = false;
             }
             // content-header 监测，控制按钮显示隐藏
-            this.contentHeaderEl = document.getElementById(HEADER_ID);
+            this.contentHeaderEl = document.getElementById('content-header');
             if (this.contentHeaderEl) {
                 this.observer = new IntersectionObserver(([entry]) => {
                     this.actionBtnsShow = !entry.isIntersecting;
                 });
                 this.observer.observe(this.contentHeaderEl);
             } else {
-                console.error(`Element #${HEADER_ID} not found.`);
+                console.error(`Element #content-header not found.`);
                 this.actionBtnsShow = true;
             }
             // 只有在需要百分比功能时才计算高度和监听 resize，避免不必要的性能开销
