@@ -200,13 +200,10 @@ function quoteComponent() {
     return {
         quote: '我们的征途是星辰大海！',
         init() {
-            this.getData();
-        },
-        getData() {
             fetch('https://v1.hitokoto.cn/')
                 .then(response => response.json())
                 .then(data => this.quote = data.hitokoto)
-        },
+        }
     }
 }
 
@@ -418,66 +415,26 @@ function copyrightComponent() {
     }
 }
 
-// for Somnia/layouts/partials/docs/docs-contents.html
-function docsTocComponent() {
-    return {
-        currentPath: window.location.pathname,
-        init() { },
-    }
-}
-
 // for Somnia/layouts/partials/page/pf-search.html
-function pfSearchComponent() {
-    return {
-        init() {
-            this.pfSearchInit();
-        },
-        async pfSearchInit() {
-            // const el = document.getElementById('content-wrapper'); // 加载到哪里 Swup.js 切换页面都不会彻底拆卸
-            // somnia.loadResource({ rel: 'stylesheet', href: '/pagefind/pagefind-ui.css',  dataSomnia: 'pagefind.css' });
-            // await somnia.loadResource({ type: 'module', href: '/pagefind/pagefind-ui.js',  dataSomnia: 'pagefind.js' });
-            // new PagefindUI({
-            //     element: "#site-search",
-            //     showSubResults: true,
-            //     showImages: false
-            // });
-            somnia.libs.pagefind.run();
-        }
-    }
-}
+// function pfSearchComponent() {
+//     return {
+//         init() {
+//             this.pfSearchInit();
+//         },
+//         async pfSearchInit() {
+//             // const el = document.getElementById('content-wrapper'); // 加载到哪里 Swup.js 切换页面都不会彻底拆卸
+//             // somnia.loadResource({ rel: 'stylesheet', href: '/pagefind/pagefind-ui.css',  dataSomnia: 'pagefind.css' });
+//             // await somnia.loadResource({ type: 'module', href: '/pagefind/pagefind-ui.js',  dataSomnia: 'pagefind.js' });
+//             // new PagefindUI({
+//             //     element: "#site-search",
+//             //     showSubResults: true,
+//             //     showImages: false
+//             // });
+//             somnia.libs.pagefind.run();
+//         }
+//     }
+// }
 
-
-// for Somnia/layouts/shortcodes/page/site-info.html
-function infoComponent() {
-    return {
-        infoClick(text) {
-            navigator.clipboard.writeText(text);
-            somnia.showToast(`Copied "${text}" to clipboard!`);
-        },
-        init() { },
-    }
-}
-
-// for Somnia/layouts/shortcodes/page/collapse.html
-function collapseComponent() {
-    return {
-        contentExpanded: false,
-        init() { },
-        headerClick() {
-            this.contentExpanded = !this.contentExpanded;
-        }
-    }
-}
-
-// for Somnia/layouts/shortcodes/formatted-date.html
-function timeComponent() {
-    return {
-        init() { },
-        shichen(ts13) {
-            return somnia.timestampToShichen(ts13);
-        }
-    }
-}
 
 //   interface GithubProps {
 //   stargazers_count: number  // 星标数
@@ -521,59 +478,6 @@ function githubCardComponent() {
             } catch (error) {
                 console.error(error);
             }
-        }
-    }
-}
-
-// for Somnia/layouts/partials/comment/mastodon.html 不用可删
-function mastodonCommentComponent() {
-    return {
-        info: "",
-        url: "",
-        status: {
-            content: "",
-            account: {
-                display_name: "",
-                url: "",
-            },
-            replies_count: 0,
-            reblogs_count: 0,
-            favourites_count: 0,
-        },
-        replies: [],
-        async initMastodonCommentComponent(url, id) {
-            this.url = url;
-            const api = `https://${url.split("/")[2]}/api/v1/statuses/${url.split("/")[4]}`;
-            this.fetchStatus(api);
-        },
-        async fetchStatus(url) {
-            fetch(url)
-                .then((response) => response.json())
-                .then((data) => {
-                    this.status = data;
-                    if (this.status.replies_count > 0) {
-                        this.fetchReplies(url + "/context");
-                    }
-                })
-                .catch((error) => this.info = error);
-        },
-        async fetchReplies(url) {
-            fetch(url)
-                .then((response) => response.json())
-                .then((data) => {
-                    this.replies = data.descendants;
-                })
-                .catch((error) => this.info = error);
-        },
-        sanitizeHTML(html) {
-            // 移除不安全的标签
-            html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-            html = html.replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '');
-
-            // 移除不安全的属性
-            html = html.replace(/javascript:/gi, '');
-
-            return html;
         }
     }
 }

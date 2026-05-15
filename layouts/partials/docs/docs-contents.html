@@ -1,7 +1,7 @@
 {{$toc:=.toc}}
 <!-- doc 单页使用  docs-toc block mt-3 -->
 {{$type:=.type}}
-<docs-toc x-data="docsTocComponent()" {{if eq .type "sidebar" }} class="not-prose docs-toc block mt-3" {{else}}
+<docs-toc x-data="{currentPath: window.location.pathname}" {{if eq .type "sidebar" }} class="not-prose docs-toc block mt-3" {{else}}
     class="not-prose" {{end}}>
     <h2 class='text-foreground font-medium'><a href='{{ "docs" | relURL }}'>Docs</a></h2>
     <!-- <span x-text="currentPath"></span> -->

@@ -1,2 +1,2 @@
 <!-- https://www.ftls.xyz/posts/2023-08-19-time-js/  的 Hugo Shortcode 包装 -->
-<time x-data="timeComponent()" x-ref="timeEl" datetime="{{ .Get 0 }}" x-text="shichen({{ .Get 0 }})"></time>
+<time x-data x-ref="timeEl" datetime="{{ .Get 0 }}" x-text="somnia.timestampToShichen({{ .Get 0 }})"></time>

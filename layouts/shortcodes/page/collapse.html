@@ -1,8 +1,8 @@
 {{$title:=.Get "title"}}
-<collapse-component x-data="collapseComponent" :class="{'expanded':contentExpanded}" class='group/expand'>
+<collapse-component x-data="{contentExpanded: false}" :class="{'expanded':contentExpanded}" class='group/expand'>
     <div class="rounded-xl border px-3 my-4 sm:px-4 group-[.expanded]/expand:bg-muted">
         <!-- slot name=before -->
-        <div @click="headerClick"
+        <div @click="contentExpanded = !contentExpanded"
             class='group/highlight expand-title sticky top-0 z-20 flex cursor-pointer items-center justify-between py-1.5 group-[.expanded]/expand:bg-muted sm:py-2'>
             <p class='m-0 transition-colors group-hover/highlight:text-primary'>{{$title}}</p>
             <div class='expand-button'>
