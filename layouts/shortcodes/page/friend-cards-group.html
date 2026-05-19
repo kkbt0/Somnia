@@ -1,3 +1,24 @@
 <div class="grid gap-3.5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
     {{.Inner}}
 </div>
+<!--
+x-data="{init(){const children=Array.from(this.$root.children);for(let i=children.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[children[i],children[j]]=[children[j],children[i]]}children.forEach(child=>this.$root.appendChild(child))}}" 
+
+<script>
+    function friendCards() {
+        return {
+            init() {
+                const children = Array.from(this.$root.children);
+                // Fisher-Yates 随机打乱算法
+                for (let i = children.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [children[i], children[j]] = [children[j], children[i]];
+                }
+
+                // 将打乱后的子元素重新添加到容器中
+                children.forEach(child => this.$root.appendChild(child));
+            }
+        }
+    }
+</script>
+-->
