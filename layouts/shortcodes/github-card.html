@@ -3,7 +3,7 @@
 {{ $owner := index $split 0 }}
 {{ $repoName := index $split 1 }}
 <!-- github-card -->
-<div x-data="{loading:true,repo:'',data:{},initGithubCardComponent(repo){this.repo=repo;this.fetchGithub(repo)},fetchGithub(){try{fetch('https://api.github.com/repos/'+this.repo).then(res=>res.json()).then(json=>{this.data=json;this.loading=false;})}catch(e){console.error(e)}}}" x-init="initGithubCardComponent('{{ $repo }}')"
+<div x-data="{loading:true,repo:'',data:{},initCard(repo){this.repo=repo;fetch('https://api.github.com/repos/'+this.repo).then(r=>r.json()).then(o=>{this.data=o;this.loading=false;}).catch(e=>console.error(e))}}" x-init="initCard('{{ $repo }}')"
   :class="{'loading': loading}" class="not-prose" data-repo="{{ $repo }}">
   <a href="https://github.com/{{ $repo }}" target="_blank" rel="noopener"
     class="group block flex flex-col gap-y-2 rounded-xl border px-4 py-3 transition-colors hover:bg-muted hover:text-muted-foreground sm:px-5 sm:py-4">
@@ -76,57 +76,50 @@
     </div>
   </a>
 </div>
-<!--
+
 <script>
   //   interface GithubProps {
-//   stargazers_count: number  // 星标数
-//   forks_count: number            // Fork 数
-//   language: string         // 主要编程语言
-//   owner: { avatar_url: string }  // 所有者头像 URL
-//   license?: { spdx_id: string }  // 许可证标识（可选）
-//   description: string      // 仓库描述
-// }
-// for Somnia/layouts/shortcodes/github-card.html
-function githubCardComponent() {
+  //   stargazers_count: number  // 星标数
+  //   forks_count: number            // Fork 数
+  //   language: string         // 主要编程语言
+  //   owner: { avatar_url: string }  // 所有者头像 URL
+  //   license?: { spdx_id: string }  // 许可证标识（可选）
+  //   description: string      // 仓库描述
+  // }
+  // for Somnia/layouts/shortcodes/github-card.html
+  function githubCardComponent() {
     return {
-        loading: true,
-        repo: '',
-        // fetch 变量
-        data: {},
-        // stargazers_count: null,
-        // forks_count: null,
-        // language: null,
-        // owner: { avatar_url: null },
-        // license: { spdx_id: null },
-        // description: null,
-        initGithubCardComponent(repo) {
-            this.repo = repo;
-            this.fetchGithub(repo);
-        },
-        fetchGithub() {
-            try {
-                fetch('https://api.github.com/repos/'+this.repo)
-                    .then(res => res.json())
-                    .then(json => {
-                        this.data = json;
-                        // this.stargazers_count = json.stargazers_count;
-                        // this.forks_count = json.forks_count;
-                        // this.language = json.language;
-                        // this.owner = json.owner;
-                        // this.license = json.license;
-                        // this.description = json.description;
+      loading: true,
+      repo: '',
+      // fetch 变量
+      data: {},
+      // stargazers_count: null,
+      // forks_count: null,
+      // language: null,
+      // owner: { avatar_url: null },
+      // license: { spdx_id: null },
+      // description: null,
+      initCard(repo) {
+        this.repo = repo;
+        fetch('https://api.github.com/repos/' + this.repo)
+          .then(r => r.json())
+          .then(o => {
+            this.data = o;
+            // this.stargazers_count = json.stargazers_count;
+            // this.forks_count = json.forks_count;
+            // this.language = json.language;
+            // this.owner = json.owner;
+            // this.license = json.license;
+            // this.description = json.description;
 
-                        this.loading = false;
-                        // console.log(json);
-                    });
-            } catch (e) {
-                console.error(e);
-            }
-        }
+            this.loading = false;
+            // console.log(json);
+          })
+          .catch(e => console.error(e));
+      }
     }
-}
+  }
 </script>
--->
 <style>
   @keyframes pulsate {
     0% {
