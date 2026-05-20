@@ -5,6 +5,8 @@
 > [!WARNING]  
 > 这是一个未经严格测试的项目。如果你喜欢这个样式，也可以使用 Astro 和原始主题：[Astro Theme Pure](https://github.com/cworld1/astro-theme-pure) by [cworld1](https://github.com/cworld1)
 
+文档可见 docs 目录和 [https://www.ftls.xyz/docs/somnia/somnia/](https://www.ftls.xyz/docs/somnia/somnia/)
+
 ## 特性
 
 使用了 Alpine.js + UnoCSS 构建，支持现代化的网站开发体验。
