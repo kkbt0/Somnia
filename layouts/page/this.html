@@ -4,20 +4,12 @@
 "href" ""
 "variant" "back"
 "class" "") }}
-<main class='mt-6 lg:mt-10' x-data="thisCom">
+<main class='mt-6 lg:mt-10' x-data="thisCom()">
     <div id='content-header' class='animate'>
         <h1 class='mb-6 text-3xl font-medium'>This</h1>
     </div>
-    <div class="relative flex flex-col gap-y-2 rounded-xl border px-3 sm:px-4 py-2 sm:py-3 mt-3">
-        <img :src="'https://gravatar.loli.net/avatar/' + md5(`{{ .Site.Params.author.email }}`)" alt="Avatar"
-            style="width: 64px;" class="rounded-full" />
+    <div id='content' class='animate flex flex-col gap-y-3'>
+        This
     </div>
 </main>
-<script>
-    function thisCom() {
-        return {
-            init() { },
-        }
-    }
-</script>
 {{ end }}

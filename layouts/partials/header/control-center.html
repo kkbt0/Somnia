@@ -1,0 +1,209 @@
+<div x-data="controlCenterComponent()" x-ignore id="control-center-container">
+    <button
+        class="group/dark box-content size-5 rounded-md border p-1.5 transition-colors hover:bg-border sm:group-[.not-top]:rounded-xl"
+        @click="btnClick()" x-ref="controlCenterBtn">
+        <!-- https://www.svgrepo.com/svg/332223/appstore COLLECTION: Ant Design Outlined Icons LICENSE: MIT License AUTHOR: Ant Design-->
+        <svg fill="currentColor" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <path
+                    d="M464 144H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H212V212h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm-52 268H612V212h200v200zM464 544H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H212V612h200v200zm452-268H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zm-52 268H612V612h200v200z">
+                </path>
+            </g>
+        </svg>
+    </button>
+    <template x-teleport="#main-container">
+        <div class="w-full" x-show="controlCenterOpen" id="control-center" x-transition>
+            {{/* <div class="fixed left-0 w-full h-full cc-bg" style="top:0rem;z-index: 25;"></div> */}}
+            <div class="fixed p-2 rounded-xl cc-bg border-b border-l" @click.outside="controlCenterOpen = false" x-ref="controlCenter">
+                <div class="animate flex flex-col gap-y-3 this w-full p-2"
+                    style="overflow-y: scroll;height: calc(100vh - 7rem);">
+                    <div class="rounded-2xl p-2 border">
+                        <a class="text-sm mb-3 px-1 text-muted-foreground" href='{{"about"|relURL}}'>恐咖兵糖</a>
+                    </div>
+                    <div class="rounded-2xl p-4 border" @mousemove="initMusic()">
+                        <!-- Music -->
+                        <h3 class="text-sm mb-3 px-1 text-muted-foreground">Music <span x-text="musicInfo"></span></h3>
+                        <div class="flex flex-col gap-y-2 px-1">
+                            <div class="pb-4">
+                                Playing: <span x-text="playing"></span>
+                                <span x-text="time"></span>s
+                                <span x-text="length"></span>s
+                                <br>
+                                <a @click="play()" class="cursor-pointer">Random</a>
+                                <a @click="stop()" class="cursor-pointer">Stop</a>
+                                <a @click="pause()" class="cursor-pointer">Pause</a>
+                                <a @click="resume()" class="cursor-pointer">Resume</a>
+                                <a @click="loop = !loop" class="cursor-pointer"
+                                    :class="loop ? 'text-primary' : ''">Loop</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl p-4 border">
+                        <h3 class="text-sm mb-3 px-1 text-muted-foreground">Background</h3>
+                        <div class="flex gap-x-2 px-1">
+                            <button @click="setBackground('#203880')">Default</button>
+                            <button @click="setBackground('#fff')">Light</button>
+                            <button @click="setBackground('#000')">Dark</button>
+                            <button @click="setBackground()">Random</button>
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl p-4 border">
+                        <h3 class="text-sm mb-3 px-1 text-muted-foreground">
+                            <a href='{{"posts"|relURL}}'>Recent</a>
+                        </h3>
+                        <div class="flex flex-col gap-y-2 px-1">
+                            {{ $posts := where site.RegularPages "Type" "posts" }}
+                            {{ range first 3 $posts }}
+                            <a href='{{.Permalink}}'>{{.Title}}</a>
+                            {{ end }}
+                        </div>
+                    </div>
+
+                    <div class="rounded-2xl p-4 border">
+                        <h3 class="text-sm mb-3 px-1 text-muted-foreground"><a href='{{"whispers"|relURL}}'>Whispers</a></h3>
+                        <a x-html="whisper" class="px-1" href='{{"whispers"|relURL}}'
+                            style="white-space:pre-wrap;max-height: 10px"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
+<script>
+    function controlCenterComponent() {
+        return {
+            controlCenterOpen: false,
+            observer: null,
+            whisper: '我们的征途是星辰大海！',
+            playing: '',
+            musicInit: false,
+            musicInfo: '',
+            time: 0,
+            length: 0,
+            loop: false,
+            musicList: ['昔涟.mid'],
+            init() {
+                // console.log("[Somnia] [ControlCenter] Loaded");
+                this.observer = new ResizeObserver(e => {
+                    if (this.controlCenterOpen) {
+                        this.controlCenterOpen = false;
+                    }
+                })
+                this.observer.observe(document.body);
+                this.fetchWhisper();
+            },
+            // Music
+            async initMusic() {
+                if (!this.musicInit && typeof MIDIjs === 'undefined') {
+                    this.musicInit = true;
+                    await Somnia.prototype.loadResource({ href: '//www.midijs.net/lib/midi.js', dataSomnia: 'midi.js' });
+                    MIDIjs.player_callback = (msg) => {
+                        this.time = parseInt(msg.time);
+                        if (this.loop && msg.status === 'finished') {
+                            this.play(this.playing);
+                        }
+                    };
+                    fetch('/midi/midi.txt')
+                        .then(res => res.text())
+                        .then(text => {
+                            this.musicList = text.trim().split('\n');
+                        })
+                }
+
+            },
+            sleep: (delay) => new Promise((resolve) => setTimeout(resolve, delay)),
+            retry: 0,
+            async play() {
+                this.musicInfo = '';
+                try {
+                    this.playing = this.musicList[Math.floor(Math.random() * this.musicList.length)];
+                    console.log("[Somnia] [Music]", this.playing);
+                    MIDIjs.play('/midi/' + this.playing);
+                    MIDIjs.get_duration('/midi/' + this.playing, (duration) => {
+                        this.length = duration;
+                    })
+                } catch (e) {
+                    console.error(e);
+                    this.musicInfo = 'Not Ready';
+                    await this.sleep(1000);
+                    if (this.retry < 5) {
+                        this.retry++;
+                        this.play();
+                    } else {
+                        this.musicInfo = 'Load Failed';
+                    }
+                }
+            },
+            stop() {
+                MIDIjs.stop();
+            },
+            pause() {
+                MIDIjs.pause();
+            },
+            resume() {
+                MIDIjs.resume();
+            },
+            fetchWhisper() {
+                const date = `${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}`;
+                fetch(`https://note.ftls.xyz/microblog/whispers1.json?v=${date}`)
+                    .then(res => res.json())
+                    .then(obj => {
+                        this.whisper = this.mdToHtml(obj.whispers[0].content);
+                    });
+            },
+            mdToHtml(md) {
+                let html = md.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="" loading="lazy">');
+                html = html.replace(/\[([^\]]*)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+                return html;
+            },
+            setBackground(color) {
+                if (color) {
+                    document.documentElement.style.setProperty('--highlightColor', color)
+                    return;
+                }
+                const r = Math.round(Math.random() * 255);
+                const g = Math.round(Math.random() * 255);
+                const b = Math.round(Math.random() * 255);
+                document.documentElement.style.setProperty('--highlightColor', `rgb(${r}, ${g}, ${b})`);
+            },
+            btnClick() {
+                const rect = this.$refs.controlCenterBtn.getBoundingClientRect();
+                const panel = this.$refs.controlCenter;
+                // 判断屏幕 >=640
+                if (window.innerWidth >= 640) {
+                    panel.style.top = rect.bottom + 16 + 'px';
+                    panel.style.left = rect.left - 384 + 30 + 'px';
+                    // panel.style.width = '384px';
+                    panel.style.width = '384px';
+                    panel.style.height = 'auto';
+                    panel.style.paddingTop = 0;
+                    panel.style.zIndex = 50;
+                } else {
+                    panel.style.top = 0;
+                    panel.style.left = 0;
+                    panel.style.width = '100%';
+                    panel.style.height = '100%';
+                    panel.style.paddingTop = 5 + 'rem';
+                    panel.style.zIndex = 25;
+                }
+                this.controlCenterOpen = !this.controlCenterOpen;
+
+            },
+            destroy() {
+                this.observer?.disconnect();
+                this.observer = null;
+            }
+        }
+    }
+</script>
+<style>
+    #main-container .cc-bg {
+        backdrop-filter: saturate(130%) blur(64px);
+        -webkit-backdrop-filter: blur(64px);
+        transform: translateZ(0);
+    }
+</style>
