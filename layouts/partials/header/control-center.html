@@ -108,7 +108,7 @@
                             this.play();
                         }
                     };
-                    fetch('/midi/midi.txt')
+                    fetch('/midi/midi.txt' + VERSION)
                         .then(res => res.text())
                         .then(text => {
                             this.musicList = text.trim().split('\n');
