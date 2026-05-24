@@ -16,7 +16,8 @@
     <template x-teleport="#main-container">
         <div class="w-full" x-show="controlCenterOpen" id="control-center" x-transition>
             {{/* <div class="fixed left-0 w-full h-full cc-bg" style="top:0rem;z-index: 25;"></div> */}}
-            <div class="fixed p-2 rounded-xl cc-bg border-b border-l" @click.outside="controlCenterOpen = false" x-ref="controlCenter">
+            <div class="fixed p-2 rounded-xl cc-bg border-b border-l" @click.outside="controlCenterOpen = false"
+                x-ref="controlCenter">
                 <div class="animate flex flex-col gap-y-3 this w-full p-2"
                     style="overflow-y: scroll;height: calc(100vh - 7rem);">
                     <div class="rounded-2xl p-2 border">
@@ -25,19 +26,16 @@
                     <div class="rounded-2xl p-4 border" @mousemove="initMusic()">
                         <!-- Music -->
                         <h3 class="text-sm mb-3 px-1 text-muted-foreground">Music <span x-text="musicInfo"></span></h3>
-                        <div class="flex flex-col gap-y-2 px-1">
-                            <div class="pb-4">
-                                Playing: <span x-text="playing"></span>
-                                <span x-text="time"></span>s
-                                <span x-text="length"></span>s
-                                <br>
-                                <a @click="play()" class="cursor-pointer">Random</a>
-                                <a @click="stop()" class="cursor-pointer">Stop</a>
-                                <a @click="pause()" class="cursor-pointer">Pause</a>
-                                <a @click="resume()" class="cursor-pointer">Resume</a>
-                                <a @click="loop = !loop" class="cursor-pointer"
-                                    :class="loop ? 'text-primary' : ''">Loop</a>
-                            </div>
+                        <div class="px-1">
+                            Playing: <span x-text="playing"></span>
+                            <span x-text="time"></span>s
+                            <span x-text="length"></span>s
+                            <br>
+                            <a @click="play()" class="cursor-pointer">Random</a>
+                            <a @click="stop()" class="cursor-pointer">Stop</a>
+                            <a @click="pause()" class="cursor-pointer">Pause</a>
+                            <a @click="resume()" class="cursor-pointer">Resume</a>
+                            <a @click="loop = !loop" class="cursor-pointer" :class="loop ? 'text-primary' : ''">Loop</a>
                         </div>
                     </div>
 
@@ -64,7 +62,8 @@
                     </div>
 
                     <div class="rounded-2xl p-4 border">
-                        <h3 class="text-sm mb-3 px-1 text-muted-foreground"><a href='{{"whispers"|relURL}}'>Whispers</a></h3>
+                        <h3 class="text-sm mb-3 px-1 text-muted-foreground"><a href='{{"whispers"|relURL}}'>Whispers</a>
+                        </h3>
                         <a x-html="whisper" class="px-1" href='{{"whispers"|relURL}}'
                             style="white-space:pre-wrap;max-height: 10px"></a>
                     </div>
@@ -105,6 +104,8 @@
                         this.time = parseInt(msg.time);
                         if (this.loop && msg.status === 'finished') {
                             this.play(this.playing);
+                        } else if (msg.status === 'finished') {
+                            this.play();
                         }
                     };
                     fetch('/midi/midi.txt')
@@ -117,10 +118,10 @@
             },
             sleep: (delay) => new Promise((resolve) => setTimeout(resolve, delay)),
             retry: 0,
-            async play() {
+            async play(next = null) {
                 this.musicInfo = '';
                 try {
-                    this.playing = this.musicList[Math.floor(Math.random() * this.musicList.length)];
+                    this.playing = next || this.musicList[Math.floor(Math.random() * this.musicList.length)];
                     console.log("[Somnia] [Music]", this.playing);
                     MIDIjs.play('/midi/' + this.playing);
                     MIDIjs.get_duration('/midi/' + this.playing, (duration) => {
