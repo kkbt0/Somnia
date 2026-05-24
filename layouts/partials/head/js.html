@@ -42,6 +42,8 @@
 {{ end }}
 
 <script defer>
+    // 全局变量
+    const VERSION = 'v{{ now.Format "2006-0102-1504" }}';
     // tocComponent 依赖 scroll-plugin
     document.addEventListener('DOMContentLoaded', () => {
         somnia.PageInitCustom();
@@ -72,7 +74,7 @@
 <script defer>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.min.js?v={{ now.Format "2006-0102-1504" }}')
+        navigator.serviceWorker.register('/sw.min.js?v=' + VERSION)
         .then(reg => console.log('[Somnia] [SW] 注册成功 scope:', reg.scope))
         .catch(err => console.error('[Somnia] [SW] 注册失败:', err));
     });
