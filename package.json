@@ -16,16 +16,16 @@
   ],
   "author": "kkbt",
   "license": "MIT",
-  "packageManager": "pnpm@10.25.0",
+  "packageManager": "pnpm@11.4.0",
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
-    "@unocss/cli": "^66.5.11",
-    "@unocss/preset-icons": "^66.5.11",
-    "@unocss/preset-typography": "^66.5.11",
-    "@unocss/preset-wind4": "^66.5.11",
-    "unocss": "^66.5.11"
+    "@unocss/cli": "^66.7.0",
+    "@unocss/preset-icons": "^66.7.0",
+    "@unocss/preset-typography": "^66.7.0",
+    "@unocss/preset-wind4": "^66.7.0",
+    "unocss": "^66.7.0"
   },
   "dependencies": {
-    "@unocss/reset": "^66.6.6"
+    "@unocss/reset": "^66.7.0"
   }
 }
