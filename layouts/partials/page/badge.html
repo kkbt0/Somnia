@@ -1,0 +1,33 @@
+{{- $label   := .label   | default "" -}}
+{{- $message := .message | default "Nothing" -}}
+{{- $color   := .color   | default "#47b20a" -}}
+{{- $textColor := .textColor | default "#fff" -}}
+{{- $link    := .link    | default "" -}}
+
+{{- /* 默认标签背景深灰色 */ -}}
+{{- $labelBg := "#555" -}}
+
+{{- if $link -}}<a href="{{ $link }}" target="_blank" rel="noopener noreferrer">{{- end -}}
+<span class="badge">
+  {{- if $label -}}
+  <span style="background: {{ $labelBg }}; color: #fff;">{{ $label }}</span>
+  {{- end -}}
+  <span style="background: {{ $color }}; color: {{ $textColor }};">{{ $message }}</span>
+</span>
+{{- if $link -}}</a>{{- end -}}
+<style>
+  .badge {
+    display: inline-block;
+    border-radius: 3px;
+    overflow: hidden;
+    font-family: sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    vertical-align: middle;
+  }
+  .badge span {
+    display: inline-block;
+    padding: 2px 6px;
+    text-shadow: 1px 1px #000;
+  }
+</style>

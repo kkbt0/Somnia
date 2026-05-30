@@ -181,6 +181,12 @@ svg or 可参考:
 
 {{< link-preview href="https://github.com/unocss/unocss" >}}
 
+### Badge
+
+{{< badge label="Status" message="Active" color="green" >}}
+{{< badge message="Draft" color="#ffc107" textColor="#000" >}}
+{{< badge label="Link" message="Click me" color="blue" link="https://example.com" >}}
+
 ## Data Transformer
 
 ### QRCode

@@ -1,0 +1,7 @@
+{{- $label   := .Get "label"   | default "" -}}
+{{- $message := .Get "message" | default (.Get 0) -}}
+{{- $color   := .Get "color"   | default "#007ec6" -}}
+{{- $textColor := .Get "textColor" | default "#fff" -}}
+{{- $link    := .Get "link"    | default "" -}}
+
+{{ partial "page/badge.html" (dict "label" $label "message" $message "color" $color "textColor" $textColor "link" $link) }}
