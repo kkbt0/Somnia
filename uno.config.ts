@@ -110,7 +110,7 @@ const typographyConfig: TypographyOptions = {
       opacity: '0.1'
     },
     // Table
-    table: { display: 'block', 'font-size': '.875em' },
+    table: { display: 'block', 'font-size': '.875em', 'overflow-x': 'auto' },
     'table tr': { 'border-bottom-width': '1px' },
     'tbody tr:last-child': { 'border-bottom-width': '0' },
     'thead th': { 'font-weight': '500', color: fg },
@@ -180,7 +180,7 @@ const rules: Rule<object>[] = [
 
 export default defineConfig({
   presets: [
-  //  presetIcons(),
+    //  presetIcons(),
     presetMini(), // required
     // presetWind4(),
     presetAttributify(),
