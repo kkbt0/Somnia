@@ -1,5 +1,5 @@
 baseURL = 'https://kkbt0.github.io/Somnia/'
-languageCode = 'zh-cn'
+languageCode = 'zh-CN'
 hasCJKLanguage = true
 title = 'Somnia'
 theme = '../..'
