@@ -40,10 +40,20 @@
 <!-- Sitemap -->
 <link href='{{absURL "sitemap.xml"}}' rel='sitemap' />
 <!-- RSS auto-discovery -->
+{{$title := cond .IsHome (site.Title) (printf "%s - %s" .Title site.Title)}}
 {{ with .OutputFormats.Get "rss" }}
   {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
   {{ printf `<link rel=%q type=%q href=%q title=%q>` "feed" .MediaType.Type .Permalink site.Title | safeHTML }}
 {{ end }}
+<!-- JSON Feed auto-discovery -->
+{{ with .OutputFormats.Get "JSONFeed" }}
+  {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
+{{ end }}
+<!-- Markdown auto-discovery -->
+{{ with .OutputFormats.Get "markdown" }}
+  {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink $title | safeHTML }}
+{{ end }}
+{{ partial "head/json-ld.html" . }}
 {{ partialCached "head/css.html" . }}
 {{ partialCached "head/js.html" . }}
 <!-- 外部 libs -->

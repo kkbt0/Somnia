@@ -31,11 +31,11 @@
                             <span x-text="time"></span>s
                             <span x-text="length"></span>s
                             <br>
-                            <a @click="play()" class="cursor-pointer">Random</a>
-                            <a @click="stop()" class="cursor-pointer">Stop</a>
-                            <a @click="pause()" class="cursor-pointer">Pause</a>
-                            <a @click="resume()" class="cursor-pointer">Resume</a>
-                            <a @click="loop = !loop" class="cursor-pointer" :class="loop ? 'text-primary' : ''">Loop</a>
+                            <button @click="play()" class="cursor-pointer">Random</button>
+                            <button @click="stop()" class="cursor-pointer">Stop</button>
+                            <button @click="pause()" class="cursor-pointer">Pause</button>
+                            <button @click="resume()" class="cursor-pointer">Resume</button>
+                            <button @click="loop = !loop" class="cursor-pointer" :class="loop ? 'text-primary' : ''">Loop</button>
                         </div>
                     </div>
 
@@ -85,10 +85,11 @@
             length: 0,
             loop: false,
             musicList: ['昔涟.mid'],
+            canClose: true,
             init() {
                 // console.log("[Somnia] [ControlCenter] Loaded");
                 this.observer = new ResizeObserver(e => {
-                    if (this.controlCenterOpen) {
+                    if (this.controlCenterOpen && this.canClose) {
                         this.controlCenterOpen = false;
                     }
                 })
@@ -192,7 +193,12 @@
                     panel.style.zIndex = 25;
                 }
                 this.controlCenterOpen = !this.controlCenterOpen;
-
+                if(this.controlCenterOpen){
+                    this.canClose = false;
+                    setTimeout(() => {
+                        this.canClose = true;
+                    },1000);
+                }
             },
             destroy() {
                 this.observer?.disconnect();
