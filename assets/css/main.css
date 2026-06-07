@@ -23,6 +23,16 @@
     animation: 100ms fade-in-up;
     animation-fill-mode: forwards;
   }
+  /* [Somnia-Pref] Reduced motion */
+  /* https://specification.website/spec/accessibility/reduced-motion/ */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 #content-header {
@@ -518,4 +528,17 @@ li:has(.highlight.ps-14) li:has(.highlight.ps-14) .ps-14 {
   max-height: 0rem;
   padding-top: 0rem;
   padding-bottom: 0rem;
+}
+
+/* [Somnia-Pref] Scrollbar gutter */
+/* https://specification.website/spec/performance/scrollbar-gutter/ */
+/* https://mdn.org.cn/en-US/docs/Web/CSS/scrollbar-gutter */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* [Somnia-Pref] text-autospace */
+/* https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference/Properties/text-autospace */
+:root {
+  text-autospace: normal;
 }
