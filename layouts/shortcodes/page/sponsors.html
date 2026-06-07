@@ -11,6 +11,7 @@
     {{- $date := index $cols 1 -}}
     {{- $platform := index $cols 2 -}}
     {{- $amount := index $cols 3 -}}
+    {{- $amount = trim $amount "\n\r" -}}
     <!-- 这里处理你的数据 -->
     <div class='sponsor-card relative h-full overflow-hidden rounded-xl border px-4 py-3'>
         <div class='font-medium mb-2 line-clamp-1'>{{ $name }}</div>
