@@ -1,7 +1,9 @@
 # 用于输出 Markdown 格式文档的设置
 [mediaTypes]
-[mediaTypes."text/plain"]
+[mediaTypes."text/markdown"]
 suffixes = ["md"]
+[mediaTypes."application/feed+json"]
+suffixes = ["json"]
 
 # 用于输出 Markdown 格式文档的设置
 [outputFormats.MarkDown]
@@ -9,13 +11,19 @@ mediaType = "text/markdown"
 isPlainText = true
 isHTML = false
 
+[outputFormats.JSONFeed]
+mediaType = "application/feed+json"
+baseName = "feed"  # 输出文件名为 feed.json
+isPlainText = true
+isHTML = false
+
 # 用于 Hugo 输出文档的设置
 [outputs]
-home = ["HTML", "RSS"]
-page = ["HTML", "MarkDown"]
-section = ["HTML", "RSS"]
-taxonomy = ["HTML", "RSS"]
-term = ['HTML']
+home = ["HTML", "RSS", "JSONFeed"] # /index.html, /index.xml, /feed.json 
+page = ["HTML", "MarkDown"] # /posts/xxx/index.html, /posts/xxx/index.md
+section = ["HTML", "RSS", "JSONFeed"] # /posts/index.html, /posts/index.xml / /posts/index.json
+taxonomy = ["HTML", "RSS", "JSONFeed"] # /tags/index.html, /tags/index.xml /tags/index.json
+term = ["HTML","RSS", "JSONFeed"] # /tags/xxx/index.html, /tags/xxx/index.xml /tags/xxx/index.json
 # taxonomyTerm = ["HTML"]
 
 # RSS 配置限制数量
