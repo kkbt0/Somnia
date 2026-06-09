@@ -1,46 +1,171 @@
-<!-- layouts/partials/json-ld.html -->
-{{- $json_ld := dict
-  "@context" "https://schema.org"
-  "@type" ( cond .IsHome "WebSite" "WebPage" )
-  "url" .Permalink
-  "name" .Title
-  "headline" .Title
-  "description" ( .Params.description | default .Site.Params.description )
-  "inLanguage" site.LanguageCode
-  "author" .Site.Params.author.name
-  "creator" .Site.Params.author.name
-  "accountablePerson" .Site.Params.author.name
-  "copyrightHolder" .Site.Params.author.name
-  "copyrightYear" ( now.Format "2006" )
-  "datePublished" ( .PublishDate.Format "2006-01-02T15:04:05Z07:00" )
-  "dateModified" ( .Lastmod.Format "2006-01-02T15:04:05Z07:00" )
-  "url" .Permalink
--}}
-{{ if .IsHome }}
+{{- $site := .Site -}}
+{{- $page := . -}}
+
+{{- /* ========== 公共基础字段 ========== */ -}}
+{{- $siteURL    := $site.BaseURL | strings.TrimRight "/" -}}
+{{- $siteName   := $site.Title -}}
+{{- $siteDesc   := $site.Params.description | default "" -}}
+{{- $siteAuthor := $site.Params.author | default $siteName -}}
+{{- $siteLogo   := $site.Params.logo   | default "" -}}
+{{- if $siteLogo }}{{ $siteLogo = printf "%s%s" $siteURL $siteLogo }}{{ end -}}
+
+{{- $pageURL    := .Permalink -}}
+{{- $pageTitle  := .Title -}}
+{{- $pageDesc   := .Description | default (.Summary | plainify | truncate 160) -}}
+{{- $pageDateP  := .PublishDate.Format "2006-01-02T15:04:05Z07:00" -}}
+{{- $pageDateM  := .Lastmod.Format "2006-01-02T15:04:05Z07:00" -}}
+
+{{- /* 封面图 */}}
+{{- $imageURL := "" -}}
+{{- with .Params.image }}{{ $imageURL = printf "%s%s" $siteURL . }}{{ end -}}
+{{- if not $imageURL }}{{ with .Params.featuredImage }}
+{{- if hasPrefix . "http" }}{{ $imageURL = . }}{{- else }}{{ $imageURL = printf "%s%s" $siteURL . }}{{ end -}}
+{{ end }}{{ end -}}
+{{- if not $imageURL }}{{ with .Params.cover }}{{ $imageURL = printf "%s%s" $siteURL . }}{{ end }}{{ end -}}
+{{- if not $imageURL }}{{ $imageURL = $siteLogo }}{{ end -}}
+
+{{- /* ========== 根据页面类型选择 schema ========== */ -}}
+{{- $json_ld := dict -}}
+
+{{- if .IsHome -}}
+  {{- /* ── 主页：WebSite + SearchAction ── */ -}}
+  {{/*  {{- $searchURL := printf "%s/search/?q={search_term_string}" $siteURL -}}
+  {{- $searchAction := dict
+        "@type"       "SearchAction"
+        "target"      (dict "@type" "EntryPoint" "urlTemplate" $searchURL)
+        "query-input" "required name=search_term_string" -}}
+  {{- $json_ld = dict
+        "@context"        "https://schema.org"
+        "@type"           "WebSite"
+        "url"             $siteURL
+        "name"            $siteName
+        "description"     $siteDesc
+        "potentialAction" $searchAction -}}  */}}
+  {{- $json_ld = dict
+        "@context"        "https://schema.org"
+        "@type"           "WebSite"
+        "url"             $siteURL
+        "name"            $siteName
+        "description"     $siteDesc -}}
+
+{{- else if .IsSection -}}
+  {{- /* ── List 页（docs/、posts/ 等栏目首页）：CollectionPage ── */ -}}
+  {{- $breadcrumbs := slice -}}
+  {{- $breadcrumbs = $breadcrumbs | append (dict
+        "@type"    "ListItem"
+        "position" 1
+        "name"     $siteName
+        "item"     $siteURL) -}}
+  {{- $breadcrumbs = $breadcrumbs | append (dict
+        "@type"    "ListItem"
+        "position" 2
+        "name"     $pageTitle
+        "item"     $pageURL) -}}
+
+  {{- $json_ld = dict
+        "@context"        "https://schema.org"
+        "@type"           "CollectionPage"
+        "url"             $pageURL
+        "name"            $pageTitle
+        "description"     $pageDesc
+        "isPartOf"        (dict "@type" "WebSite" "url" $siteURL "name" $siteName)
+        "breadcrumb"      (dict "@type" "BreadcrumbList" "itemListElement" $breadcrumbs) -}}
+
+{{- else if and .IsPage (or (eq .Type "posts") (eq .Type "docs") (eq .Section "posts") (eq .Section "docs")) -}}
+  {{- /* ── 系列博客文章页：BlogPosting / TechArticle ── */ -}}
+
+  {{- /* 作者 */}}
+  {{- $authorName := .Params.author | default $siteAuthor -}}
+  {{- $author := dict "@type" "Person" "name" $authorName -}}
+
+  {{- /* 标签 & 关键词 */}}
+  {{- $keywords := slice -}}
+  {{- with .Params.tags }}{{ range . }}{{ $keywords = $keywords | append . }}{{ end }}{{ end -}}
+  {{- with .Params.categories }}{{ range . }}{{ $keywords = $keywords | append . }}{{ end }}{{ end -}}
+
+  {{- /* 面包屑 */}}
+  {{- $pos := 1 -}}
+  {{- $items := slice -}}
+  {{- $items = $items | append (dict "@type" "ListItem" "position" $pos "name" $siteName "item" $siteURL) -}}
+  {{- $pos = add $pos 1 -}}
+  {{- with .CurrentSection -}}
+    {{- $items = $items | append (dict "@type" "ListItem" "position" $pos "name" .Title "item" .Permalink) -}}
+    {{- $pos = add $pos 1 -}}
+  {{- end -}}
+  {{- $items = $items | append (dict "@type" "ListItem" "position" $pos "name" $pageTitle "item" $pageURL) -}}
+
+  {{- /* 文章类型：docs 用 TechArticle，posts 用 BlogPosting */}}
+  {{- $articleType := "BlogPosting" -}}
+  {{- if or (eq .Type "docs") (eq .Section "docs") }}{{ $articleType = "TechArticle" }}{{ end -}}
+
+  {{- $article := dict
+        "@context"         "https://schema.org"
+        "@type"            $articleType
+        "headline"         $pageTitle
+        "description"      $pageDesc
+        "url"              $pageURL
+        "datePublished"    $pageDateP
+        "dateModified"     $pageDateM
+        "author"           $author
+        "publisher"        (dict "@type" "Organization" "name" $siteName "logo" (dict "@type" "ImageObject" "url" $siteLogo))
+        "mainEntityOfPage" (dict "@type" "WebPage" "@id" $pageURL)
+        "breadcrumb"       (dict "@type" "BreadcrumbList" "itemListElement" $items) -}}
+
+  {{- if $imageURL -}}
+    {{- $article = merge $article (dict "image" $imageURL) -}}
+  {{- end -}}
+  {{- if gt (len $keywords) 0 -}}
+    {{- $article = merge $article (dict "keywords" (delimit $keywords ", ")) -}}
+  {{- end -}}
+
+  {{- /* 系列（series 参数）*/}}
+  {{- with .Params.series -}}
+    {{- $article = merge $article (dict "isPartOf" (dict "@type" "CreativeWorkSeries" "name" .)) -}}
+  {{- end -}}
+
+  {{- $json_ld = $article -}}
+
+{{- else if .IsPage -}}
+  {{- /* ── 普通独立页（about、projects 等）：WebPage ── */ -}}
+  {{- $breadcrumbs := slice -}}
+  {{- $breadcrumbs = $breadcrumbs | append (dict
+        "@type"    "ListItem"
+        "position" 1
+        "name"     $siteName
+        "item"     $siteURL) -}}
+  {{- $breadcrumbs = $breadcrumbs | append (dict
+        "@type"    "ListItem"
+        "position" 2
+        "name"     $pageTitle
+        "item"     $pageURL) -}}
+
+  {{- $wp := dict
+        "@context"    "https://schema.org"
+        "@type"       "WebPage"
+        "url"         $pageURL
+        "name"        $pageTitle
+        "description" $pageDesc
+        "isPartOf"    (dict "@type" "WebSite" "url" $siteURL "name" $siteName)
+        "breadcrumb"  (dict "@type" "BreadcrumbList" "itemListElement" $breadcrumbs) -}}
+
+  {{- if $imageURL -}}
+    {{- $wp = merge $wp (dict "primaryImageOfPage" (dict "@type" "ImageObject" "url" $imageURL)) -}}
+  {{- end -}}
+
+  {{- /* about 页额外输出 Person */}}
+  {{- if eq .File.ContentBaseName "about" -}}
+    {{- $wp = merge $wp (dict
+          "@type"  (slice "WebPage" "ProfilePage")
+          "about"  (dict "@type" "Person" "name" $siteAuthor "url" $pageURL)) -}}
+  {{- end -}}
+
+  {{- $json_ld = $wp -}}
+
+{{- end -}}
+
+{{- /* ========== 输出 ========== */ -}}
+{{- if $json_ld -}}
 <script type="application/ld+json">
-{{- $json_ld | jsonify | safeJS -}}
+{{- $json_ld | jsonify (dict "indent" "  ") | safeJS }}
 </script>
-{{ end }}
-{{ if .IsPage }}
-<script type="application/ld+json">
-{
-    "@context" : "http://schema.org",
-    "@type" : {{ if .IsHome }}"WebSite"{{ else }}"WebPage"{{ end }},
-    "articleSection" : "{{ .Section }}",
-    "name" : "{{ .Title }}",
-    "headline" : "{{ .Title }}",
-    "description" : "{{ if .Description }}{{ .Description }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ end }}{{ end }}",
-    "inLanguage" : "{{  site.LanguageCode }}",
-    "author" : "{{ .Site.Params.author.name }}",
-    "creator" : "{{ .Site.Params.author.name }}",
-    "accountablePerson" : "{{ .Site.Params.author.name }}",
-    "copyrightHolder" : "{{ .Site.Params.author.name }}",
-    "copyrightYear" : "{{ .Date.Format "2006" }}",
-    "datePublished": "{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}",
-    "dateModified" : "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
-    "url" : "{{ .Permalink }}",
-    "wordCount" : "{{ .WordCount }}",
-    "keywords" : [ {{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }} ]
-}
-</script>
-{{ end }}
+{{- end -}}
