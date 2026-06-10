@@ -1,5 +1,5 @@
 <section class='animate mb-10 flex flex-col items-center gap-y-7' id='content-header'>
-    <img src="{{.Site.Params.author.avatar|default ""}}" alt="Avatar" class="h-28 w-auto rounded-full border p-1" loading="eager"
+    <img src='{{.Site.Params.author.avatar|default ""}}' alt="Avatar" class="h-28 w-auto rounded-full border p-1" loading="eager"
         width="256" height="256" fetchpriority="high" decoding="async">
     <div class='flex flex-col items-center gap-y-4'>
         <h1 class='text-3xl font-medium'>{{.Site.Params.author.name|default .Site.Title}}</h1>
