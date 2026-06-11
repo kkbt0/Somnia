@@ -9,24 +9,7 @@ document.addEventListener('alpine:init', () => {
         },
         // 统一调用接口，方便未来改为全局事件总线 由 Somnia 负责
     });
-
-    // directive magic plugin https://alpinejs.dev/advanced/extending
-    // https://github.com/alpinejs/alpine/blob/main/packages/alpinejs/src/directives/x-ignore.js
-    const jsReload = () => { }
-    jsReload.inline = (el) => {
-        const moveScript = (targetEl) => {
-            if (!targetEl || targetEl.tagName?.toLowerCase() !== 'script') return;
-            const newScript = document.createElement('script');
-            newScript.innerHTML = targetEl.innerHTML;
-            document.head.appendChild(newScript);
-            targetEl.remove();
-        }
-        // 忽略重复
-        moveScript(el); // 选择 el
-        moveScript(el.nextElementSibling) // 选择 el 的下一个兄弟节点 
-        moveScript(el.lastElementChild) // 选择 el 最后一个子节点
-    }
-    Alpine.directive('js-reload', jsReload)
+    Alpine.plugin(somnia.SomniaPlugin);
 })
 
 // 处理页面数据 负责动态加载 js 等

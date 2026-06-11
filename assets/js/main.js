@@ -156,6 +156,18 @@ class Somnia {
             }
         }, 1e4);
     }
+
+    // 简单 hash
+    simpleHash(str) {
+        let hash = 0;
+        if (str.length === 0) return hash;
+        for (let i = 0; i < str.length; i++) {
+            let char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        return hash;
+    }
 }
 
 //  libs 定义了 Somnia 可能使用的第三方库的加载和运行逻辑，每个库都有 loaded、ok、load 和 run 四个方法，分别用于检查是否已经加载、检查是否可用、加载资源和运行库功能。
@@ -296,6 +308,31 @@ Somnia.prototype.libs = {
             }
         }
     }
+}
+
+// for Alpinejs https://alpinejs.dev/advanced/extending
+Somnia.prototype.SomniaPlugin = function (Alpine) {
+    // directive magic plugin https://alpinejs.dev/advanced/extending
+    // https://github.com/alpinejs/alpine/blob/main/packages/alpinejs/src/directives/x-ignore.js
+    // console.log('[Somnia] Alpine Plugin Loaded');
+    const jsReload = () => { }
+    jsReload.inline = (el) => {
+        const moveScript = (targetEl) => {
+            if (!targetEl || targetEl.tagName?.toLowerCase() !== 'script') return;
+            const id = Somnia.prototype.simpleHash(targetEl.innerHTML);
+            if (document.getElementById(id)) return; // 避免切换页面的 head js 重复，初次加载 vm 仍有重复
+            const newScript = document.createElement('script');
+            newScript.id = `somnia-x-js-load-${targetEl.innerHTML.length}-${id}`;
+            newScript.innerHTML = targetEl.innerHTML;
+            document.head.appendChild(newScript);
+            targetEl.remove();
+            el.removeAttribute('x-js-load');
+        }
+        moveScript(el); // 选择 el
+        moveScript(el.nextElementSibling) // 选择 el 的下一个兄弟节点 
+        moveScript(el.lastElementChild) // 选择 el 最后一个子节点
+    }
+    Alpine.directive('js-load', jsReload)
 }
 
 const somnia = new Somnia();
