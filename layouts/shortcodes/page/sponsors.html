@@ -1,7 +1,8 @@
 <!--xxx,2010-01-01,platform,amount-->
+<!-- 或许这个组件应该交给 js 处理渲染内容，以降低复杂度，提高兼容性，提高可维护性-->
 {{$max := .Get "max" | default 100 }}
 <div class="grid gap-3 sm:grid-cols-2 sm:gap-3.5 lg:grid-cols-3">
-    <!-- [TODO] read list -->
+    <!-- read list -->
     {{- $rows := split (trim .Inner "\n\r") "\n" -}}
     {{- range $rows -}}
     {{- if . -}}
@@ -12,7 +13,7 @@
     {{- $platform := index $cols 2 -}}
     {{- $amount := index $cols 3 -}}
     {{- $amount = trim $amount "\n\r" -}}
-    <!-- 这里处理你的数据 -->
+    <!-- 处理数据 -->
     <div class='sponsor-card relative h-full overflow-hidden rounded-xl border px-4 py-3'>
         <div class='font-medium mb-2 line-clamp-1'>{{ $name }}</div>
         <div class='text-xs text-muted-foreground'>
