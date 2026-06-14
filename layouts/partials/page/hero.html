@@ -1,6 +1,6 @@
 <!--hero image-->
 {{if .Params.featuredImage }}
-<div x-data="heroComponent()" @scroll.window="onScroll()" class="hero-image relative mb-6">
+<div x-data="component.hero()" @scroll.window="onScroll()" class="hero-image relative mb-6">
     <!--  max-w-[65ch] 好像不太够用-->
     <img src="{{.Params.featuredImage}}" alt="Hero Image" fetchpriority="high"
         loading="eager" decoding="async"

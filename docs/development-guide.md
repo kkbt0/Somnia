@@ -296,16 +296,14 @@ pnpm unocss "layouts/**/*.html" -o ./assets/css/uno.css
 
 | 组件函数 | 绑定模板 | 功能 |
 |---------|---------|------|
-| `headerComponent()` | `partials/header.html` | 导航栏滚动隐藏/显示、移动端菜单、主题切换 |
-| `mainComponent()` | `_default/single.html`、`posts/single.html` | 侧边栏切换 |
-| `contentComponent()` | `_default/baseof.html` | 内容容器初始化 |
-| `backToTopComponent()` | `partials/back-to-top.html` | 回到顶部 + 阅读进度百分比 |
-| `quoteComponent()` | `partials/quote.html` | 一言 API 加载 |
-| `heroComponent()` | `partials/page/hero.html` | 文章 Banner 模糊视差效果 |
-| `tocComponent()` | `partials/toc/toc.html` | 目录高亮 |
+| `component.header()` | `partials/header.html` | 导航栏滚动隐藏/显示、移动端菜单、主题切换 |
+| `component.main()` | `_default/single.html`、`posts/single.html` | 侧边栏切换 |
+| `component.content()` | `_default/baseof.html` | 内容容器初始化 |
+| `component.backToTop()` | `partials/back-to-top.html` | 回到顶部 + 阅读进度百分比 |
+| `component.quote()` | `partials/quote.html` | 一言 API 加载 |
+| `component.hero()` | `partials/page/hero.html` | 文章 Banner 模糊视差效果 |
+| `component.toc()` | `partials/toc/toc.html` | 目录高亮 |
 | `somniaData()` | 数据属性 | 按需加载第三方库（KaTeX 等） |
-| `searchComponent()` | 搜索页 | Pagefind 搜索 UI 初始化 |
-| `noticeComponent()` | 公告关闭 | 公告面板交互 |
 
 ### Async Alpine 异步加载机制
 
@@ -437,7 +435,7 @@ TOC 通过三级 partial 实现：
 1. `toc-extract-flat.html` — 从 `.Content` 提取所有标题扁平列表
 2. `toc-build-tree` — 构建嵌套树
 3. `toc-heading-item.html` — 递归渲染
-移动端通过 `mainComponent().toggleSidebar()` 弹出遮罩层。
+移动端通过 `component.main().toggleSidebar()` 弹出遮罩层。
 
 ## 主题自定义：非侵入式覆盖
 
@@ -860,7 +858,7 @@ Goldmark `[highlight]` 配置 + Shiki 样式：
 |------|------|
 | `home.html` | 封装 Section 组件 |
 | `posts/single.html` | Markdown 渲染槽位 |
-| `headerComponent()` | 滚动性能优化 |
+| `component.header()` | 滚动性能优化 |
 | `main.js` | 扫描线超时提示优化 |
 | 整体 | HTML/CSS/JS 分离（类似 Vue SFC → 独立文件） |
 | 整体 | 字体预加载 |

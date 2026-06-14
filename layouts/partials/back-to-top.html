@@ -1,4 +1,4 @@
-<div id='action-buttons' x-data="backToTopComponent()" :class="{'ended':(scrollPercent>=100), 'show':actionBtnsShow }"
+<div id='action-buttons' x-data="component.backToTop()" :class="{'ended':(scrollPercent>=100), 'show':actionBtnsShow }"
   @scroll.window="onScroll()" class='z-10 group fixed bottom-8 end-4 transition-all flex flex-col gap-y-4 sm:end-8'>
   <!-- slot name='other-icons' -->
    <!-- 调用父组件的 toggleSidebar() -->

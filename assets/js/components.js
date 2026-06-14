@@ -31,9 +31,10 @@ function somniaData() {
     }
 }
 
+const component = {}
 
 // for Somnia/layouts/_default/single.html
-function mainComponent() {
+component.main = function () {
     return {
         sidebarShow: false,
         init() {
@@ -46,7 +47,7 @@ function mainComponent() {
 }
 
 // for Somnia/layouts/_default/baseof.html
-function contentComponent() {
+component.content = function () {
     return {
         init() { }
     }
@@ -54,7 +55,7 @@ function contentComponent() {
 
 // for Somnia/layouts/partials/header.html
 // 由于 header 组件不会被 Suwpjs 重新渲染，所以内联也可以
-function headerComponent() {
+component.header = function () {
     return {
         preScrollY: window.scrollY,
         // 初始位置监测
@@ -102,7 +103,7 @@ function headerComponent() {
 
 
 // for Somnia/layouts/partials/back-to-top.html
-function backToTopComponent() {
+component.backToTop = function () {
     return {
         needPercent: true, // 是否需要百分比功能
         actionBtnsShow: false, // actionBtns 是否可见
@@ -196,7 +197,7 @@ function backToTopComponent() {
 }
 
 // for Somnia/layouts/partials/quote.html
-function quoteComponent() {
+component.quote = function () {
     return {
         quote: '我们的征途是星辰大海！',
         init() {
@@ -208,7 +209,7 @@ function quoteComponent() {
 }
 
 // for Somnia/layouts/partials/page/hero.html
-function heroComponent() {
+component.hero = function () {
     return {
         viewportHeight: window.innerHeight,
         threshold1: 0,
@@ -237,7 +238,7 @@ function heroComponent() {
 // 如果不需要此功能，可以删除此脚本标签
 // 注意 Swupjs 需要 SwupScrollPlugin 支持滚动动画
 // for Somnia/layouts/partials/toc/toc.html
-function tocComponent() {
+component.toc = function () {
     return {
         headings: [],
         tocLinks: [],
@@ -340,7 +341,7 @@ function tocComponent() {
 }
 
 // for Somnia/layouts/partials/page/blog-preview.html
-function blogPreviewComponent() {
+component.blogPreview = function () {
     return {
         heroColor: '#9698C1',
         init() {
@@ -355,7 +356,7 @@ function blogPreviewComponent() {
 }
 
 // for Somnia/layouts/partials/page/copyright.html
-function copyrightComponent() {
+component.copyright = function () {
     return {
         qrcodeShow: false,
         qrcodeImgSrc: "",

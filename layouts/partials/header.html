@@ -1,4 +1,4 @@
-<header id="site-header" x-data="headerComponent()"
+<header id="site-header" x-data="component.header()"
     class="group sticky top-4 z-50 max-md:z-30 mb-12 flex items-center justify-between rounded-xl border border-transparent max-sm:py-1 sm:rounded-2xl header-component"
     :class="{ 'expanded': mobileMenuOpen, 'not-top': notTop }" @scroll.window="onScroll()" :data-show="headerShow">
     <a class="z-30 text-xl font-medium group-[.not-top]:ms-2 sm:group-[.not-top]:ms-3"
