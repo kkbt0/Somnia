@@ -173,7 +173,6 @@ class Somnia {
 //  libs 定义了 Somnia 可能使用的第三方库的加载和运行逻辑，每个库都有 loaded、ok、load 和 run 四个方法，分别用于检查是否已经加载、检查是否可用、加载资源和运行库功能。
 // 动态加载由 xxxComponent() 负责
 // Katex - somnia-data has "math" 时加载
-// Pagefind - 由 searchComponent() 负责加载
 // 幂等化，避免重复绑定
 // 监测可用性，加载资源，初始化等逻辑
 Somnia.prototype.libs = {
@@ -272,22 +271,24 @@ Somnia.prototype.libs = {
                 script.type = 'module';
                 // script.src = '/js/mermaid.js';
                 script.defer = true;
-                script.textContent = `import mermaid from '${SOMNIA_LIBS.mermaid.js}';mermaid.initialize({ startOnLoad: false });window.mermaid = mermaid;`;
+                script.textContent = `import mermaid from '${SOMNIA_LIBS.mermaid.js}';mermaid.initialize({ startOnLoad: false });window.mermaid = mermaid;window.dispatchEvent(new CustomEvent('somnia:mermaid-loaded'));`;
                 script.setAttribute('data-somnia', 'mermaid.js');
+                window.addEventListener('somnia:mermaid-loaded', () => resolve(script), { once: true });
+                // 轮询或事件监听
                 // script.onload = () => resolve(script);
                 // 轮询检查是否加载完成
-                const checkInterval = setInterval(() => {
-                    if (window.mermaid && window.mermaid.initialize) {
-                        clearInterval(checkInterval);
-                        resolve(script);
-                    }
-                }, 50);
+                // const checkInterval = setInterval(() => {
+                //     if (window.mermaid && window.mermaid.initialize) {
+                //         clearInterval(checkInterval);
+                //         resolve(script);
+                //     }
+                // }, 50);
 
                 // 超时处理
-                setTimeout(() => {
-                    clearInterval(checkInterval);
-                    reject(new Error('Mermaid 加载超时'));
-                }, 5000);
+                // setTimeout(() => {
+                //     clearInterval(checkInterval);
+                //     reject(new Error('Mermaid 加载超时'));
+                // }, 5000);
                 script.onerror = () => reject();
                 document.head.appendChild(script);
             });
