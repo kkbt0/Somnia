@@ -100,7 +100,7 @@
             async initMusic() {
                 if (!this.musicInit && typeof MIDIjs === 'undefined') {
                     this.musicInit = true;
-                    await Somnia.prototype.loadResource({ href: '//www.midijs.net/lib/midi.js', dataSomnia: 'midi.js' });
+                    await Somnia.loadResource({ href: '//www.midijs.net/lib/midi.js', dataSomnia: 'midi.js' });
                     MIDIjs.player_callback = (msg) => {
                         this.time = parseInt(msg.time);
                         if (this.loop && msg.status === 'finished') {

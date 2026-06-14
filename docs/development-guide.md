@@ -364,7 +364,7 @@ const somnia = new Somnia();
 | `PageInitCustom()` | 用户自定义初始化钩子（可覆盖） |
 | `swupPageInitCustom()` | Swup 页面切换后自定义钩子（可覆盖） |
 
-**第三方库管理系统（`Somnia.prototype.libs`）：**
+**第三方库管理系统（`Somnia.libs`）：**
 
 每个库实现四个方法：
 
@@ -476,7 +476,7 @@ themes/Somnia/                              ← 默认加载（低优先级）
 1. **优先覆盖 partials 而非重写整个布局** — 只改需要改的部分
 2. **升级主题时 diff 检查** — 覆盖的文件不会随主题更新，需手动合并改进
 3. **UnoCSS 注意** — 如果覆盖的布局使用了原子类，确保 UnoCSS 能扫描到新文件
-4. **自定义 JS 钩子** — 利用 `Somnia.prototype.PageInitCustom` 和 `swupPageInitCustom()` 添加逻辑，而非替换整个 `main.js`
+4. **自定义 JS 钩子** — 利用 `Somnia.PageInitCustom` 和 `swupPageInitCustom()` 添加逻辑，而非替换整个 `main.js`
 
 ## Partial 组件
 
@@ -620,7 +620,7 @@ function test() {
 </script>
 ```
 
-在 `custom.js` 的 `Somnia.prototype.swupPageInitCustom` 中添加：
+在 `custom.js` 的 `Somnia.swupPageInitCustom` 中添加：
 
 ```javascript
 // 将 #content-wrapper 内的脚本移到 head，防止 Swup 丢弃
@@ -650,7 +650,7 @@ document.dispatchEvent(new CustomEvent('somnia:moved', { bubbles: true }));
 </script>
 ```
 
-在 `custom.js` 的 `Somnia.prototype.swupPageInitCustom` 中添加：
+在 `custom.js` 的 `Somnia.swupPageInitCustom` 中添加：
 
 ```javascript
 document.querySelectorAll('div[x-ignore]').forEach(div => {

@@ -1,5 +1,5 @@
 /*! Somnia | (c) 2026 kkbt | https://github.com/kkbt0/Somnia */
-class Somnia {
+const Somnia = {
     // Toast
     showToast(message, time) {
         const toast = document.createElement('div')
@@ -14,7 +14,7 @@ class Somnia {
         setTimeout(() => {
             toast.remove()
         }, time || 3000)
-    }
+    },
     // 十二时辰
     timestampToShichen(ts13) {
         // 十二时辰对应
@@ -69,7 +69,7 @@ class Somnia {
             return number < 10 ? `0${number}` : number;
         }
         return formatTime(ts13);
-    }
+    },
     res() {
         const res = document.querySelectorAll("[data-somnia]");
         let result = {};
@@ -78,7 +78,7 @@ class Somnia {
             result[key] = el;
         });
         return result;
-    }
+    },
     // 使用示例：
     // example loadResource(el,rel,href,type,integrity,crossOrigin,defer)
     async loadResource({
@@ -125,11 +125,11 @@ class Somnia {
             // 追加到DOM
             element.appendChild(resource);
         });
-    }
+    },
 
     swupPageInitMediumZoom() {
         this.libs.mediumZoom.run();
-    }
+    },
 
     // 扫描线动画，act 默认显示后自动隐藏 time: 自动隐藏时间，默认900ms （与 CSS 动画时间一致）
     scanLine({ act, time = 900 } = {}) {
@@ -145,17 +145,17 @@ class Somnia {
             add();
             setTimeout(remove, time);
         }
-        // 超时提示  Somnia.prototype.showToast('加载超时', 3000);
+        // 超时提示  Somnia.showToast('加载超时', 3000);
         if (this._scanLineTimeoutTimer) {
             clearTimeout(this._scanLineTimeoutTimer);
             this._scanLineTimeoutTimer = null;
         }
         this._scanLineTimeoutTimer = setTimeout(() => {
             if (classList.contains('somnia-loading')) {
-                Somnia.prototype.showToast('加载超时，<a href="javascript:window.location.reload();">刷新</a>', 1e8);
+                Somnia.showToast('加载超时，<a href="javascript:window.location.reload();">刷新</a>', 1e8);
             }
         }, 1e4);
-    }
+    },
 
     // 简单 hash
     simpleHash(str) {
@@ -175,7 +175,7 @@ class Somnia {
 // Katex - somnia-data has "math" 时加载
 // 幂等化，避免重复绑定
 // 监测可用性，加载资源，初始化等逻辑
-Somnia.prototype.libs = {
+Somnia.libs = {
     mediumZoom: {
         loaded: () => true, // 已经打包全局加载 返回 true 即可
         ok: () => typeof window.mediumZoom !== 'undefined',
@@ -192,8 +192,8 @@ Somnia.prototype.libs = {
         loaded: () => !!document.head.querySelector('link[data-somnia="pagefind.css"]') && !!document.head.querySelector('script[data-somnia="pagefind.js"]'),
         ok: () => typeof window.PagefindUI !== 'undefined',
         async load() {
-            await Somnia.prototype.loadResource({ rel: 'stylesheet', href: SOMNIA_LIBS.pagefind.css, dataSomnia: 'pagefind.css' });
-            await Somnia.prototype.loadResource({ type: 'module', href: SOMNIA_LIBS.pagefind.js, dataSomnia: 'pagefind.js' });
+            await Somnia.loadResource({ rel: 'stylesheet', href: SOMNIA_LIBS.pagefind.css, dataSomnia: 'pagefind.css' });
+            await Somnia.loadResource({ type: 'module', href: SOMNIA_LIBS.pagefind.js, dataSomnia: 'pagefind.js' });
         },
         async run() {
             if (!this.loaded()) await this.load();
@@ -205,7 +205,7 @@ Somnia.prototype.libs = {
                 });
             } else {
                 console.warn('[Somnia] Lib Pagefind Error');
-                Somnia.prototype.showToast('搜索组件加载失败，请刷新页面重试');
+                Somnia.showToast('搜索组件加载失败，请刷新页面重试');
             }
         }
     },
@@ -213,7 +213,7 @@ Somnia.prototype.libs = {
         loaded: () => !!document.head.querySelector('script[data-somnia="qrcode.js"]'),
         ok: () => typeof window.QRCode !== 'undefined',
         async load() {
-            await Somnia.prototype.loadResource({ href: SOMNIA_LIBS.qrcode.js, dataSomnia: 'qrcode.js' });
+            await Somnia.loadResource({ href: SOMNIA_LIBS.qrcode.js, dataSomnia: 'qrcode.js' });
         },
         async run({ el, opt } = {}) {
             if (!this.loaded()) await this.load();
@@ -221,7 +221,7 @@ Somnia.prototype.libs = {
                 new QRCode(el, opt);
             } else {
                 console.warn('[Somnia] Lib QRCode Error');
-                Somnia.prototype.showToast('二维码组件加载失败，请刷新页面重试');
+                Somnia.showToast('二维码组件加载失败，请刷新页面重试');
             }
         }
     },
@@ -231,13 +231,13 @@ Somnia.prototype.libs = {
         async load() {
             const katex = SOMNIA_LIBS.katex;
             // 插入 KaTeX CSS
-            Somnia.prototype.loadResource({ rel: 'stylesheet', href: katex.css.href, crossOrigin: 'anonymous', dataSomnia: 'katex.css' });
+            Somnia.loadResource({ rel: 'stylesheet', href: katex.css.href, crossOrigin: 'anonymous', dataSomnia: 'katex.css' });
 
             // 插入 KaTeX 主库 JS
-            await Somnia.prototype.loadResource({ href: katex.js.href, integrity: katex.js.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex.js' });
+            await Somnia.loadResource({ href: katex.js.href, integrity: katex.js.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex.js' });
 
             // 插入 KaTeX 自动渲染扩展
-            await Somnia.prototype.loadResource({ href: katex.autoRenderJs.href, integrity: katex.autoRenderJs.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex-auto-render.js' });
+            await Somnia.loadResource({ href: katex.autoRenderJs.href, integrity: katex.autoRenderJs.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex-auto-render.js' });
 
         },
         async run(element) {
@@ -257,7 +257,7 @@ Somnia.prototype.libs = {
                 });
             } else {
                 console.warn('[Somnia] Lib KaTeX Error');
-                Somnia.prototype.showToast('数学公式组件加载失败，请刷新页面重试');
+                Somnia.showToast('数学公式组件加载失败，请刷新页面重试');
             }
         }
     },
@@ -265,7 +265,7 @@ Somnia.prototype.libs = {
         loaded: () => !!document.head.querySelector('script[data-somnia="mermaid.js"]'),
         ok: () => typeof window.mermaid !== 'undefined',
         async load() {
-            // await somnia.loadResource({ href: '/js/mermaid.js', type: 'module', defer: true, dataSomnia: 'mermaid.js' });
+            // await Somnia.loadResource({ href: '/js/mermaid.js', type: 'module', defer: true, dataSomnia: 'mermaid.js' });
             return new Promise((resolve, reject) => {
                 const script = document.createElement('script');
                 script.type = 'module';
@@ -305,14 +305,14 @@ Somnia.prototype.libs = {
                 mermaid.run({ querySelector: isDarkMode ? ".mermaid-dark" : ".mermaid" }); // 幂等
             } else {
                 console.warn('[Somnia] Lib Mermaid Error');
-                Somnia.prototype.showToast('流程图组件加载失败，请刷新页面重试');
+                Somnia.showToast('流程图组件加载失败，请刷新页面重试');
             }
         }
     }
 }
 
 // for Alpinejs https://alpinejs.dev/advanced/extending
-Somnia.prototype.SomniaPlugin = function (Alpine) {
+Somnia.SomniaPlugin = function (Alpine) {
     // directive magic plugin https://alpinejs.dev/advanced/extending
     // https://github.com/alpinejs/alpine/blob/main/packages/alpinejs/src/directives/x-ignore.js
     // console.log('[Somnia] Alpine Plugin Loaded');
@@ -320,7 +320,7 @@ Somnia.prototype.SomniaPlugin = function (Alpine) {
     jsReload.inline = (el) => {
         const moveScript = (targetEl) => {
             if (!targetEl || targetEl.tagName?.toLowerCase() !== 'script') return;
-            const id = Somnia.prototype.simpleHash(targetEl.innerHTML);
+            const id = Somnia.simpleHash(targetEl.innerHTML);
             if (document.getElementById(id)) return; // 避免切换页面的 head js 重复，初次加载 vm 仍有重复
             const newScript = document.createElement('script');
             newScript.id = `somnia-x-js-load-${targetEl.innerHTML.length}-${id}`;
@@ -336,6 +336,6 @@ Somnia.prototype.SomniaPlugin = function (Alpine) {
     Alpine.directive('js-load', jsReload)
 }
 
-const somnia = new Somnia();
+// const somnia = Somnia;
 
 

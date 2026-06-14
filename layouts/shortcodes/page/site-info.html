@@ -8,6 +8,6 @@
 <blockquote x-data class='not-prose grid grid-cols-[auto_1fr] gap-x-2 break-words border-s-4 ps-4'>
     {{range $key := $keys}}
     <span class='text-end'>{{$key}}: </span>
-    <samp class="cursor-pointer" @click='navigator.clipboard.writeText("{{index $info $key}}");somnia.showToast(`Copied "{{index $info $key}}" to clipboard!`)'>{{index $info $key}}</samp>
+    <samp class="cursor-pointer" @click='navigator.clipboard.writeText("{{index $info $key}}");Somnia.showToast(`Copied "{{index $info $key}}" to clipboard!`)'>{{index $info $key}}</samp>
     {{end}}
 </blockquote>

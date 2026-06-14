@@ -26,7 +26,7 @@ Somnia 使用了 UnoCSS + Alpine.js 。因此可以使用一些 `Alpine + Tailwi
 
 ```html
 {{</*html*/>}}
-<div x-data="{ foo: 'bar' , func1(){ somnia.showToast(this.foo); }}"
+<div x-data="{ foo: 'bar' , func1(){ Somnia.showToast(this.foo); }}"
 class="flex justify-center p-2">
 <button @click="func1" class="border p-2 rounded">按钮</button>
 </div>
@@ -34,7 +34,7 @@ class="flex justify-center p-2">
 ```
 
 {{<html>}}
-<div x-data="{ foo: 'bar' , func1(){ somnia.showToast(this.foo); }}"
+<div x-data="{ foo: 'bar' , func1(){ Somnia.showToast(this.foo); }}"
 class="flex justify-center p-2">
 <button @click="func1" class="border p-2 rounded">按钮</button>
 </div>

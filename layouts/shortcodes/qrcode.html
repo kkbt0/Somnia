@@ -2,7 +2,7 @@
 {{$text:=.Get "text"}}
 {{$class:=.Get "class"}}
 <!-- 可能传入的 class inline-flex max-w-44 p-3 bg-muted rounded-lg border -->
-<div x-data="{init(){somnia.libs.qrcode.run({el:this.$el,opt:{text:this.$el.getAttribute('title')||'Somnia',width:256,height:256}})}}" class="{{$class}} qrcode-container-component" title="{{$text}}">
+<div x-data="{init(){Somnia.libs.qrcode.run({el:this.$el,opt:{text:this.$el.getAttribute('title')||'Somnia',width:256,height:256}})}}" class="{{$class}} qrcode-container-component" title="{{$text}}">
   <!-- <img :src="qrcodeImgSrc" style="display: block;" alt="QRCode"> -->
 </div>
 <style>
@@ -26,7 +26,7 @@
         // 调用 API
         // this.qrcodeImgSrc = 'https://api.qrtool.cn/?text=' + window.location.origin + window.location.pathname;
         // 或者加载 js 生成
-        somnia.libs.qrcode.run({
+        Somnia.libs.qrcode.run({
           el: this.$el, opt: {
             text: this.$el.getAttribute('title') || 'Somnia',
             width: 256,

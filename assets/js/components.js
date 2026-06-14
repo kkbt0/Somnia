@@ -9,7 +9,7 @@ document.addEventListener('alpine:init', () => {
         },
         // 统一调用接口，方便未来改为全局事件总线 由 Somnia 负责
     });
-    Alpine.plugin(somnia.SomniaPlugin);
+    Alpine.plugin(Somnia.SomniaPlugin);
 })
 
 // 处理页面数据 负责动态加载 js 等
@@ -21,11 +21,11 @@ function somniaData() {
                 console.log("[Somnia] [Data]", data.trim());
             }
             if (data.includes("katex")) {
-                somnia.libs.katex.run(document.getElementById("content-wrapper"));
+                Somnia.libs.katex.run(document.getElementById("content-wrapper"));
             }
             // 由 render-codeblock-mermaid.html 运行
             // if (data.includes("mermaid")) {
-            //     somnia.libs.mermaid.run();
+            //     Somnia.libs.mermaid.run();
             // }
         }
     }
@@ -96,7 +96,7 @@ component.header = function () {
             // toggleDarkModeElement.dataset.theme = newTheme;
             Alpine.store('somnia').theme = newTheme;
             Alpine.store('somnia').isDark = document.documentElement.classList.contains('dark');
-            somnia.showToast(`Set theme to ${newTheme}`);
+            Somnia.showToast(`Set theme to ${newTheme}`);
         }
     };
 }
@@ -368,12 +368,12 @@ component.copyright = function () {
         },
         copyLinkClick() {
             navigator.clipboard.writeText(window.location.href);
-            somnia.showToast('Link copied!');
+            Somnia.showToast('Link copied!');
         },
         newQRCode() {
             // 加载后生成
             // console.log("New QRCode " + window.location.origin + window.location.pathname);
-            somnia.libs.qrcode.run({
+            Somnia.libs.qrcode.run({
                 el: this.$refs.qrcode, opt: {
                     text: window.location.origin + window.location.pathname,
                     width: 256,
@@ -384,17 +384,17 @@ component.copyright = function () {
             this.qrcodeShow = true;
         },
         newQRCodeScript() {
-            somnia.scanLine({ act: "show" });
+            Somnia.scanLine({ act: "show" });
             this.qrcodeScriptLoading = true;
-            somnia.libs.qrcode.load().then(() => {
+            Somnia.libs.qrcode.load().then(() => {
                 this.newQRCode();
                 this.qrcodeScriptLoaded = true;
             }).catch((e) => {
-                somnia.showToast("QRCode.js Load failed");
+                Somnia.showToast("QRCode.js Load failed");
                 console.error(e);
                 this.qrcodeScriptLoading = false;
             }).finally(() => {
-                somnia.scanLine({ act: "hide", time: 0 });
+                Somnia.scanLine({ act: "hide", time: 0 });
                 // 无论成功失败都确保加载状态重置，避免卡在加载中
                 this.qrcodeScriptLoading = false;
             });
@@ -424,14 +424,14 @@ component.copyright = function () {
 //         },
 //         async pfSearchInit() {
 //             // const el = document.getElementById('content-wrapper'); // 加载到哪里 Swup.js 切换页面都不会彻底拆卸
-//             // somnia.loadResource({ rel: 'stylesheet', href: '/pagefind/pagefind-ui.css',  dataSomnia: 'pagefind.css' });
-//             // await somnia.loadResource({ type: 'module', href: '/pagefind/pagefind-ui.js',  dataSomnia: 'pagefind.js' });
+//             // Somnia.loadResource({ rel: 'stylesheet', href: '/pagefind/pagefind-ui.css',  dataSomnia: 'pagefind.css' });
+//             // await Somnia.loadResource({ type: 'module', href: '/pagefind/pagefind-ui.js',  dataSomnia: 'pagefind.js' });
 //             // new PagefindUI({
 //             //     element: "#site-search",
 //             //     showSubResults: true,
 //             //     showImages: false
 //             // });
-//             somnia.libs.pagefind.run();
+//             Somnia.libs.pagefind.run();
 //         }
 //     }
 // }
