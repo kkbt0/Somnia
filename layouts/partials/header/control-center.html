@@ -129,13 +129,14 @@
                         this.length = duration;
                     })
                 } catch (e) {
-                    console.error(e);
+                    console.error("[Somnia] [MIDI] Not Ready");
                     this.musicInfo = 'Not Ready';
                     await this.sleep(1000);
                     if (this.retry < 5) {
                         this.retry++;
                         this.play();
                     } else {
+                        console.error("[Somnia] [MIDI] Load Failed", e);
                         this.musicInfo = 'Load Failed';
                     }
                 }

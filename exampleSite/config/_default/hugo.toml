@@ -17,9 +17,13 @@ baseName = "feed"  # 输出文件名为 feed.json
 isPlainText = true
 isHTML = false
 
+[outputFormats.INFO]
+baseName = "info"
+isPlainText = true
+
 # 用于 Hugo 输出文档的设置
 [outputs]
-home = ["HTML", "RSS", "JSONFeed"] # /index.html, /index.xml, /feed.json 
+home = ["HTML", "RSS", "JSONFeed", "INFO"] # /index.html, /index.xml, /feed.json /info
 page = ["HTML", "MarkDown"] # /posts/xxx/index.html, /posts/xxx/index.md
 section = ["HTML", "RSS", "JSONFeed"] # /posts/index.html, /posts/index.xml / /posts/index.json
 taxonomy = ["HTML", "RSS", "JSONFeed"] # /tags/index.html, /tags/index.xml /tags/index.json

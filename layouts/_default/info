@@ -1,0 +1,4 @@
+{{- $json := dict
+  "v" (now.Format "2006-0102-1504")
+-}}
+{{- $json | jsonify -}}
