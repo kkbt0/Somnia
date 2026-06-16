@@ -9,9 +9,7 @@
 
 <body class="flex justify-center bg-background text-foreground">
   <!-- 渐变背景 -->
-  <div id='highlight-gradient' class='pointer-events-none absolute start-0 top-0 z-0 h-screen w-full opacity-25'
-    style="background-image:linear-gradient(var(--highlightColor),transparent);" />
-  </div>
+  {{ partial "bg.html" . }}
 
   <!-- 主容器 -->
   <div id='main-container' class='w-full max-w-[70rem] min-h-[100dvh] flex flex-col justify-between'>

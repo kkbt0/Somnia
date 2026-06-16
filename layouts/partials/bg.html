@@ -1,0 +1,12 @@
+<!-- 渐变背景 -->
+<div id='highlight-gradient' class='pointer-events-none absolute start-0 top-0 z-0 h-screen w-full opacity-25'
+    style="background-image:linear-gradient(var(--highlightColor),transparent);">
+    {{ if .Site.Params.theme.bgMoons }}
+    <!-- 月亮1 —— 外层大光晕（暗蓝） -->
+    <div class="moon-body moon-1"></div>
+    <!-- 月亮2 —— 中层光晕（亮蓝） -->
+    <div class="moon-body moon-2"></div>
+    <!-- 月亮3 —— 内层核心（黑蓝） -->
+    <div class="moon-body moon-3"></div>
+    {{ end }}
+</div>

@@ -21,6 +21,9 @@ posts = "/posts/:slug"
 
 [params]
 description = ''
+# enablePWA = true
+# [params.theme]
+# bgMoons = true
 # Posts Tags Categories 配置页数
 [params.limit]
 blogPosts = 5 # /posts/ 每页左侧文章数

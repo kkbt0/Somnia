@@ -1,0 +1,69 @@
+#highlight-gradient {
+    overflow-x: hidden;
+}
+
+
+/* ========== 三层月亮通用样式 ========== */
+.moon-body {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+
+/* ========== 月亮1 —— 外层 ========== */
+.moon-1 {
+    --dia: min(100vw, 1920px);
+    width: calc(var(--dia) * 1.15);
+    top: calc(-1 * var(--dia) * 0.8);
+    z-index: 1;
+    background: radial-gradient(circle at 50% 50%,
+            #0e3fb5 0%,
+            #0e3fb5 50%,
+            #c4e0fd 80%,
+            #c4e0fd 100%);
+    box-shadow:
+        0 0 140px 90px rgba(100, 140, 220, 0.28),
+        0 0 300px 180px rgba(60, 90, 180, 0.16),
+        0 0 520px 280px rgba(35, 60, 150, 0.08),
+        inset 0 -24px 70px 0 rgba(170, 200, 245, 0.22);
+}
+
+/* ========== 月亮2 —— 中层 ========== */
+.moon-2 {
+    --dia: min(100vw, 1920px);
+    width: calc(var(--dia) * 1.05);
+    top: calc(-1 * var(--dia) * 0.9);
+    z-index: 2;
+    background: radial-gradient(circle at 50% 50%,
+            #1581dc 0%,
+            #1581dc 35%,
+            #c4e4fb 68%,
+            #c4e4fb 100%);
+    box-shadow:
+        0 0 80px 50px rgba(120, 160, 230, 0.26),
+        0 0 180px 100px rgba(70, 110, 200, 0.14),
+        0 0 300px 160px rgba(40, 80, 170, 0.07),
+        inset 0 -18px 50px 0 rgba(190, 220, 255, 0.28);
+}
+
+/* ========== 月亮3 —— 内层 ========== */
+.moon-3 {
+    --dia: min(100vw, 1920px);
+    width: calc(var(--dia) * 1.52);
+    top: calc(var(--dia) * -1.45);
+    z-index: 3;
+    background: radial-gradient(circle at 50% 50%,
+            #080b18 0%,
+            #0e1a51 28%,
+            #101b50 58%,
+            #054cbc 100%);
+    box-shadow:
+        0 0 40px 28px rgba(150, 190, 245, 0.35),
+        0 0 90px 50px rgba(100, 150, 230, 0.20),
+        0 0 160px 80px rgba(60, 110, 200, 0.10),
+        inset 0 -10px 32px 0 rgba(210, 235, 255, 0.35);
+}

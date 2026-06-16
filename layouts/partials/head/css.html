@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
   <!-- user custom css -->
-  {{- with resources.Get "css/custom.css" }}
+  {{- with resources.Get "css/custom.css" | css.Build }}
   <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
 
