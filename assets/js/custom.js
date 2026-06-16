@@ -10,7 +10,7 @@ console.log("你好，世界")
 // function noticeComponent() {}
 
 // 修改 CDN or 其他路径 或通过覆盖 js 实现
-BASE_URL = '/Somnia';
+// BASE_URL = '/Somnia'; // 由于 Hugo 生成提供
 SOMNIA_LIBS.pagefind.css = `${BASE_URL}/pagefind/pagefind-ui.css`;
 SOMNIA_LIBS.pagefind.js = `${BASE_URL}/pagefind/pagefind-ui.js`;
 
