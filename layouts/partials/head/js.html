@@ -41,8 +41,8 @@
 <script defer src="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}" crossorigin="anonymous"></script>
 {{ end }}
 
-<script defer>
-    // 全局变量 内联脚本 优先执行
+<script>
+    // 全局变量 内联脚本 没有 defer 优先阻塞执行
     const BASE_URL = '{{ .Site.BaseURL }}';
     // const VERSION = 'v{{ now.Format "2006-0102-1504" }}';
     // component.toc 依赖 scroll-plugin
@@ -65,14 +65,13 @@
     })
 </script>
 
-
 {{- if and site.Params.enablePWA  hugo.IsProduction  -}}
 {{ $options := dict }}
 {{ $options = dict "targetPath" "sw.min.js" | merge $options }}
 {{ $options = dict "minify" true | merge $options }}
 {{ $js := resources.Get "js/sw.js" | js.Build $options }}
 {{ $_ := $js.RelPermalink }}
-<script defer>
+<script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.min.js?v=' + VERSION)
