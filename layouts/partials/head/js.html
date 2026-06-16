@@ -42,8 +42,9 @@
 {{ end }}
 
 <script defer>
-    // 全局变量
-    const VERSION = 'v{{ now.Format "2006-0102-1504" }}';
+    // 全局变量 内联脚本 优先执行
+    const BASE_URL = '{{ .Site.BaseURL }}';
+    // const VERSION = 'v{{ now.Format "2006-0102-1504" }}';
     // component.toc 依赖 scroll-plugin
     document.addEventListener('DOMContentLoaded', () => {
         Somnia.PageInitCustom();

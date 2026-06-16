@@ -17,3 +17,17 @@ const SOMNIA_LIBS = {
         js: '//cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js'
     }
 }
+
+// CDN 击穿 ?v=xxx
+// INFO VERSION 由构建时间决定
+// NOW 为当前时间 分钟级击穿 Z 时区
+//const NOW = `${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}`; // 2026-06-16-13-38 
+const NOW = `${new Date().toISOString().replace(/[-:T]/g, '').replace(/(.{4})(.{4})/, '$1-$2-').slice(0, 14)}Z`; // 2026-0616-1338 
+let INFO = { v: NOW };
+try {
+    // 获取构建信息
+    INFO = localStorage.getItem('info') ? JSON.parse(localStorage.getItem('info')) : { v: NOW };
+} catch (e) {
+    // console.error(e);
+}
+const VERSION = `v${INFO.v}`;

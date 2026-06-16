@@ -151,8 +151,8 @@
                 MIDIjs.resume();
             },
             fetchWhisper() {
-                const date = `${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}`;
-                fetch(`https://note.ftls.xyz/microblog/whispers1.json?v=${date}`)
+                // const date = `${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}`;
+                fetch(`https://note.ftls.xyz/microblog/whispers1.json?v=${NOW}`)
                     .then(res => res.json())
                     .then(obj => {
                         this.whisper = this.mdToHtml(obj.whispers[0].content);

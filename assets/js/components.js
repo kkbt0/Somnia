@@ -5,6 +5,8 @@ document.addEventListener('alpine:init', () => {
         theme: localStorage.getItem('theme') || 'system',
         isDark: document.documentElement.classList.contains('dark'),
         init() {
+            // 存储构建信息
+            fetch(BASE_URL + 'info?v=' + NOW).then(res => res.text()).then(info => localStorage.setItem('info', info));
             // console.log("[Somnia] [Init]",this.theme, this.isDark);
         },
         // 统一调用接口，方便未来改为全局事件总线 由 Somnia 负责
