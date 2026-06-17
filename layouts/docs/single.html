@@ -2,7 +2,7 @@
 {{- $docs := hugo.Data.docs -}}
 
 <div x-data="component.main()">
-  {{ partial "page/button.html" (dict
+  {{ partial "page/nav.html" (dict "ctx" .
   "title" "Back"
   "href" "docs"
   "variant" "back"

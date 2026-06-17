@@ -1,0 +1,51 @@
+{{ if ne .ctx.Kind "home" }}
+<nav aria-label="Breadcrumb" class="breadcrumb flex flex-row gap-2">
+    {{ partial "page/button.html" (dict
+    "title" .title
+    "href" .href
+    "variant" .variant
+    "class" .class ) }}
+    <ol
+        class="group inline-flex items-center rounded-lg bg-muted border text-sm text-muted-foreground transition-all no-underline">
+        <!-- 首页 -->
+        <li>
+            <a href='{{ "" | relURL }}' title="首页">
+                <span>Home</span>
+            </a>
+        </li>
+
+        <!-- 根据页面类型生成面包屑 -->
+        {{ if eq .ctx.Kind "section" }}
+        <!-- 列表页 -->
+        <li>
+            <span>{{ .ctx.Title }}</span>
+        </li>
+        {{ else if eq .ctx.Kind "taxonomy" }}
+        <!-- 分类/标签页 -->
+        <li>
+            <span>{{ .ctx.Title }}</span>
+        </li>
+        {{ else if eq .ctx.Kind "term" }}
+        <!-- 分类/标签详情页 -->
+        <li>
+            <a href="{{ .ctx.Parent.Permalink }}">{{ .ctx.Parent.Title }}</a>
+        </li>
+        <li>
+            <span>{{ .ctx.Title }}</span>
+        </li>
+        {{ else }}
+        <!-- 普通内容页面 -->
+        {{ with .ctx.Parent }}
+        {{ if ne .Kind "home" }}
+        <li>
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </li>
+        {{ end }}
+        {{ end }}
+        <li>
+            <span>{{ .ctx.Title }}</span>
+        </li>
+        {{ end }}
+    </ol>
+</nav>
+{{ end }}

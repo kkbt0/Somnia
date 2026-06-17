@@ -542,3 +542,29 @@ html {
 :root {
   text-autospace: normal;
 }
+
+/* [Somnia-Pref] Breadcrumb */
+.breadcrumb li:not(:last-child)::after {
+  content: "›";
+  padding-left: 0.5rem;
+}
+
+.breadcrumb li {
+  display: inline-block;
+  height: 100%;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+}
+
+.breadcrumb li:last-child {
+  padding-right: 0.5rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.breadcrumb ol {
+  overflow: hidden;
+  white-space: nowrap;
+}

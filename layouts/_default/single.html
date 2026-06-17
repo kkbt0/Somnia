@@ -1,7 +1,7 @@
 {{ define "main" }}
 <div x-data="component.main()">
   {{$back := .Params.back | default ""}}
-  {{ partial "page/button.html" (dict
+  {{ partial "page/nav.html" (dict "ctx" .
   "title" "Back"
   "href" $back
   "variant" "back"

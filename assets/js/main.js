@@ -262,8 +262,9 @@ Somnia.libs = {
         }
     },
     mermaid: {
+        // 这个写法可能出现多次请求 run 不过 mermaid 初始化可能一次性初始化所有 不影响
         loaded: () => !!document.head.querySelector('script[data-somnia="mermaid.js"]'),
-        ok: () => typeof window.mermaid !== 'undefined',
+        ok: () => typeof window.mermaid.initialize !== 'undefined',
         async load() {
             // await Somnia.loadResource({ href: '/js/mermaid.js', type: 'module', defer: true, dataSomnia: 'mermaid.js' });
             return new Promise((resolve, reject) => {
@@ -303,9 +304,11 @@ Somnia.libs = {
                 hideEl.forEach(e => { e.style.display = 'none'; });
                 mermaid.initialize({ startOnLoad: false, theme: isDarkMode ? 'dark' : 'default' });
                 mermaid.run({ querySelector: isDarkMode ? ".mermaid-dark" : ".mermaid" }); // 幂等
-            } else {
+            } else if (!this.loaded()) {
                 console.warn('[Somnia] Lib Mermaid Error');
                 Somnia.showToast('流程图组件加载失败，请刷新页面重试');
+            } else {
+                // do nothing 同时多次请求时只执行一次
             }
         }
     }
