@@ -1,68 +1,20 @@
-{{ $variable := resources.Get "js/variable.js" }}
 {{ $main := resources.Get "js/main.js" }}
-{{ $components := resources.Get "js/components.js" }}
 {{ $custom := resources.Get "js/custom.js" }}
-
-{{ $asyncAlpine := resources.Get "js/async-alpine.min.js" }}
-{{ $alpinejs := resources.Get "js/alpinejs.min.js" }}
-{{ $mediumZoom := resources.Get "js/medium-zoom.min.js" }}
-{{ $swup := resources.Get "js/swup/Swup.umd.js" }}
-{{ $swupScroll := resources.Get "js/swup/scroll-plugin.js" }}
-
 {{/*  {{ $swupPreload := resources.Get "js/swup/preload-plugin.js" }}  */}}
 
-{{ if hugo.IsDevelopment }}
-<script defer src="{{ $variable.RelPermalink }}"></script>
-<script defer src="{{ $main.RelPermalink }}"></script>
-<script defer src="{{ $components.RelPermalink }}"></script>
-<script defer src="{{ $custom.RelPermalink }}"></script>
-
-<script defer src="{{ $asyncAlpine.RelPermalink }}"></script>
-<script defer src="{{ $alpinejs.RelPermalink }}"></script>
-<script defer src="{{ $mediumZoom.RelPermalink }}"></script>
-<script defer src="{{ $swup.RelPermalink }}"></script>
-<script defer src="{{ $swupScroll.RelPermalink }}"></script>
-{{/*  <script defer src="{{ $swupPreload.RelPermalink }}"></script>  */}}
-{{ else }}
 {{- $jsBundle := slice }}
-{{- $jsBundle = $jsBundle | append $variable }}
 {{- $jsBundle = $jsBundle | append $main }}
-{{- $jsBundle = $jsBundle | append $components }}
 {{- $jsBundle = $jsBundle | append $custom }}
+{{- $lastLine := "Somnia.start()" | resources.FromString "js/last.js" -}}
+{{- $jsBundle = $jsBundle | append $lastLine }}
 
-
-{{- $jsBundle = $jsBundle | append $asyncAlpine }}
-{{- $jsBundle = $jsBundle | append $alpinejs }}
-{{- $jsBundle = $jsBundle | append $mediumZoom }}
-{{- $jsBundle = $jsBundle | append $swup }}
-{{- $jsBundle = $jsBundle | append $swupScroll }}
-
-{{- $bundle := $jsBundle | resources.Concat "js/bundle.js" | minify | fingerprint -}}
+{{- $bundle := $jsBundle | resources.Concat "js/bundle.js" |  js.Build | minify | fingerprint -}}
 <script defer src="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}" crossorigin="anonymous"></script>
-{{ end }}
 
 <script>
     // 全局变量 内联脚本 没有 defer 优先阻塞执行
     const BASE_URL = '{{ .Site.BaseURL }}';
     // const VERSION = 'v{{ now.Format "2006-0102-1504" }}';
-    // component.toc 依赖 scroll-plugin
-    document.addEventListener('DOMContentLoaded', () => {
-        Somnia.PageInitCustom();
-        Somnia.swupPageInitMediumZoom();
-        Somnia.swupPageInitCustom();
-        const swup = new Swup({
-            containers: ['#content-wrapper'],
-            // native: true,
-            plugins: [
-                new SwupScrollPlugin(),
-            ]
-        });
-        // Alpine.start(); // Alpinejs 已经启动
-        swup.hooks.on('page:view', () => {
-            Somnia.swupPageInitMediumZoom();
-            Somnia.swupPageInitCustom();
-        });
-    })
 </script>
 
 {{- if and site.Params.enablePWA  hugo.IsProduction  -}}

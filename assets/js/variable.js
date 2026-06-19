@@ -31,3 +31,5 @@ try {
     // console.error(e);
 }
 const VERSION = `v${INFO.v}`;
+
+export { SOMNIA_LIBS, NOW, VERSION };
