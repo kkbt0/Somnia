@@ -7,7 +7,7 @@ console.log(currentDate.toLocaleString('zh-u-ca-chinese', { dateStyle: 'full' })
 console.log("你好，世界")
 
 // 可以放一些 js 注意全局挂载
-// window.noticeComponent() {}
+// window.noticeComponent = function () {}
 
 // 修改 CDN or 其他路径 或通过覆盖 js 实现
 // BASE_URL = '/Somnia'; // 由于 Hugo 生成提供
