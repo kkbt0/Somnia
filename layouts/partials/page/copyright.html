@@ -52,16 +52,22 @@
   <!-- Functions -->
   <div class='relative'>
     <div class='flex flex-row gap-3'>
-      <button id='copy-link' @click="copyLinkClick()" aria-label='Copy link'
+      <button id='copy-link' @click="copyLinkClick()" aria-label='Copy link' title="Copy link"
         class='group rounded-full bg-muted p-1 text-muted-foreground transition-colors hover:text-primary sm:p-1.5'>
         <svg aria-hidden="true" class="size-5" width="22" height="22" style="--sl-icon-size: 1em;">
           <use href='{{"icons/main.svg#link"|relURL}}' />
         </svg>
       </button>
-      <button id='get-qrcode' @click="getQRCodeClick()" aria-label='Get QR code'
+      <button id='get-qrcode' @click="getQRCodeClick()" aria-label='Get QR code' title="Get QR code"
         class='group rounded-full bg-muted p-1 text-muted-foreground transition-colors hover:text-primary sm:p-1.5'>
         <svg aria-hidden="true" class="size-5" width="22" height="22" style="--sl-icon-size: 1em;">
           <use href='{{"icons/main.svg#qrcode"|relURL}}' />
+        </svg>
+      </button>
+      <button id='open-markdown' @click="window.open(window.location.origin + window.location.pathname + 'index.md', '_blank')" aria-label='Open markdown' title="Open markdown"
+        class='group rounded-full bg-muted p-1 text-muted-foreground transition-colors hover:text-primary sm:p-1.5'>
+        <svg aria-hidden="true" class="size-5" width="22" height="22" style="--sl-icon-size: 1em;">
+          <use href='{{"icons/main.svg#fluent-markdown-20-filled"|relURL}}' />
         </svg>
       </button>
       <!-- More Share -->
@@ -77,7 +83,7 @@
 
 <!-- 赞助 -->
 <div class='mx-6 rounded-b-xl border border-t-0 px-3 pb-1.5 pt-1 sm:mx-8 sm:px-4'>
-  <a href="{{"projects/#sponsorship"|relURL}}" class='flex items-center justify-between text-muted-foreground no-underline'>
+  <a href='{{"projects/#sponsorship"|relURL}}' class='flex items-center justify-between text-muted-foreground no-underline'>
     <span>Buy me a cup of coffee ☕.</span>
     <svg aria-hidden="true" class="box-content size-5 p-1" width="22" height="22" style="--sl-icon-size: 1em;">
       <use href='{{"icons/main.svg#sponsor"|relURL}}' />
