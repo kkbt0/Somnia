@@ -21,6 +21,7 @@ window.somniaData = somniaData;
 
 
 Alpine.plugin(AsyncAlpine);
+Alpine.plugin(Somnia.SomniaPlugin);
 Alpine.store('somnia', {
     theme: localStorage.getItem('theme') || 'system',
     isDark: document.documentElement.classList.contains('dark'),
@@ -30,12 +31,11 @@ Alpine.store('somnia', {
         // console.log("[Somnia] [Init]",this.theme, this.isDark);
     },
 });
-Alpine.plugin(Somnia.SomniaPlugin);
 
 Somnia.start = function () {
-    Somnia.PageInitCustom();
-    Somnia.swupPageInitMediumZoom();
-    Somnia.swupPageInitCustom();
+    Somnia.PageInitCustom?.();
+    Somnia.swupPageInitMediumZoom?.();
+    Somnia.swupPageInitCustom?.();
     const swup = new Swup({
         containers: ['#content-wrapper'],
         // native: true,
@@ -45,11 +45,8 @@ Somnia.start = function () {
         ]
     });
     swup.hooks.on('page:view', () => {
-        Somnia.swupPageInitMediumZoom();
-        Somnia.swupPageInitCustom();
+        Somnia.swupPageInitMediumZoom?.();
+        Somnia.swupPageInitCustom?.();
     });
     Alpine.start();
 }
-
-
-// document.addEventListener('somnia:run', Somnia.start, { once: true });
