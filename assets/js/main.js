@@ -1,7 +1,6 @@
 import Alpine from './libs/alpinejs.esm.js';
 import AsyncAlpine from './libs/async-alpine.esm.js';
-import Swup from './libs/swup.umd.js';
-import SwupScrollPlugin from './libs/scroll-plugin.umd.js';
+import { Swup, SwupScrollPlugin } from './libs/swup.esm.js';
 import mediumZoom from './libs/medium-zoom.esm.js';
 
 import { SOMNIA_LIBS, NOW, VERSION } from './variable.js'

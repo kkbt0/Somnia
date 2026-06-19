@@ -51,7 +51,7 @@
 ### 前置要求
 
 - Hugo 0.158.0 或更高版本（开发环境 hugo v0.158.0-f41be7959a44108641f1e081adf5c4be7fc1bb63+extended linux/amd64 BuildDate=2026-03-16T17:42:04Z VendorInfo=gohugoio）
-- pnpm (用于开发时构建 UnoCSS)
+- pnpm bun (用于开发时构建 UnoCSS)
 - just (可选，用于便捷命令执行)
 - pagefind (可选，用于构建搜索索引)
 
@@ -183,6 +183,14 @@ pnpm dev
 
 # 构建生产版本
 pnpm build
+```
+
+更新
+
+```bash
+bun update
+# 将 js 库打包复制到 assets 目录
+bun run ./scripts/libs/vendor.js
 ```
 
 ### UnoCSS 开发
