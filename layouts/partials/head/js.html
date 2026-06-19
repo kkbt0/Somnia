@@ -5,7 +5,7 @@
 {{- $jsBundle := slice }}
 {{- $jsBundle = $jsBundle | append $main }}
 {{- $jsBundle = $jsBundle | append $custom }}
-{{- $lastLine := "Somnia.start()" | resources.FromString "js/last.js" -}}
+{{- $lastLine := "\nSomnia.start();\n" | resources.FromString "js/last.js" -}}
 {{- $jsBundle = $jsBundle | append $lastLine }}
 
 {{- $bundle := $jsBundle | resources.Concat "js/bundle.js" |  js.Build | minify | fingerprint -}}
