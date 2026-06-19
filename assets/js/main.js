@@ -6,6 +6,7 @@ import mediumZoom from './libs/medium-zoom.esm.js';
 import { SOMNIA_LIBS, NOW, VERSION } from './variable.js'
 import Somnia from './Somnia.js';
 import { component, somniaData } from './components.js';
+import * as params from '@params'; // Hugo 变量
 
 window.Alpine = Alpine;
 window.mediumZoom = mediumZoom;
@@ -13,6 +14,7 @@ window.mediumZoom = mediumZoom;
 window.SOMNIA_LIBS = SOMNIA_LIBS;
 window.NOW = NOW;
 window.VERSION = VERSION;
+window.BASE_URL = params.BASE_URL;
 
 window.Somnia = Somnia;
 window.component = component;

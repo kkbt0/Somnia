@@ -1,21 +1,26 @@
 {{ $main := resources.Get "js/main.js" }}
 {{ $custom := resources.Get "js/custom.js" }}
-{{/*  {{ $swupPreload := resources.Get "js/swup/preload-plugin.js" }}  */}}
 
-{{- $jsBundle := slice }}
-{{- $jsBundle = $jsBundle | append $main }}
-{{- $jsBundle = $jsBundle | append $custom }}
+{{- $jsBundle := slice $main $custom }}
 {{- $lastLine := "\nSomnia.start();\n" | resources.FromString "js/last.js" -}}
 {{- $jsBundle = $jsBundle | append $lastLine }}
 
-{{- $bundle := $jsBundle | resources.Concat "js/bundle.js" |  js.Build | minify | fingerprint -}}
+{{- $opts := dict
+    "params" (dict
+        "BASE_URL" .Site.BaseURL
+        "environment" (cond hugo.IsProduction "production" "development")
+    )
+-}}
+{{- $bundle := $jsBundle | resources.Concat "js/bundle.js" |  js.Build $opts | minify | fingerprint -}}
 <script defer src="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}" crossorigin="anonymous"></script>
 
+<!--
 <script>
-    // 全局变量 内联脚本 没有 defer 优先阻塞执行
-    const BASE_URL = '{{ .Site.BaseURL }}';
-    // const VERSION = 'v{{ now.Format "2006-0102-1504" }}';
+// 全局变量 内联脚本 没有 defer 优先阻塞执行
+// const BASE_URL = '{{ .Site.BaseURL }}';
+// const VERSION = 'v{{ now.Format "2006-0102-1504" }}';
 </script>
+-->
 
 {{- if and site.Params.enablePWA  hugo.IsProduction  -}}
 {{ $options := dict }}
