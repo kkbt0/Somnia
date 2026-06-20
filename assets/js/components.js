@@ -14,6 +14,8 @@
 //     Alpine.plugin(Somnia.SomniaPlugin);
 // })
 
+import Somnia from "./Somnia";
+
 // 处理页面数据 负责动态加载 js 等
 function somniaData() {
     return {
@@ -364,7 +366,6 @@ component.copyright = function () {
         qrcodeImgSrc: "",
         qrcodeInit: false,
         qrcodeScriptLoaded: window.QRCode !== undefined, // 检测全局 QRCode 对象，避免重复加载
-        qrcodeScriptLoading: false,
         init() {
             // console.log("QRCode library 加载状态:", this.qrcodeScriptLoaded);
         },
@@ -372,9 +373,23 @@ component.copyright = function () {
             navigator.clipboard.writeText(window.location.href);
             Somnia.showToast('Link copied!');
         },
-        newQRCode() {
-            // 加载后生成
-            // console.log("New QRCode " + window.location.origin + window.location.pathname);
+        getQRCodeClick() {
+            // 调用 API
+            // this.qrcodeImgSrc = "https://api.qrtool.cn/?text=" + window.location.origin + window.location.pathname;
+            // 或者加载 js 生成
+            if (this.qrcodeScriptLoaded && this.qrcodeInit) {
+                this.qrcodeShow = !this.qrcodeShow;
+                return;
+            } else if (this.qrcodeInit) {
+                // 加载js期间的点击事件 不做处理
+                return;
+            }
+            this.qrcodeInit = true; // 标记点击过
+            // 如果没有加载过 js
+            if (!Somnia.libs.qrcode.res.length) {
+                Somnia.scanLine({ act: "show" });
+            }
+            // 自动加载 js 库并生成二维码
             Somnia.libs.qrcode.run({
                 el: this.$refs.qrcode, opt: {
                     text: window.location.origin + window.location.pathname,
@@ -382,38 +397,14 @@ component.copyright = function () {
                     height: 256,
                 }
             });
-            this.qrcodeInit = true;
-            this.qrcodeShow = true;
-        },
-        newQRCodeScript() {
-            Somnia.scanLine({ act: "show" });
-            this.qrcodeScriptLoading = true;
-            Somnia.libs.qrcode.load().then(() => {
-                this.newQRCode();
+            // 监测 js 加载情况
+            Promise.all(Somnia.libs.qrcode.res).then(() => {
                 this.qrcodeScriptLoaded = true;
-            }).catch((e) => {
-                Somnia.showToast("QRCode.js Load failed");
-                console.error(e);
-                this.qrcodeScriptLoading = false;
+                this.qrcodeShow = true;
             }).finally(() => {
-                Somnia.scanLine({ act: "hide", time: 0 });
                 // 无论成功失败都确保加载状态重置，避免卡在加载中
-                this.qrcodeScriptLoading = false;
-            });
-        },
-        getQRCodeClick() {
-            // 调用 API
-            // this.qrcodeImgSrc = "https://api.qrtool.cn/?text=" + window.location.origin + window.location.pathname;
-            // 或者加载 js 生成
-            // console.log("脚本加载:", this.qrcodeScriptLoaded, "生成状态:", this.qrcodeInit, "加载中:", this.qrcodeScriptLoading, "显示:", this.qrcodeShow);
-            if (this.qrcodeScriptLoading) { }
-            else if (!this.qrcodeScriptLoaded && !this.qrcodeInit) {
-                this.newQRCodeScript();
-            }
-            else if (this.qrcodeScriptLoaded && !this.qrcodeInit) {
-                this.newQRCode();
-            }
-            else this.qrcodeShow = !this.qrcodeShow;
+                Somnia.scanLine({ act: "hide", time: 0 });
+            })
         }
     }
 }

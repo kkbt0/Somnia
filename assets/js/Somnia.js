@@ -1,5 +1,6 @@
 /*! Somnia | (c) 2026 kkbt | https://github.com/kkbt0/Somnia */
 const Somnia = {
+    sleep: (delay) => new Promise((resolve) => setTimeout(resolve, delay)),
     // Toast
     showToast(message, time) {
         const toast = document.createElement('div')
@@ -188,86 +189,86 @@ Somnia.libs = {
         }
     },
     pagefind: {
-        // 通过检测资源是否存在来判断是否已经加载，避免重复加载
-        loaded: () => !!document.head.querySelector('link[data-somnia="pagefind.css"]') && !!document.head.querySelector('script[data-somnia="pagefind.js"]'),
-        ok: () => typeof window.PagefindUI !== 'undefined',
+        res: [], // Promise list
         async load() {
-            await Somnia.loadResource({ rel: 'stylesheet', href: SOMNIA_LIBS.pagefind.css, dataSomnia: 'pagefind.css' });
-            await Somnia.loadResource({ type: 'module', href: SOMNIA_LIBS.pagefind.js, dataSomnia: 'pagefind.js' });
+            Somnia.loadResource({ rel: 'stylesheet', href: SOMNIA_LIBS.pagefind.css, dataSomnia: 'pagefind.css' });
+            this.res.push(Somnia.loadResource({ type: 'module', href: SOMNIA_LIBS.pagefind.js, dataSomnia: 'pagefind.js' }));
         },
         async run() {
-            if (!this.loaded()) await this.load();
-            if (this.ok()) {
-                new PagefindUI({
-                    element: "#site-search",
-                    showSubResults: true,
-                    showImages: false
-                });
-            } else {
-                console.warn('[Somnia] Lib Pagefind Error');
-                Somnia.showToast('搜索组件加载失败，请刷新页面重试');
-            }
+            // this.res.length === 0
+            if (!this.res.length) this.load();
+            Promise.all(this.res)
+                .then(r => {
+                    new PagefindUI({
+                        element: "#site-search",
+                        showSubResults: true,
+                        showImages: false
+                    })
+                })
+                .catch(e => {
+                    console.warn('[Somnia] Lib Pagefind Error');
+                    Somnia.showToast('搜索组件加载失败，请刷新页面重试');
+                })
         }
     },
     qrcode: {
-        loaded: () => !!document.head.querySelector('script[data-somnia="qrcode.js"]'),
-        ok: () => typeof window.QRCode !== 'undefined',
+        res: [],
         async load() {
-            await Somnia.loadResource({ href: SOMNIA_LIBS.qrcode.js, dataSomnia: 'qrcode.js' });
+            this.res.push(Somnia.loadResource({ href: SOMNIA_LIBS.qrcode.js, dataSomnia: 'qrcode.js' }));
         },
         async run({ el, opt } = {}) {
-            if (!this.loaded()) await this.load();
-            if (this.ok()) {
-                new QRCode(el, opt);
-            } else {
-                console.warn('[Somnia] Lib QRCode Error');
-                Somnia.showToast('二维码组件加载失败，请刷新页面重试');
-            }
-        }
+            if (!this.res.length) this.load();
+            Promise.all(this.res)
+                .then(r => {
+                    new QRCode(el, opt);
+                })
+                .catch(e => {
+                    console.warn('[Somnia] Lib QRCode Error');
+                    Somnia.showToast('二维码组件加载失败，请刷新页面重试');
+                })
+
+        },
     },
     katex: {
-        loaded: () => !!document.head.querySelector('link[data-somnia="katex.css"]') && !!document.head.querySelector('script[data-somnia="katex.js"]') && !!document.head.querySelector('script[data-somnia="katex-auto-render.js"]'),
-        ok: () => typeof window.renderMathInElement !== 'undefined',
+        res: [],
         async load() {
             const katex = SOMNIA_LIBS.katex;
             // 插入 KaTeX CSS
             Somnia.loadResource({ rel: 'stylesheet', href: katex.css.href, crossOrigin: 'anonymous', dataSomnia: 'katex.css' });
-
             // 插入 KaTeX 主库 JS
             await Somnia.loadResource({ href: katex.js.href, integrity: katex.js.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex.js' });
-
             // 插入 KaTeX 自动渲染扩展
-            await Somnia.loadResource({ href: katex.autoRenderJs.href, integrity: katex.autoRenderJs.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex-auto-render.js' });
-
+            this.res.push(Somnia.loadResource({ href: katex.autoRenderJs.href, integrity: katex.autoRenderJs.integrity, crossOrigin: 'anonymous', defer: true, dataSomnia: 'katex-auto-render.js' }));
+            // 注意 必须在 katex.js 加载完成后再加载 katex-auto-render.js  同时加载概率报错
         },
         async run(element) {
-            if (!this.loaded()) await this.load();
-            if (this.ok()) {
-                renderMathInElement(element, {
-                    // customised options
-                    // • auto-render specific keys, e.g.:
-                    delimiters: [
-                        { left: '$$', right: '$$', display: true },
-                        { left: '$', right: '$', display: false },
-                        { left: '\\(', right: '\\)', display: false },
-                        { left: '\\[', right: '\\]', display: true }
-                    ],
-                    // • rendering keys, e.g.:
-                    throwOnError: false
-                });
-            } else {
-                console.warn('[Somnia] Lib KaTeX Error');
-                Somnia.showToast('数学公式组件加载失败，请刷新页面重试');
-            }
+            if (!this.res.length) await this.load();
+            Promise.all(this.res)
+                .then(r => {
+                    renderMathInElement(element, {
+                        // customised options
+                        // • auto-render specific keys, e.g.:
+                        delimiters: [
+                            { left: '$$', right: '$$', display: true },
+                            { left: '$', right: '$', display: false },
+                            { left: '\\(', right: '\\)', display: false },
+                            { left: '\\[', right: '\\]', display: true }
+                        ],
+                        // • rendering keys, e.g.:
+                        throwOnError: false
+                    });
+                })
+                .catch(e => {
+                    console.error(e);
+                    console.warn('[Somnia] Lib KaTeX Error');
+                    Somnia.showToast('数学公式组件加载失败，请刷新页面重试');
+                })
         }
     },
     mermaid: {
-        // 这个写法可能出现多次请求 run 不过 mermaid 初始化可能一次性初始化所有 不影响
-        loaded: () => !!document.head.querySelector('script[data-somnia="mermaid.js"]'),
-        ok: () => typeof window.mermaid.initialize !== 'undefined',
+        res: [],
         async load() {
-            // await Somnia.loadResource({ href: '/js/mermaid.js', type: 'module', defer: true, dataSomnia: 'mermaid.js' });
-            return new Promise((resolve, reject) => {
+            const loadMermaid = new Promise((resolve, reject) => {
                 const script = document.createElement('script');
                 script.type = 'module';
                 // script.src = '/js/mermaid.js';
@@ -293,25 +294,27 @@ Somnia.libs = {
                 script.onerror = () => reject();
                 document.head.appendChild(script);
             });
+            this.res.push(loadMermaid);
         },
+        // 这个写法可能出现多次请求 run 不过 mermaid 初始化可能一次性初始化所有 不影响
         async run() {
-            if (!this.loaded()) await this.load();
-            if (this.ok()) {
-                const isDarkMode = document.documentElement.classList.contains('dark');
-                const showEl = document.querySelectorAll(isDarkMode ? '.mermaid-dark' : '.mermaid');
-                showEl.forEach(e => { e.style.display = 'block'; });
-                const hideEl = document.querySelectorAll(isDarkMode ? '.mermaid' : '.mermaid-dark');
-                hideEl.forEach(e => { e.style.display = 'none'; });
-                mermaid.initialize({ startOnLoad: false, theme: isDarkMode ? 'dark' : 'default' });
-                mermaid.run({ querySelector: isDarkMode ? ".mermaid-dark" : ".mermaid" }); // 幂等
-            } else if (!this.loaded()) {
-                console.warn('[Somnia] Lib Mermaid Error');
-                Somnia.showToast('流程图组件加载失败，请刷新页面重试');
-            } else {
-                // do nothing 同时多次请求时只执行一次
-            }
+            if (!this.res.length) await this.load();
+            Promise.all(this.res)
+                .then(r => {
+                    const isDarkMode = document.documentElement.classList.contains('dark');
+                    const showEl = document.querySelectorAll(isDarkMode ? '.mermaid-dark' : '.mermaid');
+                    showEl.forEach(e => { e.style.display = 'block'; });
+                    const hideEl = document.querySelectorAll(isDarkMode ? '.mermaid' : '.mermaid-dark');
+                    hideEl.forEach(e => { e.style.display = 'none'; });
+                    mermaid.initialize({ startOnLoad: false, theme: isDarkMode ? 'dark' : 'default' });
+                    mermaid.run({ querySelector: isDarkMode ? ".mermaid-dark" : ".mermaid" }); // 幂等
+                })
+                .catch(e => {
+                    console.warn('[Somnia] Lib Mermaid Error');
+                    Somnia.showToast('流程图组件加载失败，请刷新页面重试');
+                })
         }
-    }
+    },
 }
 
 // for Alpinejs https://alpinejs.dev/advanced/extending
@@ -333,7 +336,7 @@ Somnia.SomniaPlugin = function (Alpine) {
             el.removeAttribute('x-js-load');
         }
         moveScript(el); // 选择 el
-        moveScript(el.nextElementSibling) // 选择 el 的下一个兄弟节点 
+        moveScript(el.nextElementSibling) // 选择 el 的下一个兄弟节点
         moveScript(el.lastElementChild) // 选择 el 最后一个子节点
     }
     Alpine.directive('js-load', jsReload)
