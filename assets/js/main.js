@@ -16,10 +16,11 @@ window.NOW = NOW;
 window.VERSION = VERSION;
 window.BASE_URL = params.BASE_URL;
 
-window.Somnia = Somnia;
-window.component = component;
-window.somniaData = somniaData;
+window.Somnia = Somnia; // 主程序
+window.component = component; // 组件
+window.somniaData = somniaData; // 处理动态加载 js 库等
 
+window.page = {}; // 全局可用页面数据 切换页面后清空
 
 Alpine.plugin(AsyncAlpine);
 Alpine.plugin(Somnia.SomniaPlugin);
@@ -44,6 +45,9 @@ Somnia.start = function () {
             // component.toc 依赖 scroll-plugin
             new SwupScrollPlugin(),
         ]
+    });
+    swup.hooks.on('page:load', () => {
+      window.page = {}; // 清空页面数据
     });
     swup.hooks.on('page:view', () => {
         Somnia.swupPageInitMediumZoom?.();
