@@ -1,12 +1,14 @@
-{{- $libs := slice -}}
+{{- $libs := .Page.Store.Get "libs" | default slice -}}
 
 {{- if .Params.math -}}
 {{- $libs = $libs | append  "katex" -}}
 {{- end -}}
 
+<!-- 实际上是直接添加到 libs 变量方法
 {{- if .Store.Get "mermaid" -}}
 {{- $libs = $libs | append  "mermaid" -}}
 {{- end -}}
+-->
 
 <!-- 页面数据 -->
 <div x-data="somniaData()" data-somnia='{{ $libs }}' style="display: none;"></div>

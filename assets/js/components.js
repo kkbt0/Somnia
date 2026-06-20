@@ -27,10 +27,10 @@ function somniaData() {
             if (data.includes("katex")) {
                 Somnia.libs.katex.run(document.getElementById("content-wrapper"));
             }
-            // 由 render-codeblock-mermaid.html 运行
-            // if (data.includes("mermaid")) {
-            //     Somnia.libs.mermaid.run();
-            // }
+            if (data.includes("mermaid")) {
+                Somnia.libs.mermaid.run();
+                this.$watch('$store.somnia.isDark', (n, o) => Somnia.libs.mermaid.run())
+            }
         }
     }
 }
@@ -188,7 +188,7 @@ component.backToTop = function () {
         scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             this.contentHeaderEl?.setAttribute('tabindex', '-1'); // 键盘无障碍优化，允许 focus
-            this.contentHeaderEl?.focus({ preventScroll: true }); // 键盘无障碍优化 
+            this.contentHeaderEl?.focus({ preventScroll: true }); // 键盘无障碍优化
         },
 
         destroy() {

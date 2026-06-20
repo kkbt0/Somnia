@@ -1,4 +1,7 @@
-<div x-init="Somnia.libs.mermaid.run()" x-data="$watch('$store.somnia.isDark', (n, o) => Somnia.libs.mermaid.run())" class="astro-code astro-code-themes chroma" style="overflow-x: auto;" data-language="mermaid">
+<div class="astro-code astro-code-themes chroma" style="overflow-x: auto;" data-language="mermaid">
     <pre class="mermaid">{{- .Inner | safeHTML }}</pre>
     <pre class="mermaid-dark">{{- .Inner | safeHTML }}</pre>
 </div>
+{{- $libs := .Page.Store.Get "libs" | default slice -}}
+{{- $libs = $libs | append "mermaid" | uniq -}}  <!-- uniq 确保不重复 -->
+{{- .Page.Store.Set "libs" $libs -}}
