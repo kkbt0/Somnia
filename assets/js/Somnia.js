@@ -1,4 +1,7 @@
 /*! Somnia | (c) 2026 kkbt | https://github.com/kkbt0/Somnia */
+import mediumZoom from './libs/medium-zoom.esm.js';
+import { SOMNIA_LIBS } from './variable.js'
+
 const Somnia = {
     sleep: (delay) => new Promise((resolve) => setTimeout(resolve, delay)),
     // Toast

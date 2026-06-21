@@ -3,34 +3,36 @@ import AsyncAlpine from './libs/async-alpine.esm.js';
 import { Swup, SwupScrollPlugin } from './libs/swup.esm.js';
 import mediumZoom from './libs/medium-zoom.esm.js';
 
-import { SOMNIA_LIBS, NOW, VERSION } from './variable.js'
+import { SOMNIA_LIBS, NOW, VERSION, BASE_URL } from './variable.js'
 import Somnia from './Somnia.js';
 import { component, somniaData } from './components.js';
-import * as params from '@params'; // Hugo 变量
 
-window.Alpine = Alpine;
-window.mediumZoom = mediumZoom;
-
-window.SOMNIA_LIBS = SOMNIA_LIBS;
-window.NOW = NOW;
-window.VERSION = VERSION;
-window.BASE_URL = params.BASE_URL;
-
-window.Somnia = Somnia; // 主程序
-window.component = component; // 组件
-window.somniaData = somniaData; // 处理动态加载 js 库等
+// 全局挂载
+Object.assign(window, {
+  Alpine,
+  Swup,
+  mediumZoom,
+  SOMNIA_LIBS,
+  NOW,
+  VERSION,
+  BASE_URL,
+  Somnia, // 主程序
+  component, // 组件
+  somniaData // 处理动态加载 js 库等
+});
 
 window.page = {}; // 全局可用页面数据 切换页面后清空
 
 Alpine.plugin(AsyncAlpine);
 Alpine.plugin(Somnia.SomniaPlugin);
-Alpine.store('somnia', {
+Alpine.store('somnia', { // 全局状态
     theme: localStorage.getItem('theme') || 'system',
     isDark: document.documentElement.classList.contains('dark'),
     init() {
         // 存储构建信息
         fetch(BASE_URL + 'info?v=' + NOW).then(res => res.text()).then(info => localStorage.setItem('info', info));
         // console.log("[Somnia] [Init]",this.theme, this.isDark);
+        // 统一调用接口，方便未来改为全局事件总线 由 Somnia 负责
     },
 });
 

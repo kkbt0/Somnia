@@ -1,20 +1,6 @@
 // Alpinejs components script
-// 全局状态
-// document.addEventListener('alpine:init', () => {
-//     Alpine.store('somnia', {
-//         theme: localStorage.getItem('theme') || 'system',
-//         isDark: document.documentElement.classList.contains('dark'),
-//         init() {
-//             // 存储构建信息
-//             fetch(BASE_URL + 'info?v=' + NOW).then(res => res.text()).then(info => localStorage.setItem('info', info));
-//             // console.log("[Somnia] [Init]",this.theme, this.isDark);
-//         },
-//         // 统一调用接口，方便未来改为全局事件总线 由 Somnia 负责
-//     });
-//     Alpine.plugin(Somnia.SomniaPlugin);
-// })
-
-import Somnia from "./Somnia";
+import Alpine from './libs/alpinejs.esm.js';
+import Somnia from './Somnia.js';
 
 // 处理页面数据 负责动态加载 js 等
 function somniaData() {

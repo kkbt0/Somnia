@@ -1,3 +1,4 @@
+import * as params from '@params'; // Hugo 变量
 
 // for cdn or local libs url
 const SOMNIA_LIBS = {
@@ -21,15 +22,15 @@ const SOMNIA_LIBS = {
 // CDN 击穿 ?v=xxx
 // INFO VERSION 由构建时间决定
 // NOW 为当前时间 分钟级击穿 Z 时区
-//const NOW = `${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}`; // 2026-06-16-13-38 
-const NOW = `${new Date().toISOString().replace(/[-:T]/g, '').replace(/(.{4})(.{4})/, '$1-$2-').slice(0, 14)}Z`; // 2026-0616-1338 
+//const NOW = `${new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-')}`; // 2026-06-16-13-38
+const NOW = `${new Date().toISOString().replace(/[-:T]/g, '').replace(/(.{4})(.{4})/, '$1-$2-').slice(0, 14)}Z`; // 2026-0616-1338
 let INFO = { v: NOW };
 try {
-    // 获取构建信息
-    INFO = localStorage.getItem('info') ? JSON.parse(localStorage.getItem('info')) : { v: NOW };
-} catch (e) {
-    // console.error(e);
-}
+    INFO = localStorage.getItem('info') ? JSON.parse(localStorage.getItem('info')) : { v: NOW }; // 获取构建信息
+} catch (e) { }
 const VERSION = `v${INFO.v}`;
 
-export { SOMNIA_LIBS, NOW, VERSION };
+// Hugo 注入
+const BASE_URL = params.BASE_URL || window.location.origin + "/";
+
+export { SOMNIA_LIBS, NOW, VERSION, BASE_URL };
