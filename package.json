@@ -16,7 +16,7 @@
   ],
   "author": "kkbt",
   "license": "MIT",
-  "packageManager": "pnpm@11.4.0",
+  "packageManager": "bun@1.3.14",
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
     "@unocss/cli": "^66.7.2",
