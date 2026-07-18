@@ -24,7 +24,7 @@ Object.assign(window, {
 window.page = {}; // 全局可用页面数据 切换页面后清空
 
 Alpine.plugin(AsyncAlpine);
-Alpine.plugin(Somnia.SomniaPlugin);
+Alpine.plugin(Somnia.plugin.JSLoad);
 Alpine.store('somnia', { // 全局状态
     theme: localStorage.getItem('theme') || 'system',
     isDark: document.documentElement.classList.contains('dark'),

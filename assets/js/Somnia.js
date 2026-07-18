@@ -3,6 +3,8 @@ import mediumZoom from './libs/medium-zoom.esm.js';
 import { SOMNIA_LIBS } from './variable.js'
 
 const Somnia = {
+    libs: {},
+    plugin: {},
     sleep: (delay) => new Promise((resolve) => setTimeout(resolve, delay)),
     // Toast
     showToast(message, time) {
@@ -87,14 +89,14 @@ const Somnia = {
     // example loadResource(el,rel,href,type,integrity,crossOrigin,defer)
     async loadResource({
         element = document.head,        // 要追加到的DOM元素，默认为document.head。
-        // 由于加载到哪里 Swup.js 切换页面都不会彻底拆卸。所以默认加载到 head，避免保证调试元素可见
+        // 由于 Swup.js 切换页面无法卸载已经加载的 js。所以默认加载到 head，保证元素可见，方便调试
         rel = 'stylesheet',            // 主要用于CSS的rel属性，默认'stylesheet'
-        href,                          // 资源URL（必需）
+        href,                          // 资源 URL
         type,                           //  type module，可选
         integrity,                     // 完整性哈希，可选
         crossOrigin,                    // 跨域设置，可选
         defer = false,                     // 是否延迟加载，默认false
-        dataSomnia = 'somnia'                 // 自定义属性，默认为空字符串
+        dataSomnia = 'somnia'                 // 自定义属性
     } = {}) {
         return new Promise((resolve, reject) => {
             if (!href) {
@@ -174,7 +176,7 @@ const Somnia = {
     }
 }
 
-//  libs 定义了 Somnia 可能使用的第三方库的加载和运行逻辑，每个库都有 loaded、ok、load 和 run 四个方法，分别用于检查是否已经加载、检查是否可用、加载资源和运行库功能。
+//  libs 定义了 Somnia 可能使用的第三方库的加载和运行逻辑
 // 动态加载由 xxxComponent() 负责
 // Katex - somnia-data has "math" 时加载
 // 幂等化，避免重复绑定
@@ -321,7 +323,7 @@ Somnia.libs = {
 }
 
 // for Alpinejs https://alpinejs.dev/advanced/extending
-Somnia.SomniaPlugin = function (Alpine) {
+Somnia.plugin.JSLoad = function (Alpine) {
     // directive magic plugin https://alpinejs.dev/advanced/extending
     // https://github.com/alpinejs/alpine/blob/main/packages/alpinejs/src/directives/x-ignore.js
     // console.log('[Somnia] Alpine Plugin Loaded');
