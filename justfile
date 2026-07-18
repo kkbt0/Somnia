@@ -5,13 +5,13 @@ build:
 pf:
     pagefind_extended --site exampleSite/public
 css:
-    pnpm run dev
+    bun run dev
 css-build:
-    pnpm run build
+    bun run build
 
 ### dev
 
 dev-dev:
     ../../../bin/hugo  server -s exampleSite/ --disableFastRender -e production
 update:
-    ../../../bin/llrt scripts/version.js 
+    ../../../bin/llrt scripts/version.js

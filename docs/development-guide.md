@@ -55,7 +55,7 @@
 | 图片缩放 | **Medium Zoom** | 轻量级图片查看器 |
 | 数学公式 | **KaTeX** | 可选，按需加载 |
 | 搜索 | **Pagefind** | 可选，静态搜索索引 |
-| 包管理 | **pnpm** | v10.25.0 |
+| 包管理 | **bun** | v1.3.14 |
 | 任务执行 | **just** | 可选，便捷命令封装 |
 
 > **CSS import 兼容性：** Hugo >= v0.158.0 开始原生支持 CSS `@import` 语法，
@@ -206,8 +206,8 @@ Somnia/
 # Hugo（extended 版本，要求 v0.158.0+）
 hugo version
 
-# pnpm（v10+）
-pnpm --version
+# bun（1.3.14）
+bun --version
 
 # just（可选，用于便捷命令）
 just --version
@@ -223,13 +223,13 @@ pagefind --version
 cd themes/Somnia
 
 # 2. 安装 JS 依赖
-pnpm install
+bun install
 
 # 3. 启动 Hugo 开发服务器 + UnoCSS 监听（分别开两个终端）
 # 终端 1：
 just dev       # 或：hugo server -s exampleSite/ --disableFastRender
 # 终端 2：
-just css       # 或：pnpm dev（监听 layouts/ 变化，自动生成 uno.css）
+just css       # 或：bun dev（监听 layouts/ 变化，自动生成 uno.css）
 
 # 4. 浏览器访问 http://localhost:1313
 ```
@@ -243,8 +243,8 @@ just css       # 或：pnpm dev（监听 layouts/ 变化，自动生成 uno.css�
 | `just dev` | 启动 Hugo 开发服务器 | `hugo server -s exampleSite/ --disableFastRender` |
 | `just build` | 构建生产版本 | `hugo --minify -s exampleSite/` |
 | `just pf` | 构建 Pagefind 搜索索引 | `pagefind_extended --site exampleSite/public` |
-| `just css` | UnoCSS 开发模式（监听） | `pnpm dev` |
-| `just css-build` | UnoCSS 生产构建 | `pnpm build` |
+| `just css` | UnoCSS 开发模式（监听） | `bun dev` |
+| `just css-build` | UnoCSS 生产构建 | `bun build` |
 | `just update` | 版本更新 | `llrt scripts/version.js` |
 
 ## 前端构建体系
@@ -273,10 +273,10 @@ presets: [
 
 ```bash
 # 开发（监听 layouts/ 变化）
-pnpm unocss "layouts/**/*.html" -o ./assets/css/uno.css --watch
+bun unocss "layouts/**/*.html" -o ./assets/css/uno.css --watch
 
 # 生产构建
-pnpm unocss "layouts/**/*.html" -o ./assets/css/uno.css
+bun unocss "layouts/**/*.html" -o ./assets/css/uno.css
 ```
 
 ### Alpine.js 组件
