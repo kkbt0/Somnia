@@ -19,16 +19,16 @@
   "packageManager": "bun@1.3.14",
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
-    "@unocss/cli": "^66.7.5",
-    "@unocss/preset-icons": "^66.7.5",
-    "@unocss/preset-typography": "^66.7.5",
-    "@unocss/preset-wind4": "^66.7.5",
-    "unocss": "^66.7.5"
+    "@unocss/cli": "^66.8.1",
+    "@unocss/preset-icons": "^66.8.1",
+    "@unocss/preset-typography": "^66.8.1",
+    "@unocss/preset-wind4": "^66.8.1",
+    "unocss": "^66.8.1"
   },
   "dependencies": {
     "@swup/scroll-plugin": "^4.0.0",
-    "@unocss/reset": "^66.7.5",
-    "alpinejs": "^3.15.12",
+    "@unocss/reset": "^66.8.1",
+    "alpinejs": "^3.16.3",
     "async-alpine": "^2.0.3",
     "medium-zoom": "^1.1.0",
     "swup": "^4.9.2"
